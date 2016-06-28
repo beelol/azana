@@ -29,6 +29,7 @@ const appRouter = (
 // <Route path="/benches/:benchId" component={ BenchShow} >
 //   <Route path="review" component={ ReviewForm } onEnter={ _ensureLoggedIn }/>
 // </Route>
+
 function _ensureLoggedIn(nextState, replace) {
   // We don't want users to be able to visit our 'new' or 'review' routes
   // if they haven't already signed in/up. Let's redirect them!
