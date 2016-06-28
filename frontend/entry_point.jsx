@@ -18,7 +18,7 @@ const SessionActions = require('./actions/session_actions');
 
 const appRouter = (
   <Router history={ hashHistory }>
-    <Route path="/" component={ App }>
+    <Route path="/" component={ App } >
       <Route path="/login" component={ LoginForm } />
       <Route path="/signup" component={ LoginForm } />
     </Route>
@@ -29,7 +29,6 @@ const appRouter = (
 // <Route path="/benches/:benchId" component={ BenchShow} >
 //   <Route path="review" component={ ReviewForm } onEnter={ _ensureLoggedIn }/>
 // </Route>
-
 function _ensureLoggedIn(nextState, replace) {
   // We don't want users to be able to visit our 'new' or 'review' routes
   // if they haven't already signed in/up. Let's redirect them!
