@@ -1,6 +1,8 @@
+<link href='https://fonts.googleapis.com/css?family=Josefin+Sans:400italic,400,700,700italic' rel='stylesheet' type='text/css'>
+
 <script id="bootstrap-current-user" type="text/javascript">
   <% if logged_in? %>
-  	window.currentUser = <%= render("api/users/user.json.jbuilder", 
+  	window.currentUser = <%= render("api/users/user.json.jbuilder",
   		user: current_user).html_safe %>
   <% end %>
 </script>
