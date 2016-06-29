@@ -1,0 +1,83 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+
+
+ */
+
+
+ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, caption {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+/* NAVBAR PROPERTIES */
+.navbar {
+  background: #fff;
+  border-bottom: 1px solid #e1e2e4;
+  color: #898e95;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 14px;
+  height: 40px;
+}
+
+.navbar-left {
+  margin-left: 30px;
+}
+
+.navigation-link {
+  text-decoration: none;
+  float: left;
+  -webkit-box-align: left;
+  -ms-flex-align: left;
+  align-items: left;
+  color: #898e95;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  font-size: 12px;
+  margin: 15px 0px 0px 20px;
+  text-transform: uppercase;
+}
+
+.navigation-link:hover {
+  color: #02ceff;
+}
+
+
+/* LOGIN FORM BULLSHIT */
+.login-form-container {
+  width: 400px;
+  height: 350px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.login-form-box h1, form {
+  text-align: center;
+  margin: 0 auto;
+}
+
+.login-form-box label {
+  position: relative;
+  text-align: left;
+}
