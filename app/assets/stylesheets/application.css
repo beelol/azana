@@ -25,6 +25,11 @@
     font-family: 'Josefin Sans', sans-serif;
 }
 
+h1 {
+  font-size: 30px;
+  text-align: center;
+}
+
 /* NAVBAR PROPERTIES */
 .navbar {
   background: #fff;
@@ -65,10 +70,22 @@
 
 /* LOGIN FORM BULLSHIT */
 .login-form-container {
-  width: 400px;
-  height: 350px;
+  background: blue;
+  width: 500px;
+  height: 450px;
   margin: 0 auto;
+  margin-top: 30px;
   text-align: center;
+  background-color: #fff;
+  border-radius: 3px;
+  box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.1);
+  line-height: 1.5;
+}
+
+.login-signup {
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 30px;
 }
 
 .login-form-box h1, form {
