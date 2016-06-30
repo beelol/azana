@@ -27,8 +27,8 @@ function resetSingleTask(task) {
   TaskStore.__emitChange();
 }
 
-function removeTask(task) {
-  delete _tasks[task.id];
+function removeTask(id) {
+  delete _tasks[id];
   TaskStore.__emitChange();
 }
 
@@ -41,7 +41,7 @@ TaskStore.__onDispatch = function(payload) {
       resetSingleTask(payload.task);
       break;
     case TaskConstants.TASK_REMOVED:
-      removeTask(payload.task);
+      removeTask(payload.id);
       break;
   }
 };

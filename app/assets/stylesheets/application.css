@@ -26,6 +26,10 @@
     text-decoration: none;
 }
 
+body {
+  background-color: #EFF0F1;
+}
+
 li {
   list-style: none;
 }
@@ -194,4 +198,62 @@ input {
 .login-form-box label {
   position: relative;
   text-align: left;
+}
+
+/* Task View Styling */
+
+/* Container of all tasks */
+.task-index {
+  display: block;
+  float: left;
+  margin: 15px;
+}
+
+/* Container of details of selected task */
+.task-detail {
+  display: block;
+  float: right;
+  margin: 15px;
+}
+
+.task-index-item {
+  border-radius: 0px;
+  margin: 0;
+  text-align: center;
+  background-color: #fff;
+  box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.5);
+  line-height: 1.5;
+  height: 24px;
+}
+
+.task-index-item:hover {
+  border: 1px solid #02ceff;
+}
+
+.new-task-form input {
+  width: 396px;
+  margin: 0;
+  text-align: center;
+  background-color: #fff;
+  box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.5);
+  line-height: 1.5;
+  margin: 0px;
+  min-width: 0px;
+  border-radius: 0px;
+  text-align: center;
+  box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.5);
+  line-height: 1.5;
+}
+
+.new-task-form {
+  width: 400px;
+}
+
+.task-index-item button {
+  display: block;
+  float: right;
+}
+
+.new-task-container {
+  width: 400px;
 }

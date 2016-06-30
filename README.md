@@ -8,17 +8,17 @@
 
 Azana is a web application inspired by Asana that I will build using Rails, React, and Flux. By the end of Week 9, this app will, at a minimum, satisfy the following criteria:
 
-- [ ] Hosting on Heroku
-- [ ] New account creation, login, and guest/demo login
+- [ ] Hosting on Heroku *
+- [ ] New account creation, login, and guest/demo login *
 - [ ] A production README, replacing this README
 - [ ] Tasks for projects
-  - [ ] Ability to add names to tasks
-  - [ ] Ability to add descriptions to tasks
+  - [ ] Ability to add names to tasks *
+  - [ ] Ability to add descriptions to tasks *
   - [ ] Adequate seed data
   - [ ] Adequate styling
   - [ ] Smooth bug free navigation
 - [ ] Projects with lists of tasks
-  - [ ] Ability to create tasks
+  - [ ] Ability to create tasks 
   - [ ] Ability complete a task
   - [ ] Ability to delete a task
   - [ ] Ability for whole team to view projects

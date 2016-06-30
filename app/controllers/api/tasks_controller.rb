@@ -13,7 +13,15 @@ class Api::TasksController < ApplicationController
     @task = Task.find(params[:id]);
   end
 
+  def destroy
+    @task = Task.find(params[:id]);
+
+    @task.destroy
+
+    render json: {}
+  end
+
   def task_params
-    params.require(:task).permit(:id, :title, :description, :project_id, :author_id)
+    params.require(:task).permit(:title, :description, :project_id, :author_id)
   end
 end

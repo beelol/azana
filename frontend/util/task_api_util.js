@@ -25,6 +25,14 @@ const ApiUtil = {
     });
   },
 
+  deleteTask (id, cb) {
+    $.ajax({
+      url: `api/tasks/${id}`,
+      method: "DELETE",
+      success: cb(id)
+    });
+  },
+
   createTask (newTask, cb, redirectCb) {
     $.ajax({
       url: "api/tasks",

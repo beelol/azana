@@ -22,8 +22,7 @@ const TaskIndex = React.createClass({
 
     console.log(taskKeys);
     return (
-      <div>
-        <h1>Tasks: </h1>
+      <div className="task-index">
           {
             taskKeys.map( key => {
               return (

@@ -18,13 +18,21 @@ const TaskActions = {
   fetchAllTasks () {
     TaskApiUtil.fetchAllTasks(TaskActions.receiveAllTasks);
   },
-  fetchTask () {
-    TaskApiUtil.fetchTasks(TaskActions.receiveAllTasks);
+  fetchTask (id) {
+    TaskApiUtil.fetchTask(id, TaskActions.receiveTask);
   },
   createTask (task) {
     TaskApiUtil.createTask(task, TaskActions.receiveSingleTask);
   },
-
+  deleteTask(id) {
+    TaskApiUtil.deleteTask(id, TaskActions.removeTask);
+  },
+  removeTask (id) {
+    AppDispatcher.dispatch({
+      actionType: TaskConstants.TASK_REMOVED,
+      id: id
+    });
+  },
   receiveAllTasks(tasks) {
     AppDispatcher.dispatch({
       actionType: TaskConstants.TASKS_RECEIVED,

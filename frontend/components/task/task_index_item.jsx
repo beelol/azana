@@ -2,6 +2,7 @@
 
 const React = require('react');
 const hashHistory = require('react-router').hashHistory;
+const TaskActions = require('../../actions/task_actions');
 
 const IndexItem = React.createClass({
   handleClick() {
@@ -9,14 +10,17 @@ const IndexItem = React.createClass({
     // hashHistory.push("tasks/" + taskID );
     console.log("wooooooooooooœ");
   },
-
+  deleteTask () {
+    TaskActions.deleteTask(this.props.task.id);
+  },
   render() {
     let task = this.props.task;
     return (
         <div className="task-index-item"
              onClick={this.handleClick}
              key={this.props.key}>
-             <div className="task">{task.title}</div>
+             {task.title}
+             <button onClick={this.deleteTask}>delete</button>
         </div>
     );
   }
