@@ -17,18 +17,20 @@ const TaskIndex = React.createClass({
   onChange () {
     this.setState({tasks: TaskStore.all()})
   },
-  render() {
+  render () {
     let taskKeys = Object.keys(this.state.tasks);
 
     return (
-      <div className="task-index">
-          {
-            taskKeys.map( key => {
-              return (
-                <IndexItem task={this.state.tasks[key]} key={key} />
-              );
-            })
-          }
+      <div className="task-index-container">
+        <div className="task-index">
+            {
+              taskKeys.map( key => {
+                return (
+                  <IndexItem task={this.state.tasks[key]} key={key} />
+                );
+              })
+            }
+        </div>
         <TaskForm />
       </div>
     );

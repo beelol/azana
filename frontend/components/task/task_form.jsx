@@ -37,25 +37,26 @@ const TaskForm = React.createClass({
   },
   render() {
     return (
-        <div className="new-task-container">
-          <div className="new-task-form">
+      <div className="new-task-container">
+        <div className="new-task-form">
 
-            <form onSubmit={this.handleSubmit}>
-              <input type="text" value={this.state.title}
-                onChange={this.update("title")} className="task-index-item"/>
-
-              <div className="button-holder">
-                <input type="submit" value="Create Task" className="new-task-button"/>
-              </div>
-            </form>
-
-            <div className="button-holder">
-              <button className="new-task-button" onClick={this.handleCancel}>Cancel</button>
-            </div>
-          </div>
+          <form onSubmit={this.handleSubmit}>
+            <input type="text" value={this.state.title}
+              onChange={this.update("title")} className="task-index-item"/>
+          </form>
         </div>
+      </div>
     );
   }
 });
 
 module.exports = TaskForm;
+
+// <div className="button-holder">
+//   <input type="submit" value="Create Task" className="new-task-button"/>
+// </div>
+// </form>
+//
+// <div className="button-holder">
+//   <button className="new-task-button" onClick={this.handleCancel}>Cancel</button>
+// </div>
