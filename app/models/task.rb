@@ -13,7 +13,6 @@
 #
 
 class Task < ActiveRecord::Base
-  validates :title, presence: true
   after_initialize :initialize_description
 
   belongs_to :author,
