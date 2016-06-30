@@ -49,6 +49,8 @@ const LoginForm = React.createClass({
     } else {
       SessionActions.signUp(formData);
     }
+
+		console.log(this.fieldErrors("username"));
 	},
 
   fieldErrors(field) {
@@ -83,37 +85,37 @@ const LoginForm = React.createClass({
     }
 
 		return (
-				<Modal isOpen={true}>
+				<div>
 					<div className="login-form-container">
-					<form onSubmit={this.handleSubmit} className="login-form-box">
+						{ this.fieldErrors("base") }
+					<form className="login-form-box">
 		        Welcome!
 						<br/>
 						Please { this.formType() } or { navLink }
 
-		        { this.fieldErrors("base") }
 						<div className="login-form">
 
 							<div className="login-input-label">Username</div>
-			          { this.fieldErrors("username") }
+							{ this.fieldErrors("username") }
 								<input type="text"
 			            value={this.state.username}
 			            onChange={this.update("username")}
 									className="login-input" />
 
 								<div className="login-input-label">Password</div>
-			          { this.fieldErrors("password") }
+								{ this.fieldErrors("password") }
 			          <input type="password"
 			            value={this.state.password}
 			            onChange={this.update("password")}
 									className="login-input" />
-
-								<div className="login-form-submit">
-									<input className="login-submit" type="submit" value={submitText} />
-								</div>
 						</div>
 					</form>
+					<div className="login-form-submit">
+						<input onClick={this.handleSubmit} className="login-submit button-general" type="submit" value={submitText} />
+					</div>
 				</div>
-			</Modal>
+				<button className="button-general login-demo">Use a Demo Account</button>
+			</div>
 		);
 	}
 });

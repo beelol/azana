@@ -27,13 +27,21 @@ function resetSingleTask(task) {
   TaskStore.__emitChange();
 }
 
+function removeTask(task) {
+  delete _tasks[task.id];
+  TaskStore.__emitChange();
+}
+
 TaskStore.__onDispatch = function(payload) {
-  switch(payload.actionType) {
+  switch (payload.actionType) {
     case TaskConstants.TASKS_RECEIVED:
       resetAllTasks(payload.tasks);
       break;
     case TaskConstants.TASK_RECEIVED:
       resetSingleTask(payload.task);
+      break;
+    case TaskConstants.TASK_REMOVED:
+      removeTask(payload.task);
       break;
   }
 };

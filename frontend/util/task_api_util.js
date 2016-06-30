@@ -8,7 +8,7 @@ const ApiUtil = {
   //   $.get('api/task/:id', filters, success);
   // },
   // createTask (data, success) {
-  //   $.post('api/benches', { task: data }, success);
+  //   $.post('api/tasks', { task: data }, success);
   // },
 
   fetchAllTasks (cb) {
@@ -36,15 +36,6 @@ const ApiUtil = {
     });
   },
 
-  // TaskApiUtil.createTask({
-  //   id: 2,
-  //   title: "A truly great task",
-  //   author_id: 2,
-  //   project_id: 2
-  // },
-  // () => {console.log("lol")},
-  // () => {console.log("lol2")}
-  // );
 
   updateTask (task, cb, redirectCb) {
     $.ajax({
@@ -59,3 +50,16 @@ const ApiUtil = {
 };
 
 module.exports = ApiUtil;
+
+/* Stuff for testing */
+
+// let newTask = {id: 2, title: "nice", project_id: 2, author_id: 2}
+//
+// $.ajax({
+//   url: "api/tasks",
+//   method: "POST",
+//   data: {task: newTask},
+//   success: function (task) {
+//     console.log(task);
+//   }
+// });

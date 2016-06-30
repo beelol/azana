@@ -1,30 +1,30 @@
 "use strict";
 
 const AppDispatcher = require('../dispatcher/dispatcher');
-const TaskConstants = require('../constants/bench_constants');
-const TaskApiUtil = require('../util/bench_api_util');
+const TaskConstants = require('../constants/task_constants');
+const TaskApiUtil = require('../util/task_api_util');
 
 const TaskActions = {
   fetchAllTasks(filters) {
     TaskApiUtil.fetchAllTasks(filters, TaskActions.receiveAllTasks);
   },
-  createTask(bench){
-    TaskApiUtil.createTask(bench, TaskActions.receiveSingleTask);
+  fetchTask(filters) {
+    TaskApiUtil.fetchTasks(filters, TaskActions.receiveAllTasks);
   },
-  createReview(review){
-    TaskApiUtil.createReview(review, TaskActions.receiveSingleTask);
+  createTask(task){
+    TaskApiUtil.createTask(task, TaskActions.receiveSingleTask);
   },
 
-  receiveAllTasks(benches) {
+  receiveAllTasks(taskes) {
     AppDispatcher.dispatch({
-      actionType: TaskConstants.BENCHES_RECEIVED,
-      benches: benches
+      actionType: TaskConstants.TASKS_RECEIVED,
+      taskes: taskes
     });
   },
-  receiveSingleTask(bench) {
+  receiveSingleTask(task) {
     AppDispatcher.dispatch({
-      actionType: TaskConstants.BENCH_RECEIVED,
-      bench: bench
+      actionType: TaskConstants.TASK_RECEIVED,
+      task: task
     });
   }
 };
