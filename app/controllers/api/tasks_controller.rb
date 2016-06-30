@@ -10,11 +10,19 @@ class Api::TasksController < ApplicationController
   end
 
   def show
-    @task = Task.find(params[:id]);
+    @task = Task.find(params[:id])
+  end
+
+  def update
+    @task = Task.find(params[:id])
+
+    @task.update!(task_params)
+
+    render :show
   end
 
   def destroy
-    @task = Task.find(params[:id]);
+    @task = Task.find(params[:id])
 
     @task.destroy
 

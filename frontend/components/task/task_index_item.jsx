@@ -5,6 +5,20 @@ const hashHistory = require('react-router').hashHistory;
 const TaskActions = require('../../actions/task_actions');
 
 const IndexItem = React.createClass({
+  getInitialState () {
+    return {title: ""}
+  },
+  componentDidMount () {
+    this.setState({title: this.props.task.title});
+  },
+  handleChange(e) {
+    this.setState({title: e.currentTarget.value});
+
+    let newTask = this.props.task;
+    newTask.title = this.state.title;
+
+    TaskActions.editTask(newTask);
+  },
   handleClick() {
     // const taskID = this.props.task.id;
     // hashHistory.push("tasks/" + taskID );
@@ -17,7 +31,7 @@ const IndexItem = React.createClass({
     return (
         <input className="task-index-item"
              onClick={this.handleClick}
-             key={this.props.key} value={task.title}>
+             key={this.props.key} value={this.state.title} onChange={this.handleChange}>
         </input>
     );
   }

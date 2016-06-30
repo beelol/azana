@@ -44,7 +44,6 @@ const ApiUtil = {
     });
   },
 
-
   updateTask (task, cb, redirectCb) {
     $.ajax({
       url: `api/tasks/${task.id}`,
