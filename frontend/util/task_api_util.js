@@ -36,6 +36,16 @@ const ApiUtil = {
     });
   },
 
+  // TaskApiUtil.createTask({
+  //   id: 2,
+  //   title: "A truly great task",
+  //   author_id: 2,
+  //   project_id: 2
+  // },
+  // () => {console.log("lol")},
+  // () => {console.log("lol2")}
+  // );
+
   updateTask (task, cb, redirectCb) {
     $.ajax({
       url: `api/tasks/${task.id}`,
