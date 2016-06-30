@@ -9,6 +9,60 @@ const ErrorStore = require('../stores/error_store');
 
 const LoginForm = React.createClass({
 
+	DEMO_USERNAME: "Guest",
+
+	DEMO_PASSWORD: "the_best",
+
+	demoLoginHandler(e) {
+		e.preventDefault();
+
+		this.setState({ username: "", password: ""});
+		var _username = this.DEMO_USERNAME.split("").slice();
+		this.fillDemoUsername(_username);
+	},
+
+	fillDemoUsername: function(_username) {
+	 var self = this;
+	 if (_username.length > 0) {
+		 setTimeout(function() {
+			 self.setState({
+				 username: self.state.username + _username.shift()
+			 });
+
+			 self.fillDemoUsername(_username);
+		 }, 120);
+	 } else {
+		 var _password = this.DEMO_PASSWORD.split("").slice();
+		 this.fillDemoPassword(_password);
+	 }
+ },
+
+ fillDemoPassword: function(_password) {
+	 var self = this;
+	 if (_password.length > 0) {
+		 setTimeout(function() {
+			 self.setState({
+				 password: self.state.password + _password.shift()
+			 });
+
+			 self.fillDemoPassword(_password);
+		 }, 120);
+	 } else {
+		 var e = { preventDefault: function() {} };
+
+		 this.login();
+	 }
+ },
+
+ login () {
+	 const formData = {
+		username: this.state.username,
+		password: this.state.password
+	 };
+
+	 SessionActions.logIn(formData);
+ },
+
 	contextTypes: {
 		router: React.PropTypes.object.isRequired
 	},
@@ -114,7 +168,7 @@ const LoginForm = React.createClass({
 						<input onClick={this.handleSubmit} className="login-submit button-general" type="submit" value={submitText} />
 					</div>
 				</div>
-				<button className="button-general login-demo">Use a Demo Account</button>
+				<button onClick={this.demoLoginHandler} className="button-general login-demo">Use a Demo Account</button>
 			</div>
 		);
 	}
