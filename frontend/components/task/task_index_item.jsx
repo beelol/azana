@@ -15,14 +15,14 @@ const IndexItem = React.createClass({
   render() {
     let task = this.props.task;
     return (
-        <div className="task-index-item"
+        <input className="task-index-item"
              onClick={this.handleClick}
-             key={this.props.key}>
-             {task.title}
-             <button onClick={this.deleteTask}>delete</button>
-        </div>
+             key={this.props.key} value={task.title}>
+        </input>
     );
   }
 });
+
+// <button onClick={this.deleteTask}>delete</button>
 
 module.exports = IndexItem;
