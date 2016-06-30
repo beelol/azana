@@ -7,3 +7,138 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 guest = User.create(username: "Guest", password: "the_best")
+
+Task.create([
+  {
+    title: "A truly great task",
+    description: "nice",
+    project_id: 1,
+    author_id: 1
+  },
+  {
+    title: "I need to get some damned eggs",
+    description: "nice",
+    project_id: 1,
+    author_id: 1
+  },
+  {
+    title: "And butter",
+    description: "nice",
+    project_id: 1,
+    author_id: 1
+  },
+  {
+    title: "And some milk too",
+    description: "nice",
+    project_id: 1,
+    author_id: 1
+  },
+  {
+    title: "also we should probably finish this project",
+    description: "nice",
+    project_id: 1,
+    author_id: 1
+  },
+  {
+    title: "actually go to work",
+    description: "nice",
+    project_id: 1,
+    author_id: 1
+  },
+  {
+    title: "actually get something done at work",
+    description: "nice",
+    project_id: 1,
+    author_id: 1
+  },
+  {
+    title: "A truly great task",
+    description: "nice",
+    project_id: 1,
+    author_id: 1
+  },
+  {
+    title: "I need to get some damned eggs",
+    description: "nice",
+    project_id: 1,
+    author_id: 1
+  },
+  {
+    title: "And butter",
+    description: "nice",
+    project_id: 1,
+    author_id: 1
+  },
+  {
+    title: "And some milk too",
+    description: "nice",
+    project_id: 1,
+    author_id: 1
+  },
+  {
+    title: "also we should probably finish this project",
+    description: "nice",
+    project_id: 1,
+    author_id: 1
+  },
+  {
+    title: "actually go to work",
+    description: "nice",
+    project_id: 1,
+    author_id: 1
+  },
+  {
+    title: "actually get something done at work",
+    description: "nice",
+    project_id: 1,
+    author_id: 1
+  },
+  {
+    title: "A truly great task",
+    description: "nice",
+    project_id: 1,
+    author_id: 1
+  },
+  {
+    title: "I need to get some damned eggs",
+    description: "nice",
+    project_id: 1,
+    author_id: 1
+  },
+  {
+    title: "And butter",
+    description: "nice",
+    project_id: 1,
+    author_id: 1
+  },
+  {
+    title: "And some milk too",
+    description: "nice",
+    project_id: 1,
+    author_id: 1
+  },
+  {
+    title: "also we should probably finish this project",
+    description: "nice",
+    project_id: 1,
+    author_id: 1
+  },
+  {
+    title: "actually go to work",
+    description: "nice",
+    project_id: 1,
+    author_id: 1
+  },
+  {
+    title: "actually get something done at work",
+    description: "nice",
+    project_id: 1,
+    author_id: 1
+  },
+  {
+    title: "call my parents",
+    description: "nice",
+    project_id: 1,
+    author_id: 1
+  }
+  ])

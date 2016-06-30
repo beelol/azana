@@ -14,11 +14,16 @@ const IndexItem = React.createClass({
   handleChange(e) {
     this.setState({title: e.currentTarget.value});
   },
-  handleExit(e){
+  handleExit(e) {
     let newTask = this.props.task;
     newTask.title = this.state.title;
 
     TaskActions.editTask(newTask);
+  },
+  handleKeyPress (e) {
+    if (e.keyCode === 13) {
+      this.handleExit(e);
+    }
   },
   handleClick() {
     // const taskID = this.props.task.id;
@@ -33,7 +38,8 @@ const IndexItem = React.createClass({
         <input className="task-index-item"
              onClick={this.handleClick}
              key={this.props.key} value={this.state.title} onChange={this.handleChange}
-             onBlur={this.handleExit}>
+             onBlur={this.handleExit}
+             onKeyDown={this.handleKeyPress}>
         </input>
     );
   }
