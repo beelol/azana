@@ -8,7 +8,6 @@ const IndexItem = React.createClass({
   handleClick() {
     // const taskID = this.props.task.id;
     // hashHistory.push("tasks/" + taskID );
-    console.log("wooooooooooooœ");
   },
   deleteTask () {
     TaskActions.deleteTask(this.props.task.id);

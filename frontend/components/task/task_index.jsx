@@ -10,17 +10,16 @@ const TaskIndex = React.createClass({
   getInitialState () {
     return {tasks: TaskStore.all()};
   },
-  componentWillMount () {
-    TaskStore.addListener(this.onTasksWereFetched);
+  componentDidMount () {
+    TaskStore.addListener(this.onChange);
     TaskActions.fetchAllTasks();
   },
-  onTasksWereFetched () {
+  onChange () {
     this.setState({tasks: TaskStore.all()})
   },
   render() {
     let taskKeys = Object.keys(this.state.tasks);
 
-    console.log(taskKeys);
     return (
       <div className="task-index">
           {

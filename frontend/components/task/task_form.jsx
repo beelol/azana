@@ -19,6 +19,7 @@ const TaskForm = React.createClass({
     event.preventDefault();
 
     const task = Object.assign({}, this.state);
+
     TaskActions.createTask(task);
     this.goHome();
 

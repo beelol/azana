@@ -7,8 +7,6 @@ const TaskStore = new Store(AppDispatcher);
 
 let _tasks = {};
 
-window.TaskStore = TaskStore;
-
 TaskStore.all = function(){
   return Object.assign({}, _tasks);
 };
@@ -18,7 +16,10 @@ TaskStore.find = function(id){
 };
 
 function resetAllTasks(tasks) {
-  _tasks = tasks;
+  tasks.forEach((task) => {
+    _tasks[task.id] = task;
+  });
+
   TaskStore.__emitChange();
 }
 
@@ -29,6 +30,7 @@ function resetSingleTask(task) {
 
 function removeTask(id) {
   delete _tasks[id];
+
   TaskStore.__emitChange();
 }
 
