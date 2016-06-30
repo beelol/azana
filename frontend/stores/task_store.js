@@ -2,9 +2,9 @@
 
 const Store = require('flux/utils').Store;
 const TaskConstants = require('../constants/task_constants');
-const FavoriteConstants = require('../constants/favorite_constants.js');
 const AppDispatcher = require('../dispatcher/dispatcher');
 const TaskStore = new Store(AppDispatcher);
+
 let _tasks = {};
 
 window.TaskStore = TaskStore;
