@@ -2,6 +2,7 @@
 
 const React = require('react');
 const Link = require('react-router').Link;
+const Modal = require('react-modal');
 const SessionActions = require('../actions/session_actions');
 const SessionStore = require('../stores/session_store');
 const ErrorStore = require('../stores/error_store');
@@ -82,35 +83,37 @@ const LoginForm = React.createClass({
     }
 
 		return (
-			<div className="login-form-container">
-				<form onSubmit={this.handleSubmit} className="login-form-box">
-	        Welcome!
-					<br/>
-					Please { this.formType() } or { navLink }
+				<Modal isOpen={true}>
+					<div className="login-form-container">
+					<form onSubmit={this.handleSubmit} className="login-form-box">
+		        Welcome!
+						<br/>
+						Please { this.formType() } or { navLink }
 
-	        { this.fieldErrors("base") }
-					<div className="login-form">
+		        { this.fieldErrors("base") }
+						<div className="login-form">
 
-						<div className="login-input-label">Username</div>
-		          { this.fieldErrors("username") }
-							<input type="text"
-		            value={this.state.username}
-		            onChange={this.update("username")}
-								className="login-input" />
+							<div className="login-input-label">Username</div>
+			          { this.fieldErrors("username") }
+								<input type="text"
+			            value={this.state.username}
+			            onChange={this.update("username")}
+									className="login-input" />
 
-							<div className="login-input-label">Password</div>
-		          { this.fieldErrors("password") }
-		          <input type="password"
-		            value={this.state.password}
-		            onChange={this.update("password")}
-								className="login-input" />
+								<div className="login-input-label">Password</div>
+			          { this.fieldErrors("password") }
+			          <input type="password"
+			            value={this.state.password}
+			            onChange={this.update("password")}
+									className="login-input" />
 
-							<div className="login-form-submit">
-								<input className="login-submit" type="submit" value={submitText} />
-							</div>
-					</div>
-				</form>
-			</div>
+								<div className="login-form-submit">
+									<input className="login-submit" type="submit" value={submitText} />
+								</div>
+						</div>
+					</form>
+				</div>
+			</Modal>
 		);
 	}
 });

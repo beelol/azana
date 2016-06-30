@@ -3,6 +3,7 @@
 //React
 const React = require('react');
 const ReactDOM = require('react-dom');
+const Modal = require('react-modal')
 
 //Router
 const ReactRouter = require('react-router');
@@ -13,7 +14,7 @@ const hashHistory = ReactRouter.hashHistory;
 
 //Components
 const App = require('./components/app');
-const LoginForm = require('./components/login_form');
+const LoginForm = require('./components/login_form.jsx');
 
 //Auth
 const SessionStore = require('./stores/session_store');
@@ -43,11 +44,14 @@ function _ensureLoggedIn(nextState, replace) {
     }
 }
 
+window.TaskApiUtil = require('./util/task_api_util');
+
 document.addEventListener('DOMContentLoaded', function() {
   if (window.currentUser) {
     SessionActions.receiveCurrentUser(window.currentUser);
   }
 
   const root = document.getElementById('content');
+  Modal.setAppElement(document.body);
   ReactDOM.render(appRouter, root);
 });
