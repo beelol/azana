@@ -16,6 +16,7 @@ const hashHistory = ReactRouter.hashHistory;
 const App = require('./components/app');
 const LoginForm = require('./components/login_form.jsx');
 const TaskForm = require('./components/task/task_form.jsx');
+const TaskDetail = require('./components/task/task_detail.jsx');
 const TaskIndex = require('./components/task/task_index.jsx');
 
 //Auth
@@ -24,8 +25,13 @@ const SessionActions = require('./actions/session_actions');
 
 const appRouter = (
   <Router history={ hashHistory }>
-    <Route path="/" component={ App } >
-      <Route path="/tasks" component={ TaskIndex } onEnter={_ensureLoggedIn} />
+    <Route path="/" component={ App }>
+
+      <Route path="/tasks" component={ TaskIndex } onEnter={_ensureLoggedIn}>
+        <Route path=":id" component={ TaskDetail }>
+        </Route>
+      </Route>
+
       <Route path="/login" component={ LoginForm } />
       <Route path="/signup" component={ LoginForm } />
     </Route>

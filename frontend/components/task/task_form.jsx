@@ -5,6 +5,7 @@ const TaskActions = require('../../actions/task_actions');
 const hashHistory = require('react-router').hashHistory;
 
 const TaskForm = React.createClass({
+  
   getInitialState() {
     return {
       title: "",
@@ -15,6 +16,7 @@ const TaskForm = React.createClass({
       completed: false
     };
   },
+
   handleSubmit(event) {
     event.preventDefault();
 
@@ -25,16 +27,20 @@ const TaskForm = React.createClass({
 
     this.setState({title: ""})
   },
+
   goHome() {
     // TaskActions.fetchAllTasks();
   },
+
   handleCancel(event) {
     event.preventDefault();
     this.goHome();
   },
+
   update(property) {
     return (e) => this.setState({[property]: e.target.value});
   },
+
   render() {
     return (
       <div className="new-task-container">

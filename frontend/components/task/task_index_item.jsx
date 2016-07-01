@@ -4,6 +4,12 @@ const React = require('react');
 const hashHistory = require('react-router').hashHistory;
 const TaskActions = require('../../actions/task_actions');
 
+// const ReactRouter = require('react-router');
+// const Router = ReactRouter.Router;
+// const Route = ReactRouter.Route;
+// const IndexRoute = ReactRouter.IndexRoute;
+// const hashHistory = ReactRouter.hashHistory;
+
 const IndexItem = React.createClass({
   getInitialState () {
     return {title: ""}
@@ -33,8 +39,8 @@ const IndexItem = React.createClass({
     }
   },
   handleClick() {
-    // const taskID = this.props.task.id;
-    // hashHistory.push("tasks/" + taskID );
+    const taskID = this.props.task.id;
+    hashHistory.push("tasks/" + taskID );
   },
   deleteTask () {
     TaskActions.deleteTask(this.props.task.id);
@@ -44,7 +50,8 @@ const IndexItem = React.createClass({
     return (
         <input className="task-index-item"
              onClick={this.handleClick}
-             key={this.props.key} value={this.state.title} onChange={this.handleChange}
+             value={this.state.title}
+             onChange={this.handleChange}
              onBlur={this.handleExit}
              onKeyDown={this.handleKeyPress}>
         </input>
