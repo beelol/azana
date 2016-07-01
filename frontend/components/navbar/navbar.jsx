@@ -1,6 +1,7 @@
 const React = require('react');
 
 const NavBarLeft = require('./navbar_left.jsx');
+const NavBarRight = require('./navbar_right.jsx');
 
 const NavBar = React.createClass({
 
@@ -8,6 +9,7 @@ const NavBar = React.createClass({
     return(
       <div className='navbar'>
         <NavBarLeft />
+        <NavBarRight />
       </div>
     );
   }

@@ -6,8 +6,8 @@ const NavBarLeft = React.createClass({
   render () {
     return (
       <div className='navbar-left'>
-        <Link to="/" className="navigation-link">Projects</Link>
-        <Link to="/tasks" className="navigation-link">Tasks</Link>
+        <Link to="/" className="navigation-link-left">Projects</Link>
+        <Link to="/tasks" className="navigation-link-left">Tasks</Link>
       </div>
     );
   }

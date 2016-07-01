@@ -12,17 +12,12 @@ const App = React.createClass({
     SessionStore.addListener(this.forceUpdate.bind(this));
   },
 
-  _handleLogOut(){
-    SessionActions.logOut();
-  },
-
   greeting() {
     if (SessionStore.isUserLoggedIn()) {
 
     	return (
     		<hgroup className="header-group">
     			<h2 className="header-name">Hi, {SessionStore.currentUser().username}!</h2>
-    			<input className="header-button" type="submit" value="logout" onClick={ this._handleLogOut } />
     		</hgroup>
     	);
     } else if ( !["/login", "/signup"].includes(this.props.location.pathname) ) {

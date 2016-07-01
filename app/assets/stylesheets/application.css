@@ -63,16 +63,24 @@ input {
   color: #898e95;
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+  display: block;
   font-size: 14px;
   height: 40px;
 }
 
 .navbar-left {
+  display: block;
+  float: left;
   margin-left: 30px;
 }
 
-.navigation-link {
+.navbar-right {
+  display: block;
+  float: right;
+  margin-right: 30px;
+}
+
+.navigation-link-left {
   text-decoration: none;
   float: left;
   -webkit-box-align: left;
@@ -85,11 +93,33 @@ input {
   -ms-flex-negative: 0;
   flex-shrink: 0;
   font-size: 12px;
-  margin: 15px 0px 0px 20px;
+  margin: 15px 20px 0px 15px;
   text-transform: uppercase;
 }
 
-.navigation-link:hover {
+.navigation-link-right {
+  text-decoration: none;
+  float: right;
+  -webkit-box-align: right;
+  -ms-flex-align: right;
+  align-items: right;
+  color: #898e95;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  font-size: 12px;
+  margin: 15px 15px 0px 20px;
+  text-transform: uppercase;
+}
+
+.navigation-link-left:hover {
+  color: #02ceff;
+}
+
+.navigation-link-right:hover {
+  cursor: pointer;
   color: #02ceff;
 }
 
