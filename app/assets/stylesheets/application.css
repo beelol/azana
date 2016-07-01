@@ -320,3 +320,7 @@ input {
 .new-task-container {
   width: 400px;
 }
+
+.hidden {
+  display: none;
+}

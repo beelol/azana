@@ -5,37 +5,45 @@ const TaskActions = require('../../actions/task_actions');
 const TaskStore = require('../../stores/task_store');
 
 const TaskDetail = React.createClass({
+  setTargetTask (newProps) {
+    if(this.id === undefined) {
+      let path = newProps.location.pathname;
+      this.id = parseInt(path.replace('/tasks/', ''));
+
+      this.setState({
+        task: TaskStore.find(this.id)
+      })
+    } else {
+      let path = this.props.location.pathname;
+      let oldId = this.id
+
+      path = newProps.location.pathname;
+      this.id = parseInt(path.replace('/tasks/', ''));
+
+      if (this.id !== oldId) {
+        this.setState({
+          task: TaskStore.find(this.id)
+        })
+      }
+    }
+  },
 
   getInitialState() {
-      return {
-        task: {
-          id: undefined,
-          title: "Task Title",
-          description: "Task Description"
-        },
-        id: undefined
+    return {
+      task: {
+        id: undefined,
+        title: "Task Title",
+        description: "Task Description"
       }
+    }
   },
 
-  componentDidUpdate () {
-    console.log("updated");
-    let path = this.props.location.pathname;
-    this.id = parseInt(path.replace('/tasks/', ''));
-  },
-
-  componentDidMount () {
-    let path = this.props.location.pathname;
-    this.id = parseInt(path.replace('/tasks/', ''));
-
-    this.onReceivedTaskListener = TaskStore.addListener(this.onReceivedTask)
-    TaskActions.fetchTask(this.id);
-  },
-
-  componentWillUnmount () {
-    this.onReceivedTaskListener.remove();
+  componentWillReceiveProps(newProps) {
+    this.setTargetTask(newProps);
   },
 
   onReceivedTask () {
+    console.log("we found the task with this id: " + this.id);
     this.setState({
       task: TaskStore.find(this.id)
     })
@@ -44,8 +52,14 @@ const TaskDetail = React.createClass({
   render () {
     let task = this.state.task;
 
+    let taskCheck = TaskStore.find(this.id);
+
+    let empty = (Object.keys(taskCheck).length === 0 && taskCheck.constructor === Object);
+
+    let className = (!empty ? "task-detail-container" : "hidden");
+
     return (
-      <div className="task-detail-container">
+      <div className={className}>
         <div>{task.title}</div>
         <div>{task.description}</div>
       </div>
