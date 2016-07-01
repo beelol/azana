@@ -60,8 +60,8 @@ const TaskDetail = React.createClass({
 
     return (
       <div className={className}>
-        <div>{task.title}</div>
-        <div>{task.description}</div>
+        <h1>{task.title}</h1>
+        <textarea>{task.description}</textarea>
       </div>
     );
   }

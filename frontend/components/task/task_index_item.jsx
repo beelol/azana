@@ -4,12 +4,6 @@ const React = require('react');
 const hashHistory = require('react-router').hashHistory;
 const TaskActions = require('../../actions/task_actions');
 
-// const ReactRouter = require('react-router');
-// const Router = ReactRouter.Router;
-// const Route = ReactRouter.Route;
-// const IndexRoute = ReactRouter.IndexRoute;
-// const hashHistory = ReactRouter.hashHistory;
-
 const IndexItem = React.createClass({
   getInitialState () {
     return {title: ""}
