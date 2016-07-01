@@ -30,6 +30,7 @@ function resetSingleTask(task) {
 
 function removeTask(id) {
   delete _tasks[id];
+  console.log(TaskStore.all());
 
   TaskStore.__emitChange();
 }

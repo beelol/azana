@@ -26,7 +26,7 @@ class Api::TasksController < ApplicationController
 
     @task.destroy
 
-    render json: {}
+    render :index
   end
 
   def task_params

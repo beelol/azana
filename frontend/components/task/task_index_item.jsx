@@ -24,6 +24,13 @@ const IndexItem = React.createClass({
     if (e.keyCode === 13) {
       this.handleExit(e);
     }
+
+    if (e.keyCode === 8 || e.keyCode === 46) {
+      if (this.state.title === "") {
+        e.preventDefault();
+        this.deleteTask();
+      }
+    }
   },
   handleClick() {
     // const taskID = this.props.task.id;

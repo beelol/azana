@@ -18,7 +18,7 @@ Azana is a web application inspired by Asana that I will build using Rails, Reac
   - [ ] Adequate styling
   - [ ] Smooth bug free navigation
 - [ ] Projects with lists of tasks
-  - [ ] Ability to create tasks 
+  - [ ] Ability to create tasks
   - [ ] Ability complete a task
   - [ ] Ability to delete a task
   - [ ] Ability for whole team to view projects
@@ -89,7 +89,7 @@ user interface.
 - Implement each project related component, building out the flux loop as needed.
   - [ ] `App`
   - [ ] `TasksIndex`
-  - [ ] `TaskItem`
+  - [ ] `TaskIndexItem`
   - [ ] `TaskForm`
 
 ### Phase 4: Start Styling (0.5 days, W2 M 12pm)
