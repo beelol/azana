@@ -16,7 +16,7 @@ Task.create([
     author_id: 1
   },
   {
-    title: "I need to get some damned eggs",
+    title: "I need to get some eggs",
     description: "nice",
     project_id: 1,
     author_id: 1
@@ -58,7 +58,7 @@ Task.create([
     author_id: 1
   },
   {
-    title: "I need to get some damned eggs",
+    title: "I need to get some eggs",
     description: "nice",
     project_id: 1,
     author_id: 1
@@ -100,7 +100,7 @@ Task.create([
     author_id: 1
   },
   {
-    title: "I need to get some damned eggs",
+    title: "I need to get some eggs",
     description: "nice",
     project_id: 1,
     author_id: 1
