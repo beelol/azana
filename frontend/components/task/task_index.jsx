@@ -12,18 +12,13 @@ const TaskIndex = React.createClass({
   //Set state for detail and form here.
   getInitialState () {
     return {
-      tasks: TaskStore.all(),
-      selectedTask: undefined
+      tasks: TaskStore.all()
     };
   },
 
   componentDidMount () {
     TaskStore.addListener(this.onChange);
     TaskActions.fetchAllTasks();
-  },
-
-  selectTask (task) {
-    this.setState({selectedTask: task})
   },
 
   onChange () {
@@ -33,8 +28,6 @@ const TaskIndex = React.createClass({
   render () {
     let taskKeys = Object.keys(this.state.tasks);
 
-    // let taskDetail = this.state.selectedTask !== undefined ? <TaskDetail task={this.state.selectedTask}/> : <div className="hidden" />
-
     return (
       <div>
       <div className="task-index-container">
@@ -42,7 +35,7 @@ const TaskIndex = React.createClass({
             {
               taskKeys.map( key => {
                 return (
-                  <IndexItem onClick={this.onTaskWasClicked} task={this.state.tasks[key]} key={key} />
+                  <IndexItem task={this.state.tasks[key]} key={key} />
                 );
               })
             }
@@ -55,5 +48,4 @@ const TaskIndex = React.createClass({
   }
 });
 
-// {taskDetail}
 module.exports = TaskIndex;

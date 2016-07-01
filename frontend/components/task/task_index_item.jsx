@@ -14,18 +14,22 @@ const IndexItem = React.createClass({
   getInitialState () {
     return {title: ""}
   },
+
   componentDidMount () {
     this.setState({title: this.props.task.title});
   },
+
   handleChange(e) {
     this.setState({title: e.currentTarget.value});
   },
+
   handleExit(e) {
     let newTask = this.props.task;
     newTask.title = this.state.title;
 
     TaskActions.editTask(newTask);
   },
+
   handleKeyPress (e) {
     if (e.keyCode === 13) {
       this.handleExit(e);
@@ -38,13 +42,16 @@ const IndexItem = React.createClass({
       }
     }
   },
+
   handleClick() {
     const taskID = this.props.task.id;
     hashHistory.push("tasks/" + taskID );
   },
+
   deleteTask () {
     TaskActions.deleteTask(this.props.task.id);
   },
+
   render() {
     let task = this.props.task;
     return (

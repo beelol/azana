@@ -53,7 +53,7 @@ function _ensureLoggedIn(nextState, replace) {
     }
 }
 
-window.TaskApiUtil = require('./util/task_api_util');
+// window.TaskApiUtil = require('./util/task_api_util');
 
 document.addEventListener('DOMContentLoaded', function() {
   if (window.currentUser) {
