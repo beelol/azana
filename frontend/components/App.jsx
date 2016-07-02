@@ -31,12 +31,12 @@ const App = React.createClass({
     }
   },
 
+  // <Link to="/" className="header-link"><h1>Azana</h1></Link>
   render() {
     return (
       <div>
         <NavBar />
         <header>
-          <Link to="/" className="header-link"><h1>Azana</h1></Link>
           { this.greeting() }
         </header>
         {this.props.children}
