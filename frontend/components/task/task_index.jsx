@@ -17,8 +17,12 @@ const TaskIndex = React.createClass({
   },
 
   componentDidMount () {
-    TaskStore.addListener(this.onChange);
+    this.onChangeListener = TaskStore.addListener(this.onChange);
     TaskActions.fetchAllTasks();
+  },
+
+  componentWillUnmount () {
+    this.onChangeListener.remove();
   },
 
   onChange () {

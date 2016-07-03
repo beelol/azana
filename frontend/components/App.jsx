@@ -9,8 +9,12 @@ const NavBar = require('../components/navbar/navbar.jsx');
 const App = React.createClass({
 
   componentDidMount() {
-    SessionStore.addListener(this.forceUpdate.bind(this));
+    this.forceUpdateListener = SessionStore.addListener(this.forceUpdate.bind(this));
   },
+  // 
+  // componentWillUnmount() {
+  //   this.forceUpdateListener.remove();
+  // },
 
   greeting() {
     if (SessionStore.isUserLoggedIn()) {
