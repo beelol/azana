@@ -12,12 +12,18 @@ const Route = ReactRouter.Route;
 const IndexRoute = ReactRouter.IndexRoute;
 const hashHistory = ReactRouter.hashHistory;
 
-//Components
+/* Components */
+// General
 const App = require('./components/app');
 const LoginForm = require('./components/login_form.jsx');
+
+// Tasks
 const TaskForm = require('./components/task/task_form.jsx');
 const TaskDetail = require('./components/task/task_detail.jsx');
 const TaskIndex = require('./components/task/task_index.jsx');
+
+const ProjectIndex = require('./components/project/project_index.jsx');
+const ProjectDetail = require('./components/project/project_detail.jsx');
 
 //Auth
 const SessionStore = require('./stores/session_store');

@@ -46,10 +46,10 @@ const ProjectIndex = React.createClass({
         </div>
         <ProjectForm />
       </div>
-      {this.props.children}
       </div>
     );
   }
 });
 
+// {this.props.children}
 module.exports = ProjectIndex;
