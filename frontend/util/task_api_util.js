@@ -49,8 +49,8 @@ const ApiUtil = {
       url: `api/tasks/${task.id}`,
       method: "PATCH",
       data: {task: task},
-      success: function (task) {
-        cb(task, redirectCb);
+      success: function (newTask) {
+        cb(newTask, redirectCb);
       }
     });
   }

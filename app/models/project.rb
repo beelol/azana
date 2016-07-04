@@ -11,6 +11,8 @@
 #
 
 class Project < ActiveRecord::Base
+  after_initialize :initialize_description
+
   belongs_to :team,
   primary_key: :id,
   foreign_key: :team_id,
@@ -20,4 +22,8 @@ class Project < ActiveRecord::Base
   primary_key: :id,
   foreign_key: :project_id,
   class_name: "Task"
+
+  def initialize_description
+    @description = '';
+  end
 end
