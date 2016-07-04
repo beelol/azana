@@ -3,6 +3,7 @@
 const React = require('react');
 const hashHistory = require('react-router').hashHistory;
 const TaskActions = require('../../actions/task_actions');
+const TaskStore = require('../../stores/task_store');
 
 const IndexItem = React.createClass({
   getInitialState () {
@@ -10,7 +11,12 @@ const IndexItem = React.createClass({
   },
 
   componentDidMount () {
+    this.onChangeListener = TaskStore.addListener(this.onTaskChanged);
     this.setState({title: this.props.task.title});
+  },
+
+  componentWillUnmount () {
+    this.onChangeListener.remove();
   },
 
   handleChange(e) {
@@ -44,6 +50,13 @@ const IndexItem = React.createClass({
 
   deleteTask () {
     TaskActions.deleteTask(this.props.task.id);
+  },
+
+  // Called when task is updated from anywhere
+  onTaskChanged () {
+    this.setState({
+      title: TaskStore.find(this.props.task.id).title
+    });
   },
 
   render() {

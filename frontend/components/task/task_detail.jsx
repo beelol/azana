@@ -38,6 +38,15 @@ const TaskDetail = React.createClass({
     }
   },
 
+  componentDidMount () {
+    this.onChangeListener = TaskStore.addListener(this.onTaskChanged);
+    // this.setState({title: this.props.task.title});
+  },
+
+  componentWillUnmount () {
+    this.onChangeListener.remove();
+  },
+
   setDescription (e) {
     let newTask = this.state.task;
     newTask.description = e.currentTarget.value;
@@ -75,6 +84,12 @@ const TaskDetail = React.createClass({
 
     this.setState({
       task: TaskStore.find(this.id)
+    });
+  },
+
+  onTaskChanged () {
+    this.setState({
+      task: TaskStore.find(this.state.task.id)
     });
   },
 
