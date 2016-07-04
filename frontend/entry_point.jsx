@@ -32,6 +32,11 @@ const appRouter = (
         </Route>
       </Route>
 
+      <Route path="/projects" component={ ProjectIndex } onEnter={_ensureLoggedIn}>
+        <Route path=":id" component={ ProjectDetail }>
+        </Route>
+      </Route>
+
       <Route path="/login" component={ LoginForm } />
       <Route path="/signup" component={ LoginForm } />
     </Route>
