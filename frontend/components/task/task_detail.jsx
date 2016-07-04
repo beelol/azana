@@ -79,6 +79,12 @@ const TaskDetail = React.createClass({
     this.setTargetTask(newProps);
   },
 
+  handleTitleKeyPress (e) {
+    if (e.keyCode === 13) {
+      this.handleTitleExit(e);
+    }
+  },
+
   onReceivedTask () {
     console.log("we found the task with this id: " + this.id);
 
@@ -106,7 +112,8 @@ const TaskDetail = React.createClass({
       <div className={className}>
         <input value={task.title}
                onChange={this.setTitle}
-               onBlur={this.handleTitleExit} />
+               onBlur={this.handleTitleExit}
+               onKeyDown={this.handleTitleKeyPress} />
 
         <textarea value={task.description}
                   onChange={this.setDescription}
