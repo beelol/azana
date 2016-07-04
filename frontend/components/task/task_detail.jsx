@@ -12,7 +12,7 @@ const TaskDetail = React.createClass({
 
       this.setState({
         task: TaskStore.find(this.id)
-      })
+      });
     } else {
       let path = this.props.location.pathname;
       let oldId = this.id
@@ -38,15 +38,44 @@ const TaskDetail = React.createClass({
     }
   },
 
+  setDescription (e) {
+    let newTask = this.state.task;
+    newTask.description = e.currentTarget.value;
+
+    this.setState({task: newTask});
+  },
+
+  handleExit (e) {
+    let newTask = this.state.task;
+    newTask.description = e.currentTarget.value;
+
+    TaskActions.editTask(newTask);
+  },
+
+  setTitle (e) {
+    let newTask = this.state.task;
+    newTask.title = e.currentTarget.value;
+
+    this.setState({task: newTask});
+  },
+
+  handleTitleExit (e) {
+    let newTask = this.state.task;
+    newTask.title = e.currentTarget.value;
+
+    TaskActions.editTask(newTask);
+  },
+
   componentWillReceiveProps(newProps) {
     this.setTargetTask(newProps);
   },
 
   onReceivedTask () {
     console.log("we found the task with this id: " + this.id);
+
     this.setState({
       task: TaskStore.find(this.id)
-    })
+    });
   },
 
   render () {
@@ -60,8 +89,13 @@ const TaskDetail = React.createClass({
 
     return (
       <div className={className}>
-        <h1>{task.title}</h1>
-        <textarea>{task.description}</textarea>
+        <input value={task.title}
+               onChange={this.setTitle}
+               onBlur={this.handleTitleExit} />
+
+        <textarea value={task.description}
+                  onChange={this.setDescription}
+                  onBlur={this.handleExit} />
       </div>
     );
   }

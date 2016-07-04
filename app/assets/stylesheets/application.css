@@ -332,3 +332,7 @@ input {
 .hidden {
   display: none;
 }
+
+.task-detail-container input {
+  text-align: center;
+}
