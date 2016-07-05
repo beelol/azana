@@ -10,13 +10,8 @@ const IndexItem = React.createClass({
     return {title: ""};
   },
 
-  componentDidUpdate(newProps) {
-    // console.log(newProps.title);
-  },
-
   componentDidMount () {
     this.onChangeListener = TaskStore.addListener(this.onTaskChanged);
-    // this.setState({title: this.props.task.title});
   },
 
   componentWillUnmount () {
@@ -28,14 +23,13 @@ const IndexItem = React.createClass({
     newTask.title = e.currentTarget.value;
 
     this.props.onEditTitle(e, this.props.task);
-    // this.setState({title: e.currentTarget.value});
   },
 
   handleExit(e) {
     let newTask = this.props.task;
     newTask.title = this.props.title;
 
-    TaskActions.editTask(newTask);
+    this.props.onUpdateTask(newTask);
   },
 
   handleKeyPress (e) {
@@ -58,13 +52,6 @@ const IndexItem = React.createClass({
 
   deleteTask () {
     TaskActions.deleteTask(this.props.task.id);
-  },
-
-  // Called when task is updated from anywhere
-  onTaskChanged () {
-    // this.setState({
-    //   title: TaskStore.find(this.props.task.id).title
-    // });
   },
 
   render() {

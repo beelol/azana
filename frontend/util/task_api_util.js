@@ -44,13 +44,16 @@ const ApiUtil = {
     });
   },
 
-  updateTask (task, cb, redirectCb) {
+  updateTask (task, cb) {
     $.ajax({
       url: `api/tasks/${task.id}`,
       method: "PATCH",
       data: {task: task},
       success: function (newTask) {
-        cb(newTask, redirectCb);
+        // cb(newTask, redirectCb);
+
+        // Calling this callback gives an apply error
+        cb(newTask);
       }
     });
   }
