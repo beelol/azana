@@ -5,28 +5,28 @@ const TaskActions = require('../../actions/task_actions');
 const TaskStore = require('../../stores/task_store');
 
 const TaskDetail = React.createClass({
-  setTargetTask (newProps) {
-    if(this.id === undefined) {
-      let path = newProps.location.pathname;
-      this.id = parseInt(path.replace('/tasks/', ''));
-
-      this.setState({
-        task: TaskStore.find(this.id)
-      });
-    } else {
-      let path = this.props.location.pathname;
-      let oldId = this.id
-
-      path = newProps.location.pathname;
-      this.id = parseInt(path.replace('/tasks/', ''));
-
-      if (this.id !== oldId) {
-        this.setState({
-          task: TaskStore.find(this.id)
-        })
-      }
-    }
-  },
+  // setTargetTask (newProps) {
+  //   if(this.id === undefined) {
+  //     let path = newProps.location.pathname;
+  //     this.id = parseInt(path.replace('/tasks/', ''));
+  //
+  //     this.setState({
+  //       task: TaskStore.find(this.id)
+  //     });
+  //   } else {
+  //     let path = this.props.location.pathname;
+  //     let oldId = this.id
+  //
+  //     path = newProps.location.pathname;
+  //     this.id = parseInt(path.replace('/tasks/', ''));
+  //
+  //     if (this.id !== oldId) {
+  //       this.setState({
+  //         task: TaskStore.find(this.id)
+  //       })
+  //     }
+  //   }
+  // },
 
   getInitialState() {
     return {
@@ -61,11 +61,21 @@ const TaskDetail = React.createClass({
     TaskActions.editTask(newTask);
   },
 
-  setTitle (e) {
-    let newTask = this.state.task;
+  // setTitle (e) {
+  //   let newTask = this.state.task;
+  //   newTask.title = e.currentTarget.value;
+  //   //
+  //   // this.setState({task: newTask});
+  //
+  //   onEditTitle(e);
+  // },
+
+  handleChange(e) {
+    let newTask = this.props.task;
     newTask.title = e.currentTarget.value;
 
-    this.setState({task: newTask});
+    // console.log("we handled a change in the detail");
+    this.props.onEditTitle(e, newTask);
   },
 
   handleTitleExit (e) {
@@ -74,10 +84,10 @@ const TaskDetail = React.createClass({
 
     TaskActions.editTask(newTask);
   },
-
-  componentWillReceiveProps(newProps) {
-    this.setTargetTask(newProps);
-  },
+  //
+  // componentWillReceiveProps(newProps) {
+  //   this.setTargetTask(newProps);
+  // },
 
   handleTitleKeyPress (e) {
     if (e.keyCode === 13) {
@@ -86,7 +96,7 @@ const TaskDetail = React.createClass({
   },
 
   onReceivedTask () {
-    console.log("we found the task with this id: " + this.id);
+    // console.log("we found the task with this id: " + this.id);
 
     this.setState({
       task: TaskStore.find(this.id)
@@ -100,18 +110,21 @@ const TaskDetail = React.createClass({
   },
 
   render () {
-    let task = this.state.task;
+    let task = this.props.task;
 
-    let taskCheck = TaskStore.find(this.id);
+    //
+    // let taskCheck = TaskStore.find(this.id);
+    //
+    // let empty = (Object.keys(taskCheck).length === 0 && taskCheck.constructor === Object);
 
-    let empty = (Object.keys(taskCheck).length === 0 && taskCheck.constructor === Object);
+    let empty = (task === undefined);
 
     let className = (!empty ? "task-detail-container" : "hidden");
 
     return (
       <div className={className}>
         <input value={task.title}
-               onChange={this.setTitle}
+               onChange={this.handleChange}
                onBlur={this.handleTitleExit}
                onKeyDown={this.handleTitleKeyPress} />
 

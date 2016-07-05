@@ -22,7 +22,7 @@ const IndexItem = React.createClass({
     let newTask = this.props.task;
     newTask.title = e.currentTarget.value;
 
-    this.props.onEditTitle(e, this.props.task);
+    this.props.onEditTitle(e, newTask);
   },
 
   handleExit(e) {
@@ -46,8 +46,10 @@ const IndexItem = React.createClass({
   },
 
   handleClick() {
-    const taskID = this.props.task.id;
-    hashHistory.push("tasks/" + taskID );
+    // const taskID = this.props.task.id;
+    // hashHistory.push("tasks/" + taskID );
+
+    this.props.onSelected(this.props.task);
   },
 
   deleteTask () {
@@ -55,6 +57,7 @@ const IndexItem = React.createClass({
   },
 
   render() {
+    // console.log("the index item got rendered again");
     return (
         <input className="task-index-item"
              onClick={this.handleClick}

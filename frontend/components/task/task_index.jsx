@@ -12,7 +12,8 @@ const TaskIndex = React.createClass({
   //Set state for detail and form here.
   getInitialState () {
     return {
-      tasks: TaskStore.all()
+      tasks: TaskStore.all(),
+      selectedTask: undefined
     };
   },
 
@@ -29,18 +30,42 @@ const TaskIndex = React.createClass({
     this.setState({tasks: TaskStore.all()})
   },
 
+  /* TaskIndexItem and TaskDetail Updating Functions */
+
+  /* Called whenever something is typed in the index item
+  or in the task detail */
   onTitleWasEdited (e, newTask) {
+    // console.log("our title was edited");
+
     // Store a task pointing to its new value
-    this.setState({task: newTask});
+    // let id = newTask.id
+    this.setState({[newTask.id]: newTask});
   },
 
+  /* Called whenever the user is done editing a task.
+  Updates the database with the new task information. */
   onTaskWasUpdated (newTask) {
     // Edit the task in the database?
     TaskActions.editTask(newTask)
   },
 
+  // Stores a task in state as the selected task when clicked.
+  onTaskWasSelected(task) {
+    this.setState({
+      selectedTask: task
+    });
+  },
+
   render () {
     let taskKeys = Object.keys(this.state.tasks);
+    let taskDetail = "";
+
+    if (this.state.selectedTask) {
+      // console.log(this.state.selectedTask);
+      taskDetail = <TaskDetail task={this.state.selectedTask}
+                               onEditTitle={this.onTitleWasEdited}
+                               onUpdateTask={this.onTaskWasUpdated} />
+    }
 
     return (
       <div>
@@ -50,12 +75,16 @@ const TaskIndex = React.createClass({
               taskKeys.map( key => {
                 let task = this.state.tasks[key];
 
-                let title = (this.state[task] !== undefined ? this.state[task].title : task.title)
+                let title = (this.state[task.id] !== undefined ? this.state[task.id].title : task.title)
+
+                console.log(this.state);
+                console.log(title);
 
                 // console.log(this.state[task]);
                 return (
                   <IndexItem onEditTitle={this.onTitleWasEdited}
                              onUpdateTask={this.onTaskWasUpdated}
+                             onSelected={this.onTaskWasSelected}
                              task={task}
                              title={title}
                              key={key} />
@@ -65,10 +94,11 @@ const TaskIndex = React.createClass({
         </div>
         <TaskForm />
       </div>
-      {this.props.children}
+      {taskDetail}
       </div>
     );
   }
 });
+// {this.props.children}
 
 module.exports = TaskIndex;
