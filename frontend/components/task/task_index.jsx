@@ -43,6 +43,11 @@ const TaskIndex = React.createClass({
     this.setState({[newTask.id]: newTask});
   },
 
+  componentWillReceiveProps (newProps) {
+    let projectId = parseInt(newProps.params.project_id);
+    this.setState({tasks: TaskStore.findByProject(projectId)});
+  },
+
   /* Called whenever the user is done editing a task.
   Updates the database with the new task information. */
   onTaskWasUpdated (newTask) {
@@ -70,6 +75,7 @@ const TaskIndex = React.createClass({
 
     // console.log(this.state.tasks);
     return (
+
       <div>
       <div className="task-index-container">
         <div className="task-index">

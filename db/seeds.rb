@@ -48,13 +48,13 @@ Task.create([
   {
     title: "actually get something done at work",
     description: "nice",
-    project_id: 1,
+    project_id: 2,
     author_id: 1
   },
   {
     title: "A truly great task",
     description: "nice",
-    project_id: 1,
+    project_id: 2,
     author_id: 1
   },
   {
@@ -90,13 +90,13 @@ Task.create([
   {
     title: "actually get something done at work",
     description: "nice",
-    project_id: 1,
+    project_id: 2,
     author_id: 1
   },
   {
     title: "A truly great task",
     description: "nice",
-    project_id: 1,
+    project_id: 2,
     author_id: 1
   },
   {
