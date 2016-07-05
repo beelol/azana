@@ -15,6 +15,21 @@ TaskStore.find = function(id){
   return Object.assign({}, _tasks[id]);
 };
 
+TaskStore.findByProject = function (project_id) {
+  let tasks = [];
+  // console.log(_tasks);
+
+  Object.keys(_tasks).forEach((key) => {
+    // console.log(project_id);
+    if (_tasks[key].project_id === project_id) {
+      // console.log(_tasks[key].project_id);
+      tasks.push(_tasks[key]);
+    }
+  });
+
+  return tasks;
+};
+
 function resetAllTasks(tasks) {
   tasks.forEach((task) => {
     _tasks[task.id] = task;

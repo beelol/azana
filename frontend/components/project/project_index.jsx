@@ -41,7 +41,9 @@ const ProjectIndex = React.createClass({
                 let project = this.state.projects[key];
 
                 return (
-                  <IndexItem project={project} key={key} />
+                  <li>
+                    <IndexItem project={project} key={project.id}/>
+                  </li>
                 );
               })
             }

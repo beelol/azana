@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
 	validates :password, length: {minimum: 6}, allow_nil: :true
 
 	after_initialize :ensure_session_token, :initialize_about
+
+	# This line will fuck up when updating a user; get rid of it
 	before_validation :ensure_session_token_uniqueness
 
   has_many :teams,

@@ -3,6 +3,8 @@
 const React = require('react');
 const ProjectActions = require('../../actions/project_actions');
 const ProjectStore = require('../../stores/project_store');
+const TaskStore = require('../../stores/task_store');
+const TaskIndex = require('../task/task_index');
 
 const ProjectDetail = React.createClass({
 
@@ -11,9 +13,10 @@ const ProjectDetail = React.createClass({
       project: {
         id: undefined,
         title: "Project Title",
-        description: "Project Description"
+        description: "Project Description",
+        tasks: TaskStore.findByProject(this.props.params.id)
       }
-    }
+    };
   },
 
   componentDidMount () {
@@ -61,8 +64,6 @@ const ProjectDetail = React.createClass({
   },
 
   onReceivedProject () {
-    // console.log("we found the project with this id: " + this.id);
-
     this.setState({
       project: ProjectStore.find(this.id)
     });
@@ -82,16 +83,7 @@ const ProjectDetail = React.createClass({
     let className = (!empty ? "project-detail-container" : "hidden");
 
     return (
-      <div className={className}>
-        <input value={project.title}
-               onChange={this.handleChange}
-               onBlur={this.handleTitleExit}
-               onKeyDown={this.handleTitleKeyPress} />
-
-             <textarea value={project.description}
-                  onChange={this.setDescription}
-                  onBlur={this.handleExit} />
-      </div>
+      <TaskIndex tasks={this.state.tasks}/>
     );
   }
 });

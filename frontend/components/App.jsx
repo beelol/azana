@@ -11,17 +11,16 @@ const App = React.createClass({
   componentDidMount() {
     this.forceUpdateListener = SessionStore.addListener(this.forceUpdate.bind(this));
   },
-  // 
-  // componentWillUnmount() {
-  //   this.forceUpdateListener.remove();
-  // },
+
+  componentWillUnmount() {
+    this.forceUpdateListener.remove();
+  },
 
   greeting() {
     if (SessionStore.isUserLoggedIn()) {
 
     	return (
     		<hgroup className="header-group">
-    			<h2 className="header-name">Hi, {SessionStore.currentUser().username}!</h2>
     		</hgroup>
     	);
     } else if ( !["/login", "/signup"].includes(this.props.location.pathname) ) {
@@ -50,3 +49,10 @@ const App = React.createClass({
 });
 
 module.exports = App;
+
+
+
+
+
+
+// <h2 className="header-name">Hi, {SessionStore.currentUser().username}!</h2>
