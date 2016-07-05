@@ -27,14 +27,15 @@ const TaskIndex = React.createClass({
   },
 
   onChange () {
-    this.setState({tasks: TaskStore.all()})
+    // console.log(TaskStore.all());
+    this.setState({tasks: TaskStore.all()});
   },
 
   /* TaskIndexItem and TaskDetail Updating Functions */
 
   /* Called whenever something is typed in the index item
   or in the task detail */
-  onTitleWasEdited (e, newTask) {
+  onTitleWasEdited (newTask) {
     // console.log("our title was edited");
 
     // Store a task pointing to its new value
@@ -67,6 +68,7 @@ const TaskIndex = React.createClass({
                                onUpdateTask={this.onTaskWasUpdated} />
     }
 
+    // console.log(this.state.tasks);
     return (
       <div>
       <div className="task-index-container">
@@ -74,11 +76,12 @@ const TaskIndex = React.createClass({
             {
               taskKeys.map( key => {
                 let task = this.state.tasks[key];
+                // console.log(task);
 
                 let title = (this.state[task.id] !== undefined ? this.state[task.id].title : task.title)
 
-                console.log(this.state);
-                console.log(title);
+                // console.log(this.state);
+                // console.log(title);
 
                 // console.log(this.state[task]);
                 return (

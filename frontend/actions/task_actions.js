@@ -31,7 +31,7 @@ const TaskActions = {
     TaskApiUtil.deleteTask(id, TaskActions.removeTask);
   },
 
-  editTask(task){
+  editTask(task) {
     TaskApiUtil.updateTask(task, TaskActions.updateTask);
   },
 

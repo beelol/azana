@@ -10,19 +10,11 @@ const IndexItem = React.createClass({
     return {title: ""};
   },
 
-  componentDidMount () {
-    this.onChangeListener = TaskStore.addListener(this.onTaskChanged);
-  },
-
-  componentWillUnmount () {
-    this.onChangeListener.remove();
-  },
-
   handleChange(e) {
     let newTask = this.props.task;
     newTask.title = e.currentTarget.value;
 
-    this.props.onEditTitle(e, newTask);
+    this.props.onEditTitle(newTask);
   },
 
   handleExit(e) {
@@ -45,7 +37,7 @@ const IndexItem = React.createClass({
     }
   },
 
-  handleClick() {
+  handleClick () {
     // const taskID = this.props.task.id;
     // hashHistory.push("tasks/" + taskID );
 
@@ -57,11 +49,13 @@ const IndexItem = React.createClass({
   },
 
   render() {
-    // console.log("the index item got rendered again");
+    // console.log(this.props.title);
+    // debugger;
+
     return (
         <input className="task-index-item"
              onClick={this.handleClick}
-             defaultValue={this.props.title}
+             value={this.props.title}
              onChange={this.handleChange}
              onBlur={this.handleExit}
              onKeyDown={this.handleKeyPress}>
