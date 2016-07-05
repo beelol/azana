@@ -142,3 +142,18 @@ Task.create([
     author_id: 1
   }
   ])
+
+Project.create(
+  [
+    {
+      title: "The first project",
+      description: "It's seriously the first project",
+      team_id: 1,
+    },
+    {
+      title: "The second project",
+      description: "It's seriously the second project",
+      team_id: 2,
+    }
+  ]
+)
