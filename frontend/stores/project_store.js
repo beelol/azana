@@ -7,17 +7,15 @@ const ProjectStore = new Store(AppDispatcher);
 
 let _projects = {};
 
-ProjectStore.all = function(){
+ProjectStore.all = function () {
   return Object.assign({}, _projects);
 };
 
-ProjectStore.find = function(id){
+ProjectStore.find = function (id) {
   return Object.assign({}, _projects[id]);
 };
 
-function resetAllProjects(projects) {
-  console.log("we did it boys");
-
+function resetAllProjects (projects) {
   projects.forEach((project) => {
     _projects[project.id] = project;
   });
@@ -25,12 +23,12 @@ function resetAllProjects(projects) {
   ProjectStore.__emitChange();
 }
 
-function resetSingleProject(project) {
+function resetSingleProject (project) {
   _projects[project.id] = project;
   ProjectStore.__emitChange();
 }
 
-function removeProject(id) {
+function removeProject (id) {
   delete _projects[id];
 
   ProjectStore.__emitChange();

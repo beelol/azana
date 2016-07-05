@@ -19,14 +19,14 @@ const ProjectForm = React.createClass({
 
     const project = Object.assign({}, this.state);
     ProjectActions.createProject(project);
-    this.goHome();
+    this.backToIndex();
   },
-  goHome() {
-    hashHistory.push("/");
+  backToIndex() {
+    hashHistory.push("/projects");
   },
   handleCancel(event) {
     event.preventDefault();
-    this.goHome();
+    this.backToIndex();
   },
   update(property) {
     return (e) => this.setState({[property]: e.target.value});
