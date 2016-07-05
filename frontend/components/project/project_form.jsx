@@ -14,6 +14,7 @@ const ProjectForm = React.createClass({
       completed: false
     };
   },
+
   handleSubmit(event) {
     event.preventDefault();
 
@@ -21,16 +22,20 @@ const ProjectForm = React.createClass({
     ProjectActions.createProject(project);
     this.backToIndex();
   },
+
   backToIndex() {
     hashHistory.push("/projects");
   },
+
   handleCancel(event) {
     event.preventDefault();
     this.backToIndex();
   },
+
   update(property) {
     return (e) => this.setState({[property]: e.target.value});
   },
+
   render() {
     return (
       <Modal isOpen={true}>
