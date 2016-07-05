@@ -7,12 +7,16 @@ const TaskStore = require('../../stores/task_store');
 
 const IndexItem = React.createClass({
   getInitialState () {
-    return {title: ""}
+    return {title: ""};
+  },
+
+  componentDidUpdate(newProps) {
+    // console.log(newProps.title);
   },
 
   componentDidMount () {
     this.onChangeListener = TaskStore.addListener(this.onTaskChanged);
-    this.setState({title: this.props.task.title});
+    // this.setState({title: this.props.task.title});
   },
 
   componentWillUnmount () {
@@ -20,12 +24,16 @@ const IndexItem = React.createClass({
   },
 
   handleChange(e) {
-    this.setState({title: e.currentTarget.value});
+    let newTask = this.props.task;
+    newTask.title = e.currentTarget.value;
+
+    this.props.onEditTitle(e, this.props.task);
+    // this.setState({title: e.currentTarget.value});
   },
 
   handleExit(e) {
     let newTask = this.props.task;
-    newTask.title = this.state.title;
+    newTask.title = this.props.title;
 
     TaskActions.editTask(newTask);
   },
@@ -36,7 +44,7 @@ const IndexItem = React.createClass({
     }
 
     if (e.keyCode === 8 || e.keyCode === 46) {
-      if (this.state.title === "") {
+      if (this.props.title === "") {
         e.preventDefault();
         this.deleteTask();
       }
@@ -54,17 +62,16 @@ const IndexItem = React.createClass({
 
   // Called when task is updated from anywhere
   onTaskChanged () {
-    this.setState({
-      title: TaskStore.find(this.props.task.id).title
-    });
+    // this.setState({
+    //   title: TaskStore.find(this.props.task.id).title
+    // });
   },
 
   render() {
-    let task = this.props.task;
     return (
         <input className="task-index-item"
              onClick={this.handleClick}
-             value={this.state.title}
+             defaultValue={this.props.title}
              onChange={this.handleChange}
              onBlur={this.handleExit}
              onKeyDown={this.handleKeyPress}>

@@ -29,8 +29,25 @@ const TaskIndex = React.createClass({
     this.setState({tasks: TaskStore.all()})
   },
 
+  onTitleWasEdited (e, task) {
+    // Store a task pointing to its new value
+    this.setState(
+      {
+        task: task
+      },
+      function() {
+        console.log(task);
+        TaskActions.editTask(this.state.task)
+      }
+    );
+
+
+    // console.log(this.state.task);
+  },
+
   render () {
     let taskKeys = Object.keys(this.state.tasks);
+
 
     return (
       <div>
@@ -38,8 +55,13 @@ const TaskIndex = React.createClass({
         <div className="task-index">
             {
               taskKeys.map( key => {
+                let task = this.state.tasks[key];
+
+                let title = (this.state[task] !== undefined ? this.state[task].title : task.title)
+
+                // console.log(this.state[task]);
                 return (
-                  <IndexItem task={this.state.tasks[key]} key={key} />
+                  <IndexItem onEditTitle={this.onTitleWasEdited} task={task} title={title} key={key} />
                 );
               })
             }
