@@ -16,6 +16,8 @@ ProjectStore.find = function(id){
 };
 
 function resetAllProjects(projects) {
+  console.log("we did it boys");
+
   projects.forEach((project) => {
     _projects[project.id] = project;
   });

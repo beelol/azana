@@ -49,9 +49,6 @@ const IndexItem = React.createClass({
   },
 
   render() {
-    // console.log(this.props.title);
-    // debugger;
-
     return (
         <input className="task-index-item"
              onClick={this.handleClick}

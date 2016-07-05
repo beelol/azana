@@ -5,12 +5,11 @@ const TaskActions = require('../../actions/task_actions');
 const hashHistory = require('react-router').hashHistory;
 
 const TaskForm = React.createClass({
-  
+
   getInitialState() {
     return {
       title: "",
       description: "",
-      picture_url: "",
       project_id: 0,
       author_id: 0,
       completed: false

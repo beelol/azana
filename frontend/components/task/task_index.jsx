@@ -62,13 +62,11 @@ const TaskIndex = React.createClass({
     let taskDetail = "";
 
     if (this.state.selectedTask) {
-      // console.log(this.state.selectedTask);
       taskDetail = <TaskDetail task={this.state.selectedTask}
                                onEditTitle={this.onTitleWasEdited}
                                onUpdateTask={this.onTaskWasUpdated} />
     }
 
-    // console.log(this.state.tasks);
     return (
       <div>
       <div className="task-index-container">
@@ -76,14 +74,9 @@ const TaskIndex = React.createClass({
             {
               taskKeys.map( key => {
                 let task = this.state.tasks[key];
-                // console.log(task);
 
                 let title = (this.state[task.id] !== undefined ? this.state[task.id].title : task.title)
 
-                // console.log(this.state);
-                // console.log(title);
-
-                // console.log(this.state[task]);
                 return (
                   <IndexItem onEditTitle={this.onTitleWasEdited}
                              onUpdateTask={this.onTaskWasUpdated}

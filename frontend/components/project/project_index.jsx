@@ -26,7 +26,7 @@ const ProjectIndex = React.createClass({
   },
 
   onChange () {
-    this.setState({projects: ProjectStore.all()})
+    this.setState({projects: ProjectStore.all()});
   },
 
   render () {
@@ -38,18 +38,20 @@ const ProjectIndex = React.createClass({
         <div className="project-index">
             {
               projectKeys.map( key => {
+                let project = this.state.projects[key];
+
                 return (
-                  <IndexItem project={this.state.projects[key]} key={key} />
+                  <IndexItem project={project} key={key} />
                 );
               })
             }
         </div>
-        <ProjectForm />
       </div>
       </div>
     );
   }
 });
 
+// <ProjectForm />
 // {this.props.children}
 module.exports = ProjectIndex;

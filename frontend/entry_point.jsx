@@ -23,6 +23,7 @@ const TaskDetail = require('./components/task/task_detail.jsx');
 const TaskIndex = require('./components/task/task_index.jsx');
 
 const ProjectIndex = require('./components/project/project_index.jsx');
+const ProjectForm = require('./components/project/project_form.jsx');
 const ProjectDetail = require('./components/project/project_detail.jsx');
 
 //Auth
@@ -39,8 +40,7 @@ const appRouter = (
       </Route>
 
       <Route path="/projects" component={ ProjectIndex } onEnter={_ensureLoggedIn}>
-        <Route path=":id" component={ ProjectDetail }>
-        </Route>
+        <Route path="new" component={ ProjectForm } />
       </Route>
 
       <Route path="/login" component={ LoginForm } />
