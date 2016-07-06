@@ -7,7 +7,10 @@ const TaskStore = require('../../stores/task_store');
 
 const IndexItem = React.createClass({
   getInitialState () {
-    return {title: ""};
+    return {
+      title: "",
+      completed: false
+    };
   },
 
   handleChange(e) {
@@ -15,6 +18,12 @@ const IndexItem = React.createClass({
     newTask.title = e.currentTarget.value;
 
     this.props.onEditTitle(newTask);
+  },
+
+  toggleCompletion(e) {
+    this.setState({
+      completed: !this.state.completed
+    });
   },
 
   handleExit(e) {
@@ -37,7 +46,7 @@ const IndexItem = React.createClass({
     }
   },
 
-  handleClick () {
+  handleFocus () {
     // const taskID = this.props.task.id;
     // hashHistory.push("tasks/" + taskID );
 
@@ -49,14 +58,19 @@ const IndexItem = React.createClass({
   },
 
   render() {
+    let completeText = (this.state.completed ? "Undo" : "Complete");
+
     return (
-        <input className="task-index-item"
-             onClick={this.handleClick}
-             value={this.props.title}
-             onChange={this.handleChange}
-             onBlur={this.handleExit}
-             onKeyDown={this.handleKeyPress}>
-        </input>
+        <div>
+          <button onClick={this.deleteTask}>{completeText}</button>
+          <input className="task-index-item"
+               onFocus={this.handleFocus}
+               value={this.props.title}
+               onChange={this.handleChange}
+               onBlur={this.handleExit}
+               onKeyDown={this.handleKeyPress}>
+          </input>
+        </div>
     );
   }
 });
