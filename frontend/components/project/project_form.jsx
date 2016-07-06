@@ -2,38 +2,68 @@
 
 const React = require('react');
 const ProjectActions = require('../../actions/project_actions');
+const ProjectStore = require('../../stores/project_store');
 const hashHistory = require('react-router').hashHistory;
 const Modal = require('react-modal');
 
 const ProjectForm = React.createClass({
   getInitialState() {
     return {
-      title: "",
-      description: "",
-      team_id: 0,
-      completed: false
+      project:
+      {
+        title: "",
+        description: "",
+        team_id: 0,
+        completed: false
+      }
     };
+  },
+
+  componentDidMount () {
+    this.listener = ProjectStore.addListener(this.onChange);
+    // ProjectActions.fetchAllProjects();
+  },
+
+  componentWillUnmount () {
+    this.listener.remove();
+  },
+
+  onChange () {
+    let all = ProjectStore.all();
+    let keys = Object.keys(all)
+
+    this.setState({
+      projectId: all[keys.length].id
+    })
+
+    this.showProject(all[keys.length].id);
   },
 
   handleSubmit(event) {
     event.preventDefault();
 
-    const project = Object.assign({}, this.state);
+    const project = Object.assign({}, this.state.project);
     ProjectActions.createProject(project);
-    this.backToIndex();
   },
 
-  backToIndex() {
-    hashHistory.push("/projects");
+  showProject(id) {
+    hashHistory.push("/projects/" + id);
   },
 
   handleCancel(event) {
     event.preventDefault();
-    this.backToIndex();
+    hashHistory.push("/");
   },
 
   update(property) {
-    return (e) => this.setState({[property]: e.target.value});
+    return (e) => {
+      console.log(property);
+      let project = this.state.project;
+      project[[property]] = e.target.value
+
+      console.log(project);
+      this.setState({project: project});
+    }
   },
 
   render() {
@@ -44,11 +74,11 @@ const ProjectForm = React.createClass({
             <h3 className="new-project-title">Create A Project!</h3>
 
             <form onSubmit={this.handleSubmit}>
-              <input type="text" value={this.state.title}
+              <input type="text" value={this.state.project.title}
                 onChange={this.update("title")} className="project-field"/>
 
               <label className="project-field">Description</label>
-              <input type="text" value={this.state.description}
+              <input type="text" value={this.state.project.description}
                 onChange={this.update("description")} className="project-field"/>
 
               <div className="button-holder">

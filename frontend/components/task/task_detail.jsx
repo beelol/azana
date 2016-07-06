@@ -83,8 +83,6 @@ const TaskDetail = React.createClass({
     task.title = this.state.title
     task.description = this.state.description
 
-    // console.log(task.title);
-
     let empty = (task === undefined);
 
     let className = (!empty ? "task-detail-container" : "hidden");

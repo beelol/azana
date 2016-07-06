@@ -48,12 +48,10 @@ const appRouter = (
       <Route path="/teams" component={ TeamIndex } onEnter={_ensureLoggedIn}>
       </Route>
 
-      <Route path="/projects" component={ ProjectIndex } onEnter={_ensureLoggedIn}>
-        <Route path="new" component={ ProjectForm } />
+        <Route path="/projects/new" component={ ProjectForm } />
 
-        <Route path=":project_id" component={ TaskIndex } >
-          <Route path=":task_id" component={ TaskDetail }>
-          </Route>
+      <Route path="/projects/:project_id" component={ TaskIndex } >
+        <Route path=":task_id" component={ TaskDetail }>
         </Route>
       </Route>
 

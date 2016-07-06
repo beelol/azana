@@ -6,6 +6,7 @@ const IndexItem = require('./task_index_item');
 
 const TaskDetail = require('./task_detail');
 const TaskStore = require('../../stores/task_store');
+const ProjectStore = require('../../stores/project_store');
 const TaskActions = require('../../actions/task_actions');
 
 const TaskIndex = React.createClass({
@@ -63,10 +64,9 @@ const TaskIndex = React.createClass({
   },
 
   render () {
-    // console.log("called render in the index");
-
     let taskKeys = Object.keys(this.state.tasks);
     let taskDetail = "";
+    let project = ProjectStore.find(this.props.params.project_id);
 
     if (this.state.selectedTask) {
       taskDetail = <TaskDetail task={this.state.selectedTask}
@@ -77,6 +77,7 @@ const TaskIndex = React.createClass({
     return (
 
       <div>
+        <h1 className="task-index-header">{project.title}</h1>
       <div className="task-index-container">
         <div className="task-index">
             {
