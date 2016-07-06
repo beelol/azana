@@ -1,7 +1,6 @@
 "use strict";
 
 const React = require('react');
-const ProjectForm = require('./project_form');
 const IndexItem = require('./project_index_item');
 
 const ProjectDetail = require('./project_detail');
@@ -41,8 +40,8 @@ const ProjectIndex = React.createClass({
                 let project = this.state.projects[key];
 
                 return (
-                  <li>
-                    <IndexItem project={project} key={project.id}/>
+                  <li key={project.id}>
+                    <IndexItem project={project}/>
                   </li>
                 );
               })
@@ -55,5 +54,4 @@ const ProjectIndex = React.createClass({
   }
 });
 
-// <ProjectForm />
 module.exports = ProjectIndex;

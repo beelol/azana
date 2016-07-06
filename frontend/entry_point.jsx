@@ -22,6 +22,12 @@ const TaskForm = require('./components/task/task_form.jsx');
 const TaskDetail = require('./components/task/task_detail.jsx');
 const TaskIndex = require('./components/task/task_index.jsx');
 
+// Teams
+// const TeamForm = require('./components/team/team_form.jsx');
+// const TeamDetail = require('./components/team/team_detail.jsx');
+const TeamIndex = require('./components/team/team_index.jsx');
+
+// Projects
 const ProjectIndex = require('./components/project/project_index.jsx');
 const ProjectForm = require('./components/project/project_form.jsx');
 const ProjectDetail = require('./components/project/project_detail.jsx');
@@ -37,6 +43,9 @@ const appRouter = (
       <Route path="/tasks" component={ TaskIndex } onEnter={_ensureLoggedIn}>
         <Route path=":id" component={ TaskDetail }>
         </Route>
+      </Route>
+
+      <Route path="/teams" component={ TeamIndex } onEnter={_ensureLoggedIn}>
       </Route>
 
       <Route path="/projects" component={ ProjectIndex } onEnter={_ensureLoggedIn}>

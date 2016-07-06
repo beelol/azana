@@ -47,9 +47,6 @@ const IndexItem = React.createClass({
   },
 
   handleFocus () {
-    // const taskID = this.props.task.id;
-    // hashHistory.push("tasks/" + taskID );
-
     this.props.onSelected(this.props.task);
   },
 

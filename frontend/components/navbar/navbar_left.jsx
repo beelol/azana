@@ -15,7 +15,8 @@ const NavBarLeft = React.createClass({
     return (
       <div className='navbar-left'>
         <Link to="/projects" className="navigation-link-left">Projects</Link>
-        <Link to="/tasks" className="navigation-link-left">Tasks</Link>
+        <Link to="/tasks" className="navigation-link-left">All Tasks</Link>
+        <Link to="/teams" className="navigation-link-left">Teams</Link>
         <img className="navigation-link-left navigation-image" src={ASANA_PLUS_PATH} onClick={this.goToProjectForm} />
       </div>
     );

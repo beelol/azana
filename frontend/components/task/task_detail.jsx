@@ -8,32 +8,30 @@ const TaskDetail = React.createClass({
 
   getInitialState() {
     return {
-      task: {
-        id: undefined,
-        title: "Task Title",
-        description: "Task Description"
-      }
+      description: this.props.task.description
     }
   },
 
-  componentDidMount () {
-    this.onChangeListener = TaskStore.addListener(this.onTaskChanged);
-    // this.setState({title: this.props.task.title});
-  },
+  // componentDidMount () {
+  //   this.onChangeListener = TaskStore.addListener(this.onTaskChanged);
+  // },
 
-  componentWillUnmount () {
-    this.onChangeListener.remove();
+  // componentWillUnmount () {
+  //   this.onChangeListener.remove();
+  // },
+
+  componentWillReceiveProps (newProps) {
+    this.setState({
+      description: newProps.task.description
+    });
   },
 
   setDescription (e) {
-    let newTask = this.state.task;
-    newTask.description = e.currentTarget.value;
-
-    this.setState({task: newTask});
+    this.setState({description: e.currentTarget.value});
   },
 
   handleExit (e) {
-    let newTask = this.state.task;
+    let newTask = this.props.task;
     newTask.description = e.currentTarget.value;
 
     TaskActions.editTask(newTask);
@@ -60,19 +58,17 @@ const TaskDetail = React.createClass({
     }
   },
 
-  onReceivedTask () {
-    // console.log("we found the task with this id: " + this.id);
+  // onReceivedTask () {
+  //   this.setState({
+  //     task: TaskStore.find(this.id)
+  //   });
+  // },
 
-    this.setState({
-      task: TaskStore.find(this.id)
-    });
-  },
-
-  onTaskChanged () {
-    this.setState({
-      task: TaskStore.find(this.state.task.id)
-    });
-  },
+  // onTaskChanged () {
+  //   this.setState({
+  //     task: TaskStore.find(this.state.task.id)
+  //   });
+  // },
 
   render () {
     let task = this.props.task;
@@ -88,7 +84,7 @@ const TaskDetail = React.createClass({
                onBlur={this.handleTitleExit}
                onKeyDown={this.handleTitleKeyPress} />
 
-        <textarea value={task.description}
+             <textarea value={this.state.description}
                   onChange={this.setDescription}
                   onBlur={this.handleExit} />
       </div>
