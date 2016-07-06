@@ -83,7 +83,7 @@ const ProjectDetail = React.createClass({
     let className = (!empty ? "project-detail-container" : "hidden");
 
     return (
-      <TaskIndex tasks={this.state.tasks}/>
+      <TaskIndex tasks={this.state.tasks} projectId={project.id}/>
     );
   }
 });

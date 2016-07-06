@@ -2,6 +2,7 @@
 
 const React = require('react');
 const TaskActions = require('../../actions/task_actions');
+const SessionStore = require('../../stores/session_store');
 const hashHistory = require('react-router').hashHistory;
 
 const TaskForm = React.createClass({
@@ -34,6 +35,13 @@ const TaskForm = React.createClass({
   handleCancel(event) {
     event.preventDefault();
     this.goHome();
+  },
+
+  componentWillReceiveProps (newProps) {
+    this.setState({
+      project_id: newProps.projectId
+    });
+
   },
 
   update(property) {
