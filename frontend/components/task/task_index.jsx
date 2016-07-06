@@ -38,6 +38,8 @@ const TaskIndex = React.createClass({
   onTitleWasEdited (newTask) {
     // Store a task pointing to its new value
     // let id = newTask.id
+    // console.log(newTask.title);
+
     this.setState({[newTask.id]: newTask});
   },
 
@@ -61,6 +63,8 @@ const TaskIndex = React.createClass({
   },
 
   render () {
+    // console.log("called render in the index");
+
     let taskKeys = Object.keys(this.state.tasks);
     let taskDetail = "";
 

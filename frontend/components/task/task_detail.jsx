@@ -8,21 +8,23 @@ const TaskDetail = React.createClass({
 
   getInitialState() {
     return {
-      description: this.props.task.description
+      description: this.props.task.description,
+      title: this.props.task.title
     }
   },
 
-  // componentDidMount () {
-  //   this.onChangeListener = TaskStore.addListener(this.onTaskChanged);
-  // },
+  componentDidMount () {
+    this.onChangeListener = TaskStore.addListener(this.onTaskChanged);
+  },
 
-  // componentWillUnmount () {
-  //   this.onChangeListener.remove();
-  // },
+  componentWillUnmount () {
+    this.onChangeListener.remove();
+  },
 
   componentWillReceiveProps (newProps) {
     this.setState({
-      description: newProps.task.description
+      description: newProps.task.description,
+      title: newProps.task.title
     });
   },
 
@@ -49,6 +51,8 @@ const TaskDetail = React.createClass({
     let newTask = this.props.task;
     newTask.title = e.currentTarget.value;
 
+    // console.log(newTask.title);
+
     this.props.onUpdateTask(newTask);
   },
 
@@ -64,14 +68,22 @@ const TaskDetail = React.createClass({
   //   });
   // },
 
-  // onTaskChanged () {
-  //   this.setState({
-  //     task: TaskStore.find(this.state.task.id)
-  //   });
-  // },
+  onTaskChanged () {
+    this.setState({
+      description: TaskStore.find(this.props.task.id).description,
+      title: TaskStore.find(this.props.task.id).title
+    });
+  },
 
   render () {
+    // console.log("called render in the detail");
+
     let task = this.props.task;
+
+    task.title = this.state.title
+    task.description = this.state.description
+
+    // console.log(task.title);
 
     let empty = (task === undefined);
 

@@ -59,7 +59,9 @@ const IndexItem = React.createClass({
 
     return (
         <div>
-          <button onClick={this.deleteTask}>{completeText}</button>
+          <img className="task-index-item-img"
+               src={"http://cliparts.co/cliparts/gce/Eeg/gceEeg9Mi.png"}
+               onClick={this.deleteTask} />
           <input className="task-index-item"
                onFocus={this.handleFocus}
                value={this.props.title}

@@ -101,6 +101,13 @@ input {
   background-color: #2E3C54;
 }
 
+.task-index-item-img {
+  padding-bottom: 4px;
+  vertical-align: middle;
+  width: 20px;
+  height: 20px;
+}
+
 .navigation-link-left {
   text-decoration: none;
   float: left;
