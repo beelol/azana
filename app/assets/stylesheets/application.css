@@ -373,10 +373,8 @@ input {
   -ms-flex-negative: 0;
   flex-shrink: 0;
   font-size: 12px;
-  margin: 0 auto;
-  margin-top: 2px;
-  margin-left: 5px;
-  text-transform: uppercase;
+  margin: 0;
+  padding: 0;
 
   width: 35px;
   height: 35px;
@@ -525,9 +523,6 @@ input {
   align-items: flex-end;
   flex-wrap: wrap;
   flex-direction: column;
-  z-index: 100;
-  background: #fff;
-
   background: #fff;
   border: 1px solid #a1a4aa;
   border-radius: 3px;
@@ -538,10 +533,19 @@ input {
 }
 
 .navigation-link-left.nav-dropdown:hover .list li {
-  width: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 30px;
+  color: #898e95;
+  width: 150px;
+  height: 50px;
 }
 
 .navigation-link-left.nav-dropdown {
+  width: 35px;
   position: relative;
   align-items: center;
   display: flex;
