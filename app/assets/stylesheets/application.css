@@ -516,6 +516,7 @@ input {
 /* Dropdowns for buttons */
 .nav-dropdown .list {
   display: none;
+  color: #898e95;
 }
 
 .navigation-link-left.nav-dropdown:hover .list {
@@ -529,7 +530,7 @@ input {
   box-shadow: 0 2px 3px rgba(0,0,0,0.3);
   box-sizing: border-box;
   position: relative;
-  z-index: 600;
+  z-index: 2;
 }
 
 .navigation-link-left.nav-dropdown:hover .list li {
@@ -538,8 +539,7 @@ input {
   align-items: center;
   justify-content: center;
   text-align: center;
-  font-size: 30px;
-  color: #898e95;
+  font-size: 20px;
   width: 150px;
   height: 50px;
 }
@@ -553,4 +553,14 @@ input {
   flex-direction: column;
   margin: 0;
   padding: 0px;
+}
+
+.list li:hover {
+  color: #fff;
+  background: linear-gradient(45deg, #fc636b, #ff6d92 60%, #ffb900 115%);
+  cursor: pointer;
+}
+
+.ReactModal__Overlay .ReactModal__Overlay--after-open {
+  z-index: 1000;
 }

@@ -67,8 +67,10 @@ const ProjectForm = React.createClass({
   },
 
   render() {
+    var modalStyles = {overlay: {zIndex: 1000}};
+
     return (
-      <Modal isOpen={true}>
+      <Modal isOpen={true} style={modalStyles}>
         <div className="new-project-container">
           <div className="new-project-form">
             <h3 className="new-project-title">Create A Project!</h3>
