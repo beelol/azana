@@ -1,8 +1,8 @@
-"use strict";
-
 const Store = require('flux/utils').Store;
 const TeamConstants = require('../constants/team_constants');
 const AppDispatcher = require('../dispatcher/dispatcher');
+const SessionStore = require('./session_store');
+
 const TeamStore = new Store(AppDispatcher);
 
 let _teams = {};
@@ -13,6 +13,10 @@ TeamStore.all = function(){
 
 TeamStore.find = function(id){
   return Object.assign({}, _teams[id]);
+};
+
+TeamStore.currentTeam = function() {
+  // return _teams[SessionStore.currentUser().team_id];
 };
 
 function resetAllTeams(teams) {

@@ -37,10 +37,11 @@ const ProjectDetail = require('./components/project/project_detail.jsx');
 const SessionStore = require('./stores/session_store');
 const SessionActions = require('./actions/session_actions');
 
+// <IndexRedirect to="/tasks" />
+
 const appRouter = (
   <Router history={ hashHistory }>
     <Route path="/" component={ App }>
-      <IndexRedirect to="/tasks" />
 
       <Route path="/tasks" component={ TaskIndex } onEnter={_ensureLoggedIn}>
         <Route path=":id" component={ TaskDetail }>

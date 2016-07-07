@@ -5,6 +5,7 @@ const Link = require('react-router').Link;
 const SessionStore = require('../stores/session_store');
 const SessionActions = require('../actions/session_actions');
 const NavBar = require('../components/navbar/navbar');
+const WelcomeNavBar = require('../components/navbar/welcome_navbar');
 const SideBar = require('../components/sidebar/sidebar');
 
 const App = React.createClass({
@@ -23,7 +24,7 @@ const App = React.createClass({
     		<hgroup className="header-group">
     		</hgroup>
     	);
-    } else if ( !["/login", "/signup"].includes(this.props.location.pathname) ) {
+    } else if ( !this.onLoginPage() ) {
       return (
         <nav className="login-signup">
           <Link to="/login" activeClassName="current">Login</Link>
@@ -34,16 +35,39 @@ const App = React.createClass({
     }
   },
 
+  onLoginPage () {
+    return ["/login", "/signup"].includes(this.props.location.pathname)
+  },
+
+  shouldShowWelcome () {
+    return !SessionStore.isUserLoggedIn() && !this.onLoginPage();
+  },
+
+  getWelcomeDiv() {
+
+    return this.shouldShowWelcome() ? <div className="background"></div> : <div></div>;
+  },
+
+  getNavBar () {
+    let navBar = SessionStore.isUserLoggedIn() ? <NavBar /> : <div />
+
+    if (this.shouldShowWelcome()) {
+      navBar = <WelcomeNavBar />;
+    }
+
+    return navBar;
+  },
+
   render() {
-    let sideBar = (SessionStore.isUserLoggedIn()) ? <SideBar /> : <div/>
+    let sideBar = SessionStore.isUserLoggedIn() ? <SideBar /> : <div/>
+
+    console.log(this.onLoginPage());
 
     return (
       <div>
         {sideBar}
-        <NavBar />
-        <header>
-          { this.greeting() }
-        </header>
+        {this.getNavBar()}
+        {this.getWelcomeDiv()}
         {this.props.children}
       </div>
     );

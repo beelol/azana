@@ -501,6 +501,28 @@ input {
   color: #fff;
 }
 
+.navbar .logo-text {
+  margin-top: 10px;
+  margin-left: 10px;
+  text-transform: none;
+  display: block;
+  float: left;
+  font-size: 30px;
+  color: black;
+}
+
+.logo-icon {
+  margin: auto;
+  margin-left: 20px;
+  margin-top: 10px;
+  display: block;
+  float: left;
+  font-size: 30px;
+  width: 25px;
+  height: 25px;
+  transform: rotate(180deg);
+}
+
 .side-bar .logo img {
   margin: auto;
   margin-left: 20px;
@@ -563,4 +585,11 @@ input {
 
 .ReactModal__Overlay .ReactModal__Overlay--after-open {
   z-index: 1000;
+}
+
+.background {
+  position: relative;
+  background: radial-gradient(circle at center,rgba(255,185,0,.5) 0,rgba(252,99,107,.4) 40%,rgba(255,109,146,0) 70%);
+  background-color: #ff6d92;
+  height: 100vh;
 }
