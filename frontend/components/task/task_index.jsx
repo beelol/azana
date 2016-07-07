@@ -75,31 +75,32 @@ const TaskIndex = React.createClass({
     }
 
     return (
-
       <div>
         <h1 className="task-index-header">{project.title}</h1>
-      <div className="task-index-container">
-        <div className="task-index">
-            {
-              taskKeys.map( key => {
-                let task = this.state.tasks[key];
+        <div className="task-index-detail-container">
+        <div className="task-index-container">
+          <div className="task-index">
+              {
+                taskKeys.map( key => {
+                  let task = this.state.tasks[key];
 
-                let title = (this.state[task.id] !== undefined ? this.state[task.id].title : task.title)
+                  let title = (this.state[task.id] !== undefined ? this.state[task.id].title : task.title)
 
-                return (
-                  <IndexItem onEditTitle={this.onTitleWasEdited}
-                             onUpdateTask={this.onTaskWasUpdated}
-                             onSelected={this.onTaskWasSelected}
-                             task={task}
-                             title={title}
-                             key={key} />
-                );
-              })
-            }
+                  return (
+                    <IndexItem onEditTitle={this.onTitleWasEdited}
+                               onUpdateTask={this.onTaskWasUpdated}
+                               onSelected={this.onTaskWasSelected}
+                               task={task}
+                               title={title}
+                               key={key} />
+                  );
+                })
+              }
+          </div>
+          <TaskForm projectId={this.props.params.project_id}/>
         </div>
-        <TaskForm projectId={this.props.params.project_id}/>
-      </div>
-      {taskDetail}
+        {taskDetail}
+        </div>
       </div>
     );
   }

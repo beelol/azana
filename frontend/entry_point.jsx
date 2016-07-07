@@ -11,6 +11,7 @@ const Router = ReactRouter.Router;
 const Route = ReactRouter.Route;
 const IndexRoute = ReactRouter.IndexRoute;
 const hashHistory = ReactRouter.hashHistory;
+const IndexRedirect = ReactRouter.IndexRedirect;
 
 /* Components */
 // General
@@ -39,6 +40,7 @@ const SessionActions = require('./actions/session_actions');
 const appRouter = (
   <Router history={ hashHistory }>
     <Route path="/" component={ App }>
+      <IndexRedirect to="/tasks" />
 
       <Route path="/tasks" component={ TaskIndex } onEnter={_ensureLoggedIn}>
         <Route path=":id" component={ TaskDetail }>

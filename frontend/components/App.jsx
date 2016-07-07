@@ -35,12 +35,13 @@ const App = React.createClass({
     }
   },
 
-  // <Link to="/" className="header-link"><h1>Azana</h1></Link>
   render() {
+    let sideBar = (SessionStore.isUserLoggedIn()) ? <SideBar /> : <div/>
+
     return (
       <div>
         <NavBar />
-        <SideBar />
+        {sideBar}
         <header>
           { this.greeting() }
         </header>

@@ -8,13 +8,7 @@ const AddDropDown = React.createClass({
   render () {
     return(
       <div className='side-bar'>
-        <h1>Azana</h1>
-
-        <h1>Projects</h1>
-        <ProjectIndex />
-
-        <h1>Teams</h1>
-        <TeamIndex />
+        <button></button>
       </div>
     );
   }

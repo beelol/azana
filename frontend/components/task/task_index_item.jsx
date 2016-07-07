@@ -58,7 +58,7 @@ const IndexItem = React.createClass({
     let completeText = (this.state.completed ? "Undo" : "Complete");
 
     return (
-        <div>
+        <div className="task-index-item-container">
           <img className="task-index-item-img"
                src={"http://cliparts.co/cliparts/gce/Eeg/gceEeg9Mi.png"}
                onClick={this.deleteTask} />

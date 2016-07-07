@@ -260,26 +260,28 @@ input {
 
 /* Task View Styling */
 
+.task-index-detail-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
 /* Container of all tasks (left side of project view) */
 .task-index-container {
-  display: block;
-  float: left;
+  width: 100%;
   margin: 15px;
   max-height: 500px;
-  max-width: 400px;
   text-align: left;
 }
 
 /* Container of task detail (right side of project view) */
 .task-detail-container {
   display: block;
-  float: right;
   margin: 15px;
-  max-width: 400px;
+  /*max-width: 400px;*/
   text-align: right;
 
   /* Make it look like a box */
-  width: 500px;
+  width: 1000px;
   height: 500px;
   text-align: center;
   background-color: #fff;
@@ -296,7 +298,12 @@ input {
 
 }
 
+.task-index-item-container {
+  display: flex;
+}
+
 .task-index {
+  width: 100%;
   display: block;
   float: left;
   max-height: 500px;
@@ -325,7 +332,7 @@ input {
 }
 
 .task-index input {
-  width: 360px;
+  width: 100%;
   border-radius: 0px;
   background-color: #fff;
   box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.5);
@@ -470,6 +477,29 @@ input {
   margin-top: 20px;
 }
 
-.side-bar .logo {
+.logo {
+  margin: 0 auto;
+  margin-bottom: 15px;
+  display: block;
+  float: left;
+}
+
+.side-bar .logo h1 {
+  text-transform: none;
+  display: block;
+  float: left;
   font-size: 30px;
+  color: #fff;
+}
+
+.side-bar .logo img {
+  margin: auto;
+  margin-left: 20px;
+  margin-top: 10px;
+  display: block;
+  float: left;
+  font-size: 30px;
+  width: 25px;
+  height: 25px;
+  transform: rotate(180deg);
 }
