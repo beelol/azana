@@ -94,6 +94,8 @@ input {
 }
 
 .side-bar {
+  position: relative;
+  z-index: 2;
   height: 100vh;
   display: block;
   float: left;
@@ -472,8 +474,9 @@ input {
 }
 
 .task-index-header {
-  margin-top: 20px;
-
+  /*display: flex;
+  align-items: center;
+  justify-content: center;*/
   width: 100%;
   border-radius: 0px;
   background-color: #fff;
@@ -483,6 +486,8 @@ input {
   /*height: 24px;*/
   /*text-indent: 10px;*/
   margin: 0px;
+  /*margin-top: 10px;*/
+  /*padding-top: 10px;*/
 }
 
 .logo {
@@ -553,6 +558,15 @@ input {
   box-sizing: border-box;
   position: relative;
   z-index: 2;
+}
+
+.navbar {
+  position: relative;
+  /*-webkit-box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.4);
+  -moz-box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.4);
+  box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.4);*/
+  border-bottom: 1px solid #A2B4BC;
+  z-index: 1;
 }
 
 .navigation-link-left.nav-dropdown:hover .list li {
