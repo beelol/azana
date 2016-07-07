@@ -8,7 +8,6 @@ const NavBar = require('../components/navbar/navbar');
 const SideBar = require('../components/sidebar/sidebar');
 
 const App = React.createClass({
-
   componentDidMount() {
     this.forceUpdateListener = SessionStore.addListener(this.forceUpdate.bind(this));
   },
@@ -40,8 +39,8 @@ const App = React.createClass({
 
     return (
       <div>
-        <NavBar />
         {sideBar}
+        <NavBar />
         <header>
           { this.greeting() }
         </header>

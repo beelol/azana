@@ -475,6 +475,16 @@ input {
 
 .task-index-header {
   margin-top: 20px;
+
+  width: 100%;
+  border-radius: 0px;
+  background-color: #fff;
+  box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.5);
+  line-height: 1.5;
+  font-size: 25px;
+  /*height: 24px;*/
+  /*text-indent: 10px;*/
+  margin: 0px;
 }
 
 .logo {
@@ -482,6 +492,7 @@ input {
   margin-bottom: 15px;
   display: block;
   float: left;
+  cursor: pointer;
 }
 
 .side-bar .logo h1 {
@@ -504,13 +515,38 @@ input {
   transform: rotate(180deg);
 }
 
+/* Dropdowns for buttons */
 .nav-dropdown .list {
   display: none;
+}
+
+.navigation-link-left.nav-dropdown:hover .list {
   display: flex;
   align-items: flex-end;
+  flex-wrap: wrap;
+  flex-direction: column;
+  z-index: 100;
+  background: #fff;
+
+  background: #fff;
+  border: 1px solid #a1a4aa;
+  border-radius: 3px;
+  box-shadow: 0 2px 3px rgba(0,0,0,0.3);
+  box-sizing: border-box;
+  position: relative;
+  z-index: 600;
+}
+
+.navigation-link-left.nav-dropdown:hover .list li {
+  width: 100px;
 }
 
 .navigation-link-left.nav-dropdown {
+  position: relative;
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
   margin: 0;
   padding: 0px;
 }

@@ -15,12 +15,12 @@ const AddButton = React.createClass({
     return (
       <div className="navigation-link-left nav-dropdown">
         <img className="navigation-image" src={ASANA_PLUS_PATH} />
-        <div className="list">
-          <button>lol</button>
-          <button>lol</button>
-          <button>lol</button>
-          <button>lol</button>
-        </div>
+        <ul className="list">
+          <li>lol</li>
+          <li>lol</li>
+          <li>lol</li>
+          <li>lol</li>
+        </ul>
       </div>
     );
   }
