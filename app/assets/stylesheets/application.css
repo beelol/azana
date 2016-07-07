@@ -503,3 +503,14 @@ input {
   height: 25px;
   transform: rotate(180deg);
 }
+
+.nav-dropdown .list {
+  display: none;
+  display: flex;
+  align-items: flex-end;
+}
+
+.navigation-link-left.nav-dropdown {
+  margin: 0;
+  padding: 0px;
+}
