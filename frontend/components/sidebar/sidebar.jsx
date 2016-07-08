@@ -23,11 +23,11 @@ const SideBar = React.createClass({
         <h1>Projects</h1>
         <ProjectIndex />
 
-        <h1>Teams</h1>
-        <TeamIndex />
       </div>
     );
   }
 });
 
+// <h1>Teams</h1>
+// <TeamIndex />
 module.exports = SideBar;

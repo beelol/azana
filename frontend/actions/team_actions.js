@@ -16,7 +16,7 @@ const TeamActions = {
   // },
 
   fetchAllTeams () {
-    console.log("fetch all teams");
+    // console.log("fetch all teams");
     TeamApiUtil.fetchAllTeams(TeamActions.receiveAllTeams);
   },
 
@@ -51,7 +51,7 @@ const TeamActions = {
   },
 
   receiveAllTeams(teams) {
-    console.log("receive all teams");
+    // console.log("receive all teams");
     AppDispatcher.dispatch({
       actionType: TeamConstants.TEAMS_RECEIVED,
       teams: teams

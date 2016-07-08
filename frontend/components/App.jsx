@@ -26,14 +26,11 @@ const App = React.createClass({
   },
 
   onTeamsChanged () {
-		console.log("Teams changed");
+
     // find the teams by a user
     // get the first one
     // display it
-
     let authoredTeams = TeamStore.findByUser(SessionStore.currentUser().id);
-
-    console.log(authoredTeams);
 
 		if (Object.keys(authoredTeams).length === 0) {
 			/* Put all this in a listener for signing up */
@@ -54,6 +51,8 @@ const App = React.createClass({
 			// So we can just view the first team.
 
       let firstTeamId = authoredTeams[Object.keys(authoredTeams)[0]].id;
+
+      TeamStore.currentTeam = TeamStore.find(firstTeamId);
 
 			hashHistory.push(`/teams/${firstTeamId}`);
 		}

@@ -7,6 +7,8 @@ const TeamStore = new Store(AppDispatcher);
 
 let _teams = {};
 
+TeamStore.currentTeam = undefined;
+
 TeamStore.all = function(){
   return Object.assign({}, _teams);
 };
@@ -31,12 +33,9 @@ TeamStore.find = function(id){
   return Object.assign({}, _teams[id]);
 };
 
-TeamStore.currentTeam = function() {
-  // return _teams[SessionStore.currentUser().team_id];
-};
 
 function resetAllTeams(teams) {
-  console.log("reset all teams");
+  // console.log("reset all teams");
 
   teams.forEach((team) => {
     _teams[team.id] = team;
