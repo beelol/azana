@@ -42,6 +42,9 @@ const App = React.createClass({
   },
 
   onProjectsChanged () {
+    if (!TeamStore.currentTeam) {
+      return;
+    }
     // find the projects by a team
     // get the first one
     // display it

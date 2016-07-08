@@ -6,7 +6,6 @@ const AppDispatcher = require('../dispatcher/dispatcher');
 
 const ProjectStore = new Store(AppDispatcher);
 
-
 let _projects = {};
 
 ProjectStore.all = function () {

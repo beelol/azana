@@ -4,9 +4,17 @@ const ProjectIndex = require('../project/project_index');
 const hashHistory = require('react-router').hashHistory;
 const TeamIndex = require('../team/team_index');
 
+const ProjectActions = require('../../actions/project_actions');
+const TeamActions = require('../../actions/team_actions');
+
 const SideBar = React.createClass({
   goHome () {
     hashHistory.push("/");
+  },
+
+  componentDidMount () {
+    ProjectActions.fetchAllProjects();
+    TeamActions.fetchAllTeams();
   },
 
   render () {
