@@ -83,8 +83,9 @@ input {
 }
 
 .navbar-right {
-  display: block;
-  float: right;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: flex-end;
   margin-right: 30px;
 }
 
@@ -130,7 +131,7 @@ input {
 
 .navigation-link-right {
   text-decoration: none;
-  float: right;
+  /*float: right;*/
   -webkit-box-align: right;
   -ms-flex-align: right;
   align-items: right;
@@ -142,6 +143,7 @@ input {
   flex-shrink: 0;
   font-size: 12px;
   margin: 15px 15px 0px 20px;
+  /*margin-right: 50px;*/
   text-transform: uppercase;
 }
 
@@ -578,7 +580,11 @@ input {
   color: #898e95;
 }
 
-.navigation-link-left.nav-dropdown:hover .list {
+.nav-dropdown:hover {
+  margin-right: 4px;
+}
+
+.nav-dropdown:hover .list {
   display: flex;
   align-items: flex-end;
   flex-wrap: wrap;
@@ -601,7 +607,7 @@ input {
   z-index: 1;
 }
 
-.navigation-link-left.nav-dropdown:hover .list li {
+.nav-dropdown:hover .list li {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -621,6 +627,12 @@ input {
   flex-direction: column;
   margin: 0;
   padding: 0px;
+}
+
+.navigation-link-right.nav-dropdown {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .list li:hover {

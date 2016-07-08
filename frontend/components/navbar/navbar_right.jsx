@@ -9,16 +9,28 @@ const NavBarRight = React.createClass({
   _handleLogOut(){
     SessionActions.logOut();
   },
+
+  viewProfile () {
+    console.log("great profile, nerd");
+  },
+
   render () {
-    let logout = <div></div>;
+    let userController = <div></div>;
 
     if (SessionStore.isUserLoggedIn()) {
-      logout = <div className="navigation-link-right" onClick={ this._handleLogOut }>Sign out</div>
+      userController =
+      <div className="navigation-link-right nav-dropdown">
+        {SessionStore.currentUser().username}
+        <ul className="list">
+          <li onClick={this._handleLogOut}>SIGN OUT</li>
+          <li onClick={this.viewProfile}>PROFILE</li>
+        </ul>
+      </div>
     }
 
     return (
       <div className='navbar-right'>
-        {logout}
+        {userController}
       </div>
     );
   }
