@@ -14,7 +14,6 @@ const ProjectForm = React.createClass({
         title: "",
         description: "",
         team_id: 0,
-        completed: false
       }
     };
   },

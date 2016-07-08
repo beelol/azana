@@ -3,7 +3,9 @@
 const Store = require('flux/utils').Store;
 const ProjectConstants = require('../constants/project_constants');
 const AppDispatcher = require('../dispatcher/dispatcher');
+
 const ProjectStore = new Store(AppDispatcher);
+
 
 let _projects = {};
 
@@ -13,6 +15,21 @@ ProjectStore.all = function () {
 
 ProjectStore.find = function (id) {
   return Object.assign({}, _projects[id]);
+};
+
+ProjectStore.findByTeam = function (team_id) {
+  let projects = [];
+
+  Object.keys(_projects).forEach((key) => {
+    let newKey = parseInt(key);
+    console.log(_projects[newKey].team_id);
+
+    if (_projects[newKey].team_id === team_id) {
+      projects.push(_projects[key]);
+    }
+  });
+
+  return projects;
 };
 
 function resetAllProjects (projects) {

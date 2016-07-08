@@ -13,11 +13,21 @@ const hashHistory = require('react-router').hashHistory;
 const TeamStore = require('../stores/team_store');
 const TeamActions = require('../actions/team_actions');
 
+const ProjectStore = require('../stores/project_store');
+const ProjectActions = require('../actions/project_actions');
+
 const App = React.createClass({
   componentDidMount() {
     this.forceUpdateListener = SessionStore.addListener(this.forceUpdate.bind(this));
 
+    // Used to create a new team once we find all of them
+    // to check if we already have one or not
     this.teamListener = TeamStore.addListener(this.onTeamsChanged);
+
+    // Used to create a new project once we find all of them
+    // to check if we already have one or not,
+    // then we use it to view the project
+    this.projectListener = ProjectStore.addListener(this.onProjectsChanged);
   },
 
   componentWillUnmount() {
@@ -25,8 +35,35 @@ const App = React.createClass({
     this.teamListener.remove();
   },
 
-  onTeamsChanged () {
+  onProjectsChanged () {
+    // find the projects by a team
+    // get the first one
+    // display it
 
+    let teamProjects = ProjectStore.findByTeam(TeamStore.currentTeam.id);
+
+    if (Object.keys(teamProjects).length === 0) {
+      // If we have no projects, make dat shet
+
+      console.log(teamProjects);
+
+      let defaultProject = {
+        title: `${SessionStore.currentUser().username}'s First Project'`,
+        description: "It's your first project. Go crazy!",
+        team_id: TeamStore.currentTeam.id,
+      };
+
+    } else {
+      // If we're here, then creating a team worked,
+      // So we can just view the first team.
+
+      let firstProjectId = teamProjects[Object.keys(teamProjects)[0]].id;
+
+      hashHistory.push(`/projects/${firstProjectId}`);
+    }
+  },
+
+  onTeamsChanged () {
     // find the teams by a user
     // get the first one
     // display it
@@ -52,9 +89,12 @@ const App = React.createClass({
 
       let firstTeamId = authoredTeams[Object.keys(authoredTeams)[0]].id;
 
+      // Set currently viewed team
       TeamStore.currentTeam = TeamStore.find(firstTeamId);
 
-			hashHistory.push(`/teams/${firstTeamId}`);
+      // Get all projects so we can check if we have any.
+      // Or view the first one
+      ProjectActions.fetchAllProjects();
 		}
 	},
 
