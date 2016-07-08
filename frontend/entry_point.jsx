@@ -25,7 +25,7 @@ const TaskIndex = require('./components/task/task_index.jsx');
 
 // Teams
 // const TeamForm = require('./components/team/team_form.jsx');
-// const TeamDetail = require('./components/team/team_detail.jsx');
+const TeamDetail = require('./components/team/team_detail.jsx');
 const TeamIndex = require('./components/team/team_index.jsx');
 
 // Projects
@@ -48,10 +48,9 @@ const appRouter = (
         </Route>
       </Route>
 
-      <Route path="/teams" component={ TeamIndex } onEnter={_ensureLoggedIn}>
-      </Route>
+      <Route path="/teams/:team_id" component={ TeamDetail } />
 
-        <Route path="/projects/new" component={ ProjectForm } />
+      <Route path="/projects/new" component={ ProjectForm } />
 
       <Route path="/projects/:project_id" component={ TaskIndex } >
         <Route path=":task_id" component={ TaskDetail }>
@@ -63,6 +62,10 @@ const appRouter = (
     </Route>
   </Router>
 );
+
+// <Route path="/teams" component={ TeamIndex } onEnter={_ensureLoggedIn}>
+// </Route>
+
 
 // <Route path="/benches/new" component={ BenchForm } onEnter={ _ensureLoggedIn }/>
 // <Route path="/benches/:benchId" component={ BenchShow} >

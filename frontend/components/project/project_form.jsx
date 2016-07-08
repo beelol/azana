@@ -57,11 +57,9 @@ const ProjectForm = React.createClass({
 
   update(property) {
     return (e) => {
-      console.log(property);
       let project = this.state.project;
       project[[property]] = e.target.value
 
-      console.log(project);
       this.setState({project: project});
     }
   },

@@ -3,7 +3,7 @@
 const React = require('react');
 const TeamActions = require('../../actions/team_actions');
 const TeamStore = require('../../stores/team_store');
-// const ProjectStore = require('../../stores/project_store');
+const ProjectStore = require('../../stores/project_store');
 // const ProjectIndex = require('../project/project_index');
 
 const TeamDetail = React.createClass({
@@ -83,7 +83,7 @@ const TeamDetail = React.createClass({
     let className = (!empty ? "team-detail-container" : "hidden");
 
     return (
-
+      <div className="team-detail"></div>
     );
   }
 });

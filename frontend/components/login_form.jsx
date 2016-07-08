@@ -7,6 +7,9 @@ const SessionActions = require('../actions/session_actions');
 const SessionStore = require('../stores/session_store');
 const ErrorStore = require('../stores/error_store');
 
+// const TeamStore = require('../stores/team_store');
+const TeamActions = require('../actions/team_actions');
+
 const LoginForm = React.createClass({
 
 	DEMO_USERNAME: "Guest",
@@ -76,18 +79,49 @@ const LoginForm = React.createClass({
 
   componentDidMount() {
     this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
-    this.sessionListener = SessionStore.addListener(this.redirectIfLoggedIn);
+    this.sessionListener = SessionStore.addListener(this.handleSignIn);
+		// this.teamListener = TeamStore.addListener(this.onTeamsChanged);
   },
 
   componentWillUnmount() {
     this.errorListener.remove();
     this.sessionListener.remove();
+    // this.teamListener.remove();
   },
 
-  redirectIfLoggedIn() {
+	// onTeamsChanged () {
+		// console.log("Teams changed");
+		//
+		// if (TeamStore.all().length === 0) {
+		// 	/* Put all this in a listener for signing up */
+		// 	const defaultTeam = {
+		// 		author_id: SessionStore.currentUser().id,
+		// 		name: SessionStore.currentUser().username,
+		// 	};
+		// 	// create team
+		// 	// set callback to set current team and
+		// 	// create project under that team
+		// 	// then set a callback to view that project
+		// 	// set callback to view it
+		// 	TeamActions.createTeam(defaultTeam);
+		// } else {
+		// 	// If we're here, then creating a team worked,
+		// 	// So we can just view the first team.
+		// 	hashHistory.push(`/teams/0`);
+		// }
+	// },
+
+  handleSignIn() {
     if (SessionStore.isUserLoggedIn()) {
       this.context.router.push("/");
     }
+
+		// Fetch teams here so that we make a new team
+		// if we have none, and then we can
+		// view the teams
+
+		// We will only have no teams if we're signing up.
+		TeamActions.fetchAllTeams();
   },
 
 	handleSubmit(e) {
@@ -98,18 +132,14 @@ const LoginForm = React.createClass({
 			password: this.state.password
 		};
 
-		const defaultTeam = {
-			
-		};
 
     if (this.props.location.pathname === "/login") {
       SessionActions.logIn(formData);
     } else {
-
       SessionActions.signUp(formData);
     }
 
-		console.log(this.fieldErrors("username"));
+		// console.log(this.fieldErrors("username"));
 	},
 
   fieldErrors(field) {
