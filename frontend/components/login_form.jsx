@@ -98,9 +98,14 @@ const LoginForm = React.createClass({
 			password: this.state.password
 		};
 
+		const defaultTeam = {
+			
+		};
+
     if (this.props.location.pathname === "/login") {
       SessionActions.logIn(formData);
     } else {
+
       SessionActions.signUp(formData);
     }
 
