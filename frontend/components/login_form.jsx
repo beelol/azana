@@ -121,7 +121,7 @@ const LoginForm = React.createClass({
 		// view the teams
 
 		// We will only have no teams if we're signing up.
-		TeamActions.fetchAllTeams();
+		// TeamActions.fetchAllTeams();
   },
 
 	handleSubmit(e) {

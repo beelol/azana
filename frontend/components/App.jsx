@@ -39,33 +39,40 @@ const App = React.createClass({
   componentWillUnmount() {
     this.forceUpdateListener.remove();
     this.teamListener.remove();
+    this.projectListener.remove();
   },
 
   onProjectsChanged () {
-    if (!TeamStore.currentTeam) {
-      return;
-    }
+
     // find the projects by a team
     // get the first one
     // display it
 
+    console.log(TeamStore.currentTeam.id);
+
     let teamProjects = ProjectStore.findByTeam(TeamStore.currentTeam.id);
+
+    console.log(Object.keys(teamProjects));
 
     this.setState({projects: teamProjects})
 
-    if (Object.keys(teamProjects).length === 0) {
-      // If we have no projects, make dat shet
+    if (TeamStore.currentTeam === undefined) {
+      return;
+    }
 
+    if (Object.keys(teamProjects).length === 0) {
+
+      // no projects; make one
       let defaultProject = {
         title: `${SessionStore.currentUser().username}'s First Project'`,
         description: "It's your first project. Go crazy!",
         team_id: TeamStore.currentTeam.id,
       };
 
+      ProjectActions.createProject(defaultProject);
     } else {
-      // If we're here, then creating a team worked,
+      // If we're here, then creating a project worked,
       // So we can just view the first team.
-
 
       let firstProjectId = teamProjects[Object.keys(teamProjects)[0]].id;
 
@@ -73,13 +80,33 @@ const App = React.createClass({
     }
   },
 
+  componentWillReceiveProps (newProps) {
+    if (newProps.location.pathname === '/' && SessionStore.currentUser()) {
+      let teamProjects = this.state.projects;
+
+      let firstProjectId = teamProjects[Object.keys(teamProjects)[0]].id;
+
+      if (firstProjectId === undefined) {
+        return;
+      }
+
+      hashHistory.push(`/projects/${firstProjectId}`);
+    }
+  },
+
   onTeamsChanged () {
+    // if (!SessionStore.currentUser()) {
+    //   return;
+    // }
+
     // find the teams by a user
     // get the first one
     // display it
     let authoredTeams = TeamStore.findByUser(SessionStore.currentUser().id);
 
+
 		if (Object.keys(authoredTeams).length === 0) {
+      console.log("we have no authored teams");
 			/* Put all this in a listener for signing up */
       let teamName = SessionStore.currentUser().username + "'s Team";
 
@@ -92,12 +119,18 @@ const App = React.createClass({
 			// create project under that team
 			// then set a callback to view that project
 			// set callback to view it
+
+
 			TeamActions.createTeam(defaultTeam);
 		} else {
+      console.log("we have authored teams");
+
 			// If we're here, then creating a team worked,
 			// So we can just view the first team.
 
       let firstTeamId = authoredTeams[Object.keys(authoredTeams)[0]].id;
+
+      console.log(firstTeamId);
 
       // Set currently viewed team
       TeamStore.currentTeam = TeamStore.find(firstTeamId);

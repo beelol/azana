@@ -13,7 +13,6 @@ const SideBar = React.createClass({
   },
 
   componentDidMount () {
-    ProjectActions.fetchAllProjects();
     TeamActions.fetchAllTeams();
   },
 
