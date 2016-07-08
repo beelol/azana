@@ -103,11 +103,12 @@ const App = React.createClass({
     if (newProps.location.pathname === '/' && SessionStore.currentUser()) {
       let teamProjects = this.state.projects;
 
-      let firstProjectId = teamProjects[Object.keys(teamProjects)[0]].id;
-
-      if (firstProjectId === undefined) {
+      if (teamProjects[Object.keys(teamProjects)[0]] === undefined) {
         return;
       }
+
+      let firstProjectId = teamProjects[Object.keys(teamProjects)[0]].id;
+
 
       hashHistory.push(`/projects/${firstProjectId}`);
     }
