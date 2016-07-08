@@ -645,9 +645,40 @@ input {
   z-index: 1000;
 }
 
+.background h1 {
+  text-shadow: 4px 4px rgba(0,0,0,0.1);
+  margin-top: 90px;
+  font-size: 65px;
+  line-height: 60px;
+  max-width: 600px;
+  font-weight: 100;
+  margin: 50px auto 10px;
+  color: #fff;
+}
+
+.background p {
+  margin-bottom: 30px;
+  width: 40vw;
+  text-shadow: 2px 2px rgba(0,0,0,0.1);
+
+  color: #fff;
+  max-width: 500px;
+  margin: 5vw auto;
+  margin-top: 10px;
+  font-size: 1.6em;
+}
+
 .background {
+  color: #fff;
+  text-align: center;
   position: relative;
   background: radial-gradient(circle at center,rgba(255,185,0,.5) 0,rgba(252,99,107,.4) 40%,rgba(255,109,146,0) 70%);
   background-color: #ff6d92;
   height: 100vh;
+
+  /* Display Features */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }

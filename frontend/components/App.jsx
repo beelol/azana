@@ -1,21 +1,27 @@
 "use strict";
 
 const React = require('react');
-const Link = require('react-router').Link;
 const SessionStore = require('../stores/session_store');
 const SessionActions = require('../actions/session_actions');
 const NavBar = require('../components/navbar/navbar');
 const WelcomeNavBar = require('../components/navbar/welcome_navbar');
 const SideBar = require('../components/sidebar/sidebar');
 
+// Routing
+const Link = require('react-router').Link;
 const hashHistory = require('react-router').hashHistory;
 
+// Teams
 const TeamStore = require('../stores/team_store');
 const TeamActions = require('../actions/team_actions');
 
+// Projects
 const ProjectStore = require('../stores/project_store');
 const ProjectActions = require('../actions/project_actions');
 const TaskActions = require('../actions/task_actions');
+
+// Other
+const WelcomeScreen = require('./welcome_screen');
 
 const App = React.createClass({
   getInitialState () {
@@ -178,8 +184,7 @@ const App = React.createClass({
   },
 
   getWelcomeDiv() {
-
-    return this.shouldShowWelcome() ? <div className="background"></div> : <div></div>;
+    return this.shouldShowWelcome() ? <WelcomeScreen /> : <div></div>;
   },
 
   getNavBar () {

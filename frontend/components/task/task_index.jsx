@@ -75,7 +75,7 @@ const TaskIndex = React.createClass({
     if (this.state.selectedTask) {
       console.log(this.state.selectedTask);
 
-      let task = this.state[[this.state.selectedTask]] ? this.state[[this.state.selectedTask]] : TaskStore.find(this.state.selectedTask)
+      let task = this.state[[this.state.selectedTask]] ? this.state[[this.state.selectedTask]] : TaskStore.find(this.state.selectedTask);
 
       taskDetail = <TaskDetail task={task}
                                onEditTitle={this.onTitleWasEdited}
