@@ -15,6 +15,7 @@ const TeamActions = require('../actions/team_actions');
 
 const ProjectStore = require('../stores/project_store');
 const ProjectActions = require('../actions/project_actions');
+const TaskActions = require('../actions/task_actions');
 
 const App = React.createClass({
   getInitialState () {
@@ -48,11 +49,8 @@ const App = React.createClass({
     // get the first one
     // display it
 
-    console.log(TeamStore.currentTeam.id);
 
     let teamProjects = ProjectStore.findByTeam(TeamStore.currentTeam.id);
-
-    console.log(Object.keys(teamProjects));
 
     this.setState({projects: teamProjects})
 
@@ -72,11 +70,26 @@ const App = React.createClass({
       ProjectActions.createProject(defaultProject);
     } else {
       // If we're here, then creating a project worked,
-      // So we can just view the first team.
+      // So we can just view the first project and create 18 tasks.
+      let project = teamProjects[Object.keys(teamProjects)[0]]
 
-      let firstProjectId = teamProjects[Object.keys(teamProjects)[0]].id;
+      let firstProjectId = project.id;
 
-      hashHistory.push(`/projects/${firstProjectId}`);
+      if (project.tasks.length === 0) {
+        let newTask = {
+          title: "",
+          description: "",
+          completed: false,
+          author_id: SessionStore.currentUser().id,
+          project_id: firstProjectId,
+        }
+
+        for (let i = 0; i < 18; i++) {
+          TaskActions.createTask(newTask)
+        }
+
+        hashHistory.push(`/projects/${firstProjectId}`);
+      }
     }
   },
 
@@ -106,7 +119,6 @@ const App = React.createClass({
 
 
 		if (Object.keys(authoredTeams).length === 0) {
-      console.log("we have no authored teams");
 			/* Put all this in a listener for signing up */
       let teamName = SessionStore.currentUser().username + "'s Team";
 
@@ -123,14 +135,12 @@ const App = React.createClass({
 
 			TeamActions.createTeam(defaultTeam);
 		} else {
-      console.log("we have authored teams");
 
 			// If we're here, then creating a team worked,
 			// So we can just view the first team.
 
       let firstTeamId = authoredTeams[Object.keys(authoredTeams)[0]].id;
 
-      console.log(firstTeamId);
 
       // Set currently viewed team
       TeamStore.currentTeam = TeamStore.find(firstTeamId);

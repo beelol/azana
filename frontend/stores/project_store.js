@@ -21,7 +21,6 @@ ProjectStore.findByTeam = function (team_id) {
 
   Object.keys(_projects).forEach((key) => {
     let newKey = parseInt(key);
-    // console.log(_projects[newKey].team_id);
 
     if (_projects[newKey].team_id === team_id) {
       projects.push(_projects[key]);

@@ -6,12 +6,6 @@ const TaskActions = require('../../actions/task_actions');
 const TaskStore = require('../../stores/task_store');
 
 const IndexItem = React.createClass({
-  getInitialState () {
-    return {
-      title: "",
-      completed: false
-    };
-  },
 
   handleChange(e) {
     let newTask = this.props.task;
@@ -20,15 +14,9 @@ const IndexItem = React.createClass({
     this.props.onEditTitle(newTask);
   },
 
-  toggleCompletion(e) {
-    this.setState({
-      completed: !this.state.completed
-    });
-  },
-
   handleExit(e) {
     let newTask = this.props.task;
-    newTask.title = this.props.title;
+    newTask.title = e.currentTarget.value;
 
     this.props.onUpdateTask(newTask);
   },
@@ -55,7 +43,7 @@ const IndexItem = React.createClass({
   },
 
   render() {
-    let completeText = (this.state.completed ? "Undo" : "Complete");
+    // let completeText = (this.state.completed ? "Undo" : "Complete");
 
     return (
         <div className="task-index-item-container">

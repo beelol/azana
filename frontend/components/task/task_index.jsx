@@ -28,6 +28,8 @@ const TaskIndex = React.createClass({
   },
 
   onChange () {
+    // console.log("Task was updated");
+
     let projectId = parseInt(this.props.params.project_id);
     this.setState({tasks: TaskStore.findByProject(projectId)});
   },
@@ -37,6 +39,7 @@ const TaskIndex = React.createClass({
   /* Called whenever something is typed in the index item
   or in the task detail */
   onTitleWasEdited (newTask) {
+    // console.log(newTask.title);
     // Store a task pointing to its new value
     // let id = newTask.id
     // console.log(newTask.title);
@@ -59,7 +62,7 @@ const TaskIndex = React.createClass({
   // Stores a task in state as the selected task when clicked.
   onTaskWasSelected(task) {
     this.setState({
-      selectedTask: task
+      selectedTask: task.id
     });
   },
 
@@ -68,8 +71,13 @@ const TaskIndex = React.createClass({
     let taskDetail = "";
     let project = ProjectStore.find(this.props.params.project_id);
 
+
     if (this.state.selectedTask) {
-      taskDetail = <TaskDetail task={this.state.selectedTask}
+      console.log(this.state.selectedTask);
+
+      let task = this.state[[this.state.selectedTask]] ? this.state[[this.state.selectedTask]] : TaskStore.find(this.state.selectedTask)
+
+      taskDetail = <TaskDetail task={task}
                                onEditTitle={this.onTitleWasEdited}
                                onUpdateTask={this.onTaskWasUpdated} />
     }

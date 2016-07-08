@@ -6,52 +6,31 @@ const TaskStore = require('../../stores/task_store');
 
 const TaskDetail = React.createClass({
 
-  getInitialState() {
-    return {
-      description: this.props.task.description,
-      title: this.props.task.title
-    }
-  },
-
-  componentDidMount () {
-    this.onChangeListener = TaskStore.addListener(this.onTaskChanged);
-  },
-
-  componentWillUnmount () {
-    this.onChangeListener.remove();
-  },
-
-  componentWillReceiveProps (newProps) {
-    this.setState({
-      description: newProps.task.description,
-      title: newProps.task.title
-    });
-  },
-
   setDescription (e) {
-    this.setState({description: e.currentTarget.value});
+    this.description = e.currentTarget.value;
   },
 
   handleExit (e) {
     let newTask = this.props.task;
     newTask.description = e.currentTarget.value;
 
-    TaskActions.editTask(newTask);
+    this.props.onUpdateTask(newTask);
   },
 
   handleChange(e) {
+    // console.log("Typing in task detail");
+    console.log(e.currentTarget.value);
+
     let newTask = this.props.task;
     newTask.title = e.currentTarget.value;
 
-    // console.log("we handled a change in the detail");
+
     this.props.onEditTitle(newTask);
   },
 
   handleTitleExit (e) {
     let newTask = this.props.task;
     newTask.title = e.currentTarget.value;
-
-    // console.log(newTask.title);
 
     this.props.onUpdateTask(newTask);
   },
@@ -62,26 +41,10 @@ const TaskDetail = React.createClass({
     }
   },
 
-  // onReceivedTask () {
-  //   this.setState({
-  //     task: TaskStore.find(this.id)
-  //   });
-  // },
-
-  onTaskChanged () {
-    this.setState({
-      description: TaskStore.find(this.props.task.id).description,
-      title: TaskStore.find(this.props.task.id).title
-    });
-  },
-
   render () {
-    // console.log("called render in the detail");
+    console.log("changed props to " + this.props.task.title);
 
     let task = this.props.task;
-
-    task.title = this.state.title
-    task.description = this.state.description
 
     let empty = (task === undefined);
 
@@ -94,7 +57,7 @@ const TaskDetail = React.createClass({
                onBlur={this.handleTitleExit}
                onKeyDown={this.handleTitleKeyPress} />
 
-             <textarea value={this.state.description}
+             <textarea value={task.description}
                   onChange={this.setDescription}
                   onBlur={this.handleExit} />
       </div>
