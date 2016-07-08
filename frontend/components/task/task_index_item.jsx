@@ -60,7 +60,7 @@ const IndexItem = React.createClass({
     return (
         <div className="task-index-item-container">
           <img className="task-index-item-img"
-               src={"http://cliparts.co/cliparts/gce/Eeg/gceEeg9Mi.png"}
+               src={"http://sethtaylor.com/b2/wp-content/uploads/2013/10/checkmark-graphic-free.png"}
                onClick={this.deleteTask} />
           <input className="task-index-item"
                onFocus={this.handleFocus}
