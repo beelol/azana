@@ -17,6 +17,12 @@ const ProjectStore = require('../stores/project_store');
 const ProjectActions = require('../actions/project_actions');
 
 const App = React.createClass({
+  getInitialState () {
+    return {
+      projects: []
+    }
+  },
+
   componentDidMount() {
     this.forceUpdateListener = SessionStore.addListener(this.forceUpdate.bind(this));
 
@@ -42,10 +48,10 @@ const App = React.createClass({
 
     let teamProjects = ProjectStore.findByTeam(TeamStore.currentTeam.id);
 
+    this.setState({projects: teamProjects})
+
     if (Object.keys(teamProjects).length === 0) {
       // If we have no projects, make dat shet
-
-      console.log(teamProjects);
 
       let defaultProject = {
         title: `${SessionStore.currentUser().username}'s First Project'`,
@@ -56,6 +62,7 @@ const App = React.createClass({
     } else {
       // If we're here, then creating a team worked,
       // So we can just view the first team.
+
 
       let firstProjectId = teamProjects[Object.keys(teamProjects)[0]].id;
 
@@ -140,7 +147,7 @@ const App = React.createClass({
   },
 
   render() {
-    let sideBar = SessionStore.isUserLoggedIn() ? <SideBar /> : <div/>
+    let sideBar = SessionStore.isUserLoggedIn() ? <SideBar projects={this.state.projects}/> : <div/>
 
     return (
       <div>

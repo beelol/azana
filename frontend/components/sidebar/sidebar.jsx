@@ -21,7 +21,7 @@ const SideBar = React.createClass({
         </div>
 
         <h1>Projects</h1>
-        <ProjectIndex />
+        <ProjectIndex projects={this.props.projects} />
 
       </div>
     );

@@ -7,29 +7,31 @@ const ProjectDetail = require('./project_detail');
 const ProjectStore = require('../../stores/project_store');
 const ProjectActions = require('../../actions/project_actions');
 
+const TeamStore = require('../../stores/team_store');
+
 const ProjectIndex = React.createClass({
   //Set state for detail and form here.
-  getInitialState () {
-    return {
-      projects: ProjectStore.all()
-    };
-  },
+  // getInitialState () {
+  //   return {
+  //     projects: ProjectStore.all()
+  //   };
+  // },
 
-  componentDidMount () {
-    this.onChangeListener = ProjectStore.addListener(this.onChange);
-    ProjectActions.fetchAllProjects();
-  },
+  // componentDidMount () {
+  //   this.onChangeListener = ProjectStore.addListener(this.onChange);
+  //   // ProjectActions.fetchAllProjects();
+  // },
+  //
+  // componentWillUnmount () {
+  //   this.onChangeListener.remove();
+  // },
 
-  componentWillUnmount () {
-    this.onChangeListener.remove();
-  },
-
-  onChange () {
-    this.setState({projects: ProjectStore.all()});
-  },
+  // onChange () {
+  //   this.setState({projects: ProjectStore.all()});
+  // },
 
   render () {
-    let projectKeys = Object.keys(this.state.projects);
+    let projectKeys = Object.keys(this.props.projects);
 
     return (
       <div>
@@ -37,7 +39,7 @@ const ProjectIndex = React.createClass({
         <div className="project-index">
             {
               projectKeys.map( key => {
-                let project = this.state.projects[key];
+                let project = this.props.projects[key];
 
                 return (
                   <li key={project.id}>
