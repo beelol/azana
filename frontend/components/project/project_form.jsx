@@ -64,23 +64,36 @@ const ProjectForm = React.createClass({
   },
 
   render() {
-    var modalStyles = {overlay: {zIndex: 1000}};
+    var modalStyles = {
+      overlay: {
+        display: 'flex',
+        position: "absolute",
+        alignItems: 'center',
+        zIndex: 1000
+      },
+      content: {
+      }
+    };
 
     return (
       <Modal isOpen={true}
-             style={modalStyles}
-             className="project-form-modal">>
+             style={modalStyles}>
         <div className="new-project-container">
           <div className="new-project-form">
             <h3 className="new-project-title">Create A Project!</h3>
 
             <form onSubmit={this.handleSubmit}>
-              <input type="text" value={this.state.project.title}
-                onChange={this.update("title")} className="project-field"/>
+              <div className='project-form-div'>
+                <label className="project-title">Title</label>
+                <input type="text" value={this.state.project.title}
+                  onChange={this.update("title")} className="project-field"/>
+              </div>
 
-              <label className="project-field">Description</label>
-              <input type="text" value={this.state.project.description}
-                onChange={this.update("description")} className="project-field"/>
+              <div className='project-form-div'>
+                <label className="project-description">Description</label>
+                <input type="text" value={this.state.project.description}
+                  onChange={this.update("description")} className="project-field"/>
+              </div>
 
               <div className="button-holder">
                 <input type="submit" value="Create Project" className="new-project-button"/>

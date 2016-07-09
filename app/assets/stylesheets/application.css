@@ -683,7 +683,49 @@ input {
   flex-direction: column;
 }
 
+.new-project-form h3 {
+  font-size: 40px;
+  margin-bottom: 20px;
+}
+
+.project-field {
+  margin-top: 5px;
+  display: flex;
+  position: relative;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.new-project-form label {
+  margin-top: 5px;
+  display: flex;
+  position: relative;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.new-project-form div {
+  width: 100%;
+}
+
+.new-project-form form {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+
+  padding-left: 10px;
+}
+
+.project-form-modal-overlay {
+  position: absolute;
+  z-index: 10000000000000;
+  width: 500px;
+  height: 500px;
+}
+
 .project-form-modal {
+  position: absolute;
+  z-index: 10000000000000;
   padding: 30px;
   font-size: 12px;
   text-transform: uppercase;
