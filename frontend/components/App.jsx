@@ -31,7 +31,7 @@ const App = React.createClass({
   getInitialState () {
     return {
       projects: []
-    }
+    };
   },
 
   componentDidMount() {
