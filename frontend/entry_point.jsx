@@ -15,7 +15,7 @@ const hashHistory = ReactRouter.hashHistory;
 
 /* Components */
 // General
-const App = require('./components/app');
+const App = require('./components/app.jsx');
 const LoginForm = require('./components/login_form.jsx');
 
 // Tasks
