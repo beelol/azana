@@ -42,8 +42,6 @@ const TaskDetail = React.createClass({
   },
 
   render () {
-    console.log("changed props to " + this.props.task.title);
-
     let task = this.props.task;
 
     let empty = (task === undefined);

@@ -178,9 +178,9 @@ const LoginForm = React.createClass({
 					<div className="login-form-container">
 						{ this.fieldErrors("base") }
 					<form className="login-form-box">
-		        Welcome!
-						<br/>
-						Please { this.formType() } or { navLink }
+		        <h1>Welcome!</h1>
+
+						<button onClick={this.demoLoginHandler} className="button-general login-demo">Use a Demo Account</button>
 
 						<div className="login-form">
 
@@ -202,8 +202,9 @@ const LoginForm = React.createClass({
 					<div className="login-form-submit">
 						<input onClick={this.handleSubmit} className="login-submit button-general" type="submit" value={submitText} />
 					</div>
+					<div className="form-mode-dialog">Please { this.formType() } or  { navLink }</div>
 				</div>
-				<button onClick={this.demoLoginHandler} className="button-general login-demo">Use a Demo Account</button>
+
 			</div>
 		);
 	}
