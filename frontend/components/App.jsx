@@ -1,11 +1,15 @@
 "use strict";
- 
+
 const React = require('react');
-const SessionStore = require('../stores/session_store');
-const SessionActions = require('../actions/session_actions');
+
+// Page Navigation
 const NavBar = require('../components/navbar/navbar');
 const WelcomeNavBar = require('../components/navbar/welcome_navbar');
 const SideBar = require('../components/sidebar/sidebar');
+
+// Sessions / Login
+const SessionStore = require('../stores/session_store');
+const SessionActions = require('../actions/session_actions');
 
 // Routing
 const Link = require('react-router').Link;
