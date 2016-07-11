@@ -7,7 +7,14 @@ const TaskStore = require('../../stores/task_store');
 const TaskDetail = React.createClass({
 
   setDescription (e) {
-    this.description = e.currentTarget.value;
+    let newTask = this.props.task;
+    newTask.description = e.currentTarget.value;
+
+    this.props.onEditTitle(newTask);
+  },
+
+  componentWillReceiveProps (newProps) {
+    this.description = newProps.description;
   },
 
   handleExit (e) {
