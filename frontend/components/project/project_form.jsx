@@ -3,8 +3,12 @@
 const React = require('react');
 const ProjectActions = require('../../actions/project_actions');
 const ProjectStore = require('../../stores/project_store');
+const TeamStore = require('../../stores/team_store');
 const hashHistory = require('react-router').hashHistory;
 const Modal = require('react-modal');
+
+const TaskActions = require('../../actions/task_actions');
+const SessionStore = require('../../stores/session_store');
 
 const ProjectForm = React.createClass({
   getInitialState() {
@@ -28,6 +32,7 @@ const ProjectForm = React.createClass({
   },
 
   onChange () {
+    // Get the project from the store
     let all = ProjectStore.all();
     let keys = Object.keys(all)
 
@@ -35,13 +40,35 @@ const ProjectForm = React.createClass({
       projectId: all[keys.length].id
     })
 
-    this.showProject(all[keys.length].id);
+    let project = all[keys.length];
+
+    ProjectStore.currentProject = project;
+
+    let newTask = {
+      title: "",
+      description: "",
+      completed: false,
+      author_id: SessionStore.currentUser().id,
+      project_id: project.id,
+    }
+
+    // Populate the project
+    for (let i = 0; i < 18; i++) {
+      TaskActions.createTask(newTask)
+    }
+
+    // Display the project
+    this.showProject(project.id);
   },
 
   handleSubmit(event) {
     event.preventDefault();
 
+
     const project = Object.assign({}, this.state.project);
+
+    if (TeamStore.currentTeam) project.team_id = TeamStore.currentTeam.id
+
     ProjectActions.createProject(project);
   },
 

@@ -79,6 +79,12 @@ const App = React.createClass({
 
       ProjectActions.createProject(defaultProject);
     } else {
+      console.log("fetched projects");
+
+      if (this.props.location.pathname === '/' && SessionStore.currentUser()) {
+        this.redirectToFirstProject();
+      }
+
       // If we're here, then creating a project worked,
       // So we can just view the first project and create 18 tasks.
       let project = teamProjects[Object.keys(teamProjects)[0]]
@@ -105,6 +111,11 @@ const App = React.createClass({
 
   componentWillReceiveProps (newProps) {
     if (newProps.location.pathname === '/' && SessionStore.currentUser()) {
+      this.redirectToFirstProject();
+    }
+  },
+
+  redirectToFirstProject () {
       let teamProjects = this.state.projects;
 
       if (teamProjects[Object.keys(teamProjects)[0]] === undefined) {
@@ -115,7 +126,6 @@ const App = React.createClass({
 
 
       hashHistory.push(`/projects/${firstProjectId}`);
-    }
   },
 
   onTeamsChanged () {
@@ -127,7 +137,6 @@ const App = React.createClass({
     // get the first one
     // display it
     let authoredTeams = TeamStore.findByUser(SessionStore.currentUser().id);
-
 
 		if (Object.keys(authoredTeams).length === 0) {
 			/* Put all this in a listener for signing up */
