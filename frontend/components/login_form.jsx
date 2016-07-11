@@ -162,19 +162,35 @@ const LoginForm = React.createClass({
     return (e) => this.setState({[property]: e.target.value});
   },
 
+	switchFormString () {
+		let navLink;
+		let submitText = "Log In";
+
+		if (this.formType() === "login") {
+      navLink = "Don't have an account?";
+    } else {
+      navLink = "Already have an account?";
+			submitText = "Sign Up";
+    }
+
+		return navLink;
+	},
+
 	render() {
 
     let navLink;
 		let submitText = "Log In";
+		let switchText = "Sign Up";
     if (this.formType() === "login") {
       navLink = <Link to="/signup">sign up instead</Link>;
     } else {
       navLink = <Link to="/login">log in instead</Link>;
+			switchText = "Log In";
 			submitText = "Sign Up"
     }
 
 		return (
-				<div>
+				<div className="login-form-background">
 					<div className="login-form-container">
 						{ this.fieldErrors("base") }
 					<div className="login-form-box">
@@ -182,6 +198,10 @@ const LoginForm = React.createClass({
 			        <h1>Welcome!</h1>
 
 							<button onClick={this.demoLoginHandler} className="button-general login-demo">Use a Demo Account</button>
+
+							<div className="dialog-login-separator">
+								or
+							</div>
 
 							<div className="login-form">
 								<div className="login-input-label">Username</div>
@@ -202,13 +222,20 @@ const LoginForm = React.createClass({
 							</div>
 
 							<div className="login-form-submit">
-								<button onClick={this.handleSubmit} className="login-submit button-general" type="submit">
+								<button onClick={this.handleSubmit} className="button-general login-submit">
 									{submitText}
 								</button>
 							</div>
 						</form>
 					</div>
-					<div className="form-mode-dialog">Please { this.formType() } or  { navLink }</div>
+					<div className="login-form-footer">
+						<div className="form-mode-dialog">
+							{this.switchFormString()}
+						</div>
+						<button className="form-mode-button" >
+							{switchText}
+						</button>
+					</div>
 				</div>
 
 			</div>
