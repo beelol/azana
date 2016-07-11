@@ -11649,25 +11649,29 @@ return jQuery;
 	var LoginForm = __webpack_require__(308);
 	
 	// Tasks
-	var TaskForm = __webpack_require__(296);
+	var TaskFormModal = __webpack_require__(310);
 	var TaskDetail = __webpack_require__(300);
 	var TaskIndex = __webpack_require__(295);
 	
 	// Teams
 	// const TeamForm = require('./components/team/team_form.jsx');
-	var TeamDetail = __webpack_require__(310);
+	var TeamDetail = __webpack_require__(311);
 	var TeamIndex = __webpack_require__(303);
 	
 	// Projects
 	var ProjectIndex = __webpack_require__(286);
-	var ProjectForm = __webpack_require__(311);
+	var ProjectForm = __webpack_require__(312);
 	var ProjectDetail = __webpack_require__(292);
 	
 	//Auth
-	var SessionStore = __webpack_require__(251);
-	var SessionActions = __webpack_require__(274);
+	var SessionStore = __webpack_require__(255);
+	var SessionActions = __webpack_require__(278);
 	
 	// <IndexRedirect to="/tasks" />
+	// <Route path="/tasks" component={ TaskIndex } onEnter={_ensureLoggedIn}>
+	//   <Route path=":id" component={ TaskDetail }>
+	//   </Route>
+	// </Route>
 	
 	var appRouter = React.createElement(
 	  Router,
@@ -11675,11 +11679,7 @@ return jQuery;
 	  React.createElement(
 	    Route,
 	    { path: '/', component: App },
-	    React.createElement(
-	      Route,
-	      { path: '/tasks', component: TaskIndex, onEnter: _ensureLoggedIn },
-	      React.createElement(Route, { path: ':id', component: TaskDetail })
-	    ),
+	    React.createElement(Route, { path: '/tasks/new', component: TaskFormModal }),
 	    React.createElement(Route, { path: '/teams/:team_id', component: TeamDetail }),
 	    React.createElement(Route, { path: '/projects/new', component: ProjectForm }),
 	    React.createElement(
@@ -39546,13 +39546,13 @@ return jQuery;
 	var React = __webpack_require__(1);
 	
 	// Page Navigation
-	var NavBar = __webpack_require__(278);
+	var NavBar = __webpack_require__(251);
 	var WelcomeNavBar = __webpack_require__(282);
 	var SideBar = __webpack_require__(285);
 	
 	// Sessions / Login
-	var SessionStore = __webpack_require__(251);
-	var SessionActions = __webpack_require__(274);
+	var SessionStore = __webpack_require__(255);
+	var SessionActions = __webpack_require__(278);
 	
 	// Routing
 	var Link = __webpack_require__(188).Link;
@@ -39565,6 +39565,9 @@ return jQuery;
 	// Projects
 	var ProjectStore = __webpack_require__(291);
 	var ProjectActions = __webpack_require__(288);
+	
+	// Tasks
+	var TaskStore = __webpack_require__(293);
 	var TaskActions = __webpack_require__(297);
 	
 	// Other
@@ -39580,6 +39583,8 @@ return jQuery;
 	  componentDidMount: function componentDidMount() {
 	    this.forceUpdateListener = SessionStore.addListener(this.forceUpdate.bind(this));
 	
+	    this.taskListener = TaskStore.addListener(this.onTasksChanged);
+	
 	    // Used to create a new team once we find all of them
 	    // to check if we already have one or not
 	    this.teamListener = TeamStore.addListener(this.onTeamsChanged);
@@ -39591,18 +39596,30 @@ return jQuery;
 	  },
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.forceUpdateListener.remove();
+	    this.taskListener.remove();
 	    this.teamListener.remove();
 	    this.projectListener.remove();
 	  },
-	  onProjectsChanged: function onProjectsChanged() {
+	  onTasksChanged: function onTasksChanged() {
+	    // let tasks = TaskStore.all();
+	    // let keys = Object.keys(tasks);
+	    //
+	    // let lastTaskId = keys[Object.keys.length-1];
 	
+	    // let currentProjectId = ProjectStore.currentProject.id;
+	
+	    // hashHistory.push(`/projects/${currentProjectId}`);
+	  },
+	  onProjectsChanged: function onProjectsChanged() {
 	    // find the projects by a team
 	    // get the first one
 	    // display it
 	
 	    var teamProjects = ProjectStore.findByTeam(TeamStore.currentTeam.id);
 	
-	    this.setState({ projects: teamProjects });
+	    this.setState({
+	      projects: teamProjects
+	    });
 	
 	    if (TeamStore.currentTeam === undefined) {
 	      return;
@@ -39619,6 +39636,10 @@ return jQuery;
 	
 	      ProjectActions.createProject(defaultProject);
 	    } else {
+	      if (this.props.location.pathname === '/' && SessionStore.currentUser()) {
+	        this.redirectToFirstProject();
+	      }
+	
 	      // If we're here, then creating a project worked,
 	      // So we can just view the first project and create 18 tasks.
 	      var project = teamProjects[Object.keys(teamProjects)[0]];
@@ -39626,6 +39647,7 @@ return jQuery;
 	      var firstProjectId = project.id;
 	
 	      if (project.tasks.length === 0) {
+	
 	        var newTask = {
 	          title: "",
 	          description: "",
@@ -39644,16 +39666,19 @@ return jQuery;
 	  },
 	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
 	    if (newProps.location.pathname === '/' && SessionStore.currentUser()) {
-	      var teamProjects = this.state.projects;
-	
-	      if (teamProjects[Object.keys(teamProjects)[0]] === undefined) {
-	        return;
-	      }
-	
-	      var firstProjectId = teamProjects[Object.keys(teamProjects)[0]].id;
-	
-	      hashHistory.push('/projects/' + firstProjectId);
+	      this.redirectToFirstProject();
 	    }
+	  },
+	  redirectToFirstProject: function redirectToFirstProject() {
+	    var teamProjects = this.state.projects;
+	
+	    if (teamProjects[Object.keys(teamProjects)[0]] === undefined) {
+	      return;
+	    }
+	
+	    var firstProjectId = teamProjects[Object.keys(teamProjects)[0]].id;
+	
+	    hashHistory.push('/projects/' + firstProjectId);
 	  },
 	  onTeamsChanged: function onTeamsChanged() {
 	    // if (!SessionStore.currentUser()) {
@@ -39757,11 +39782,184 @@ return jQuery;
 /* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	
+	var NavBarLeft = __webpack_require__(252);
+	var NavBarRight = __webpack_require__(254);
+	
+	var NavBar = React.createClass({
+	  displayName: 'NavBar',
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'navbar' },
+	      React.createElement(NavBarLeft, null),
+	      React.createElement(NavBarRight, null)
+	    );
+	  }
+	});
+	
+	module.exports = NavBar;
+
+/***/ },
+/* 252 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	var Link = __webpack_require__(188).Link;
+	
+	var ReactRouter = __webpack_require__(188);
+	var hashHistory = ReactRouter.hashHistory;
+	
+	// Plus icon in navbar to add a new anything
+	var AddButton = __webpack_require__(253);
+	
+	var ASANA_PLUS_PATH = "http://icons.veryicon.com/ico/System/Icons8%20Metro%20Style/Mathematic%20Plus2.ico";
+	
+	var NavBarLeft = React.createClass({
+	  displayName: 'NavBarLeft',
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'navbar-left' },
+	      React.createElement(
+	        Link,
+	        { to: '/tasks', className: 'navigation-link-left' },
+	        'All Tasks'
+	      ),
+	      React.createElement(AddButton, null)
+	    );
+	  }
+	});
+	
+	//         <Link to="/projects" className="navigation-link-left">Projects</Link>
+	// <Link to="/teams" className="navigation-link-left">Teams</Link>
+	
+	module.exports = NavBarLeft;
+
+/***/ },
+/* 253 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	var Link = __webpack_require__(188).Link;
+	
+	var ReactRouter = __webpack_require__(188);
+	var hashHistory = ReactRouter.hashHistory;
+	
+	var ASANA_PLUS_PATH = "http://icons.veryicon.com/ico/System/Icons8%20Metro%20Style/Mathematic%20Plus2.ico";
+	
+	var AddButton = React.createClass({
+	  displayName: 'AddButton',
+	  goToProjectForm: function goToProjectForm() {
+	    hashHistory.push('/projects/new');
+	  },
+	  goToTaskForm: function goToTaskForm() {
+	    hashHistory.push('/tasks/new');
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'navigation-link-left nav-dropdown' },
+	      React.createElement('img', { className: 'navigation-image', src: ASANA_PLUS_PATH }),
+	      React.createElement(
+	        'ul',
+	        { className: 'list' },
+	        React.createElement(
+	          'li',
+	          { onClick: this.goToTaskForm },
+	          'Add Task'
+	        ),
+	        React.createElement(
+	          'li',
+	          { onClick: this.goToProjectForm },
+	          'Add Project'
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	//         <Link to="/projects" className="navigation-link-left">Projects</Link>
+	// <Link to="/teams" className="navigation-link-left">Teams</Link>
+	
+	module.exports = AddButton;
+
+/***/ },
+/* 254 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	var Link = __webpack_require__(188).Link;
+	
+	// User session stuff
+	var SessionStore = __webpack_require__(255);
+	var SessionActions = __webpack_require__(278);
+	
+	var NavBarRight = React.createClass({
+	  displayName: 'NavBarRight',
+	  _handleLogOut: function _handleLogOut() {
+	    SessionActions.logOut();
+	  },
+	  viewProfile: function viewProfile() {
+	    console.log("great profile, nerd");
+	  },
+	  render: function render() {
+	    var userController = React.createElement('div', null);
+	
+	    if (SessionStore.isUserLoggedIn()) {
+	      userController = React.createElement(
+	        'div',
+	        { className: 'navigation-link-right nav-dropdown' },
+	        React.createElement(
+	          'div',
+	          null,
+	          SessionStore.currentUser().username
+	        ),
+	        React.createElement(
+	          'ul',
+	          { className: 'list' },
+	          React.createElement(
+	            'li',
+	            { onClick: this._handleLogOut },
+	            'SIGN OUT'
+	          ),
+	          React.createElement(
+	            'li',
+	            { onClick: this.viewProfile },
+	            'PROFILE'
+	          )
+	        )
+	      );
+	    }
+	
+	    return React.createElement(
+	      'div',
+	      { className: 'navbar-right' },
+	      userController
+	    );
+	  }
+	});
+	
+	module.exports = NavBarRight;
+
+/***/ },
+/* 255 */
+/***/ function(module, exports, __webpack_require__) {
+
 	"use strict";
 	
-	var AppDispatcher = __webpack_require__(252);
-	var Store = __webpack_require__(256).Store;
-	var SessionConstants = __webpack_require__(273);
+	var AppDispatcher = __webpack_require__(256);
+	var Store = __webpack_require__(260).Store;
+	var SessionConstants = __webpack_require__(277);
 	
 	var SessionStore = new Store(AppDispatcher);
 	
@@ -39806,17 +40004,17 @@ return jQuery;
 	module.exports = SessionStore;
 
 /***/ },
-/* 252 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
-	var Dispatcher = __webpack_require__(253).Dispatcher;
+	var Dispatcher = __webpack_require__(257).Dispatcher;
 	
 	module.exports = new Dispatcher();
 
 /***/ },
-/* 253 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -39828,11 +40026,11 @@ return jQuery;
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 */
 	
-	module.exports.Dispatcher = __webpack_require__(254);
+	module.exports.Dispatcher = __webpack_require__(258);
 
 
 /***/ },
-/* 254 */
+/* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -39854,7 +40052,7 @@ return jQuery;
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var invariant = __webpack_require__(255);
+	var invariant = __webpack_require__(259);
 	
 	var _prefix = 'ID_';
 	
@@ -40069,7 +40267,7 @@ return jQuery;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 255 */
+/* 259 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -40124,7 +40322,7 @@ return jQuery;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 256 */
+/* 260 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -40136,15 +40334,15 @@ return jQuery;
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 */
 	
-	module.exports.Container = __webpack_require__(257);
-	module.exports.MapStore = __webpack_require__(260);
-	module.exports.Mixin = __webpack_require__(272);
-	module.exports.ReduceStore = __webpack_require__(261);
-	module.exports.Store = __webpack_require__(262);
+	module.exports.Container = __webpack_require__(261);
+	module.exports.MapStore = __webpack_require__(264);
+	module.exports.Mixin = __webpack_require__(276);
+	module.exports.ReduceStore = __webpack_require__(265);
+	module.exports.Store = __webpack_require__(266);
 
 
 /***/ },
-/* 257 */
+/* 261 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -40166,10 +40364,10 @@ return jQuery;
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var FluxStoreGroup = __webpack_require__(258);
+	var FluxStoreGroup = __webpack_require__(262);
 	
-	var invariant = __webpack_require__(255);
-	var shallowEqual = __webpack_require__(259);
+	var invariant = __webpack_require__(259);
+	var shallowEqual = __webpack_require__(263);
 	
 	var DEFAULT_OPTIONS = {
 	  pure: true,
@@ -40327,7 +40525,7 @@ return jQuery;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 258 */
+/* 262 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -40346,7 +40544,7 @@ return jQuery;
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var invariant = __webpack_require__(255);
+	var invariant = __webpack_require__(259);
 	
 	/**
 	 * FluxStoreGroup allows you to execute a callback on every dispatch after
@@ -40408,7 +40606,7 @@ return jQuery;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 259 */
+/* 263 */
 /***/ function(module, exports) {
 
 	/**
@@ -40463,7 +40661,7 @@ return jQuery;
 	module.exports = shallowEqual;
 
 /***/ },
-/* 260 */
+/* 264 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -40484,10 +40682,10 @@ return jQuery;
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var FluxReduceStore = __webpack_require__(261);
-	var Immutable = __webpack_require__(271);
+	var FluxReduceStore = __webpack_require__(265);
+	var Immutable = __webpack_require__(275);
 	
-	var invariant = __webpack_require__(255);
+	var invariant = __webpack_require__(259);
 	
 	/**
 	 * This is a simple store. It allows caching key value pairs. An implementation
@@ -40613,7 +40811,7 @@ return jQuery;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 261 */
+/* 265 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -40634,10 +40832,10 @@ return jQuery;
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var FluxStore = __webpack_require__(262);
+	var FluxStore = __webpack_require__(266);
 	
-	var abstractMethod = __webpack_require__(270);
-	var invariant = __webpack_require__(255);
+	var abstractMethod = __webpack_require__(274);
+	var invariant = __webpack_require__(259);
 	
 	var FluxReduceStore = (function (_FluxStore) {
 	  _inherits(FluxReduceStore, _FluxStore);
@@ -40720,7 +40918,7 @@ return jQuery;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 262 */
+/* 266 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -40739,11 +40937,11 @@ return jQuery;
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var _require = __webpack_require__(263);
+	var _require = __webpack_require__(267);
 	
 	var EventEmitter = _require.EventEmitter;
 	
-	var invariant = __webpack_require__(255);
+	var invariant = __webpack_require__(259);
 	
 	/**
 	 * This class should be extended by the stores in your application, like so:
@@ -40903,7 +41101,7 @@ return jQuery;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 263 */
+/* 267 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -40916,14 +41114,14 @@ return jQuery;
 	 */
 	
 	var fbemitter = {
-	  EventEmitter: __webpack_require__(264)
+	  EventEmitter: __webpack_require__(268)
 	};
 	
 	module.exports = fbemitter;
 
 
 /***/ },
-/* 264 */
+/* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -40942,11 +41140,11 @@ return jQuery;
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var EmitterSubscription = __webpack_require__(265);
-	var EventSubscriptionVendor = __webpack_require__(267);
+	var EmitterSubscription = __webpack_require__(269);
+	var EventSubscriptionVendor = __webpack_require__(271);
 	
-	var emptyFunction = __webpack_require__(269);
-	var invariant = __webpack_require__(268);
+	var emptyFunction = __webpack_require__(273);
+	var invariant = __webpack_require__(272);
 	
 	/**
 	 * @class BaseEventEmitter
@@ -41120,7 +41318,7 @@ return jQuery;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 265 */
+/* 269 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -41141,7 +41339,7 @@ return jQuery;
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var EventSubscription = __webpack_require__(266);
+	var EventSubscription = __webpack_require__(270);
 	
 	/**
 	 * EmitterSubscription represents a subscription with listener and context data.
@@ -41173,7 +41371,7 @@ return jQuery;
 	module.exports = EmitterSubscription;
 
 /***/ },
-/* 266 */
+/* 270 */
 /***/ function(module, exports) {
 
 	/**
@@ -41227,7 +41425,7 @@ return jQuery;
 	module.exports = EventSubscription;
 
 /***/ },
-/* 267 */
+/* 271 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -41246,7 +41444,7 @@ return jQuery;
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var invariant = __webpack_require__(268);
+	var invariant = __webpack_require__(272);
 	
 	/**
 	 * EventSubscriptionVendor stores a set of EventSubscriptions that are
@@ -41336,7 +41534,7 @@ return jQuery;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 268 */
+/* 272 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -41391,7 +41589,7 @@ return jQuery;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 269 */
+/* 273 */
 /***/ function(module, exports) {
 
 	/**
@@ -41433,7 +41631,7 @@ return jQuery;
 	module.exports = emptyFunction;
 
 /***/ },
-/* 270 */
+/* 274 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -41450,7 +41648,7 @@ return jQuery;
 	
 	'use strict';
 	
-	var invariant = __webpack_require__(255);
+	var invariant = __webpack_require__(259);
 	
 	function abstractMethod(className, methodName) {
 	   true ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Subclasses of %s must override %s() with their own implementation.', className, methodName) : invariant(false) : undefined;
@@ -41460,7 +41658,7 @@ return jQuery;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 271 */
+/* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -46444,7 +46642,7 @@ return jQuery;
 	}));
 
 /***/ },
-/* 272 */
+/* 276 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -46461,9 +46659,9 @@ return jQuery;
 	
 	'use strict';
 	
-	var FluxStoreGroup = __webpack_require__(258);
+	var FluxStoreGroup = __webpack_require__(262);
 	
-	var invariant = __webpack_require__(255);
+	var invariant = __webpack_require__(259);
 	
 	/**
 	 * `FluxContainer` should be preferred over this mixin, but it requires using
@@ -46567,7 +46765,7 @@ return jQuery;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 273 */
+/* 277 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -46580,15 +46778,15 @@ return jQuery;
 	module.exports = SessionConstants;
 
 /***/ },
-/* 274 */
+/* 278 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
-	var AppDispatcher = __webpack_require__(252);
-	var SessionConstants = __webpack_require__(273);
-	var SessionApiUtil = __webpack_require__(275);
-	var ErrorActions = __webpack_require__(276);
+	var AppDispatcher = __webpack_require__(256);
+	var SessionConstants = __webpack_require__(277);
+	var SessionApiUtil = __webpack_require__(279);
+	var ErrorActions = __webpack_require__(280);
 	var hashHistory = __webpack_require__(188).hashHistory;
 	
 	var SessionActions = {
@@ -46621,7 +46819,7 @@ return jQuery;
 	module.exports = SessionActions;
 
 /***/ },
-/* 275 */
+/* 279 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -46681,13 +46879,13 @@ return jQuery;
 	module.exports = SessionApiUtil;
 
 /***/ },
-/* 276 */
+/* 280 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
-	var AppDispatcher = __webpack_require__(252);
-	var ErrorConstants = __webpack_require__(277);
+	var AppDispatcher = __webpack_require__(256);
+	var ErrorConstants = __webpack_require__(281);
 	
 	var ErrorActions = {
 	  setErrors: function setErrors(form, errors) {
@@ -46707,7 +46905,7 @@ return jQuery;
 	module.exports = ErrorActions;
 
 /***/ },
-/* 277 */
+/* 281 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -46718,172 +46916,6 @@ return jQuery;
 	};
 	
 	module.exports = ErrorConstants;
-
-/***/ },
-/* 278 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var React = __webpack_require__(1);
-	
-	var NavBarLeft = __webpack_require__(279);
-	var NavBarRight = __webpack_require__(281);
-	
-	var NavBar = React.createClass({
-	  displayName: 'NavBar',
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      { className: 'navbar' },
-	      React.createElement(NavBarLeft, null),
-	      React.createElement(NavBarRight, null)
-	    );
-	  }
-	});
-	
-	module.exports = NavBar;
-
-/***/ },
-/* 279 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var React = __webpack_require__(1);
-	var Link = __webpack_require__(188).Link;
-	
-	var ReactRouter = __webpack_require__(188);
-	var hashHistory = ReactRouter.hashHistory;
-	
-	// Plus icon in navbar to add a new anything
-	var AddButton = __webpack_require__(280);
-	
-	var ASANA_PLUS_PATH = "http://icons.veryicon.com/ico/System/Icons8%20Metro%20Style/Mathematic%20Plus2.ico";
-	
-	var NavBarLeft = React.createClass({
-	  displayName: 'NavBarLeft',
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      { className: 'navbar-left' },
-	      React.createElement(
-	        Link,
-	        { to: '/tasks', className: 'navigation-link-left' },
-	        'All Tasks'
-	      ),
-	      React.createElement(AddButton, null)
-	    );
-	  }
-	});
-	
-	//         <Link to="/projects" className="navigation-link-left">Projects</Link>
-	// <Link to="/teams" className="navigation-link-left">Teams</Link>
-	
-	module.exports = NavBarLeft;
-
-/***/ },
-/* 280 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var React = __webpack_require__(1);
-	var Link = __webpack_require__(188).Link;
-	
-	var ReactRouter = __webpack_require__(188);
-	var hashHistory = ReactRouter.hashHistory;
-	
-	var ASANA_PLUS_PATH = "http://icons.veryicon.com/ico/System/Icons8%20Metro%20Style/Mathematic%20Plus2.ico";
-	
-	var AddButton = React.createClass({
-	  displayName: 'AddButton',
-	  goToProjectForm: function goToProjectForm() {
-	    hashHistory.push('/projects/new');
-	  },
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      { className: 'navigation-link-left nav-dropdown' },
-	      React.createElement('img', { className: 'navigation-image', src: ASANA_PLUS_PATH }),
-	      React.createElement(
-	        'ul',
-	        { className: 'list' },
-	        React.createElement(
-	          'li',
-	          { onClick: this.goToProjectForm },
-	          'Add Task'
-	        ),
-	        React.createElement(
-	          'li',
-	          { onClick: this.goToProjectForm },
-	          'Add Project'
-	        )
-	      )
-	    );
-	  }
-	});
-	
-	//         <Link to="/projects" className="navigation-link-left">Projects</Link>
-	// <Link to="/teams" className="navigation-link-left">Teams</Link>
-	
-	module.exports = AddButton;
-
-/***/ },
-/* 281 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var React = __webpack_require__(1);
-	var Link = __webpack_require__(188).Link;
-	
-	// User session stuff
-	var SessionStore = __webpack_require__(251);
-	var SessionActions = __webpack_require__(274);
-	
-	var NavBarRight = React.createClass({
-	  displayName: 'NavBarRight',
-	  _handleLogOut: function _handleLogOut() {
-	    SessionActions.logOut();
-	  },
-	  viewProfile: function viewProfile() {
-	    console.log("great profile, nerd");
-	  },
-	  render: function render() {
-	    var userController = React.createElement('div', null);
-	
-	    if (SessionStore.isUserLoggedIn()) {
-	      userController = React.createElement(
-	        'div',
-	        { className: 'navigation-link-right nav-dropdown' },
-	        SessionStore.currentUser().username,
-	        React.createElement(
-	          'ul',
-	          { className: 'list' },
-	          React.createElement(
-	            'li',
-	            { onClick: this._handleLogOut },
-	            'SIGN OUT'
-	          ),
-	          React.createElement(
-	            'li',
-	            { onClick: this.viewProfile },
-	            'PROFILE'
-	          )
-	        )
-	      );
-	    }
-	
-	    return React.createElement(
-	      'div',
-	      { className: 'navbar-right' },
-	      userController
-	    );
-	  }
-	});
-	
-	module.exports = NavBarRight;
 
 /***/ },
 /* 282 */
@@ -46923,7 +46955,7 @@ return jQuery;
 	var hashHistory = ReactRouter.hashHistory;
 	
 	// Plus icon in navbar to add a new anything
-	var AddButton = __webpack_require__(280);
+	var AddButton = __webpack_require__(253);
 	
 	var NavBarLeft = React.createClass({
 	  displayName: 'NavBarLeft',
@@ -46958,8 +46990,8 @@ return jQuery;
 	var hashHistory = __webpack_require__(188).hashHistory;
 	
 	// User session stuff
-	var SessionStore = __webpack_require__(251);
-	var SessionActions = __webpack_require__(274);
+	var SessionStore = __webpack_require__(255);
+	var SessionActions = __webpack_require__(278);
 	
 	var NavBarRight = React.createClass({
 	  displayName: 'NavBarRight',
@@ -47156,7 +47188,7 @@ return jQuery;
 
 	"use strict";
 	
-	var AppDispatcher = __webpack_require__(252);
+	var AppDispatcher = __webpack_require__(256);
 	var ProjectConstants = __webpack_require__(289);
 	var ProjectApiUtil = __webpack_require__(290);
 	
@@ -47307,13 +47339,15 @@ return jQuery;
 
 	"use strict";
 	
-	var Store = __webpack_require__(256).Store;
+	var Store = __webpack_require__(260).Store;
 	var ProjectConstants = __webpack_require__(289);
-	var AppDispatcher = __webpack_require__(252);
+	var AppDispatcher = __webpack_require__(256);
 	
 	var ProjectStore = new Store(AppDispatcher);
 	
 	var _projects = {};
+	
+	ProjectStore.currentProject = undefined;
 	
 	ProjectStore.all = function () {
 	  return Object.assign({}, _projects);
@@ -47466,9 +47500,9 @@ return jQuery;
 
 	"use strict";
 	
-	var Store = __webpack_require__(256).Store;
+	var Store = __webpack_require__(260).Store;
 	var TaskConstants = __webpack_require__(294);
-	var AppDispatcher = __webpack_require__(252);
+	var AppDispatcher = __webpack_require__(256);
 	var TaskStore = new Store(AppDispatcher);
 	
 	var _tasks = {};
@@ -47574,13 +47608,18 @@ return jQuery;
 	  componentDidMount: function componentDidMount() {
 	    this.onChangeListener = TaskStore.addListener(this.onChange);
 	    TaskActions.fetchAllTasks();
+	
+	    this.onProjectsChangedListener = ProjectStore.addListener(this.onProjectsChanged);
 	  },
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.onChangeListener.remove();
+	    this.onProjectsChangedListener.remove();
+	  },
+	  onProjectsChanged: function onProjectsChanged() {
+	    var projectId = parseInt(this.props.params.project_id);
+	    this.setState({ tasks: TaskStore.findByProject(projectId) });
 	  },
 	  onChange: function onChange() {
-	    // console.log("Task was updated");
-	
 	    var projectId = parseInt(this.props.params.project_id);
 	    this.setState({ tasks: TaskStore.findByProject(projectId) });
 	  },
@@ -47591,10 +47630,8 @@ return jQuery;
 	  /* Called whenever something is typed in the index item
 	  or in the task detail */
 	  onTitleWasEdited: function onTitleWasEdited(newTask) {
-	    // console.log(newTask.title);
 	    // Store a task pointing to its new value
 	    // let id = newTask.id
-	    // console.log(newTask.title);
 	
 	    this.setState(_defineProperty({}, newTask.id, newTask));
 	  },
@@ -47625,8 +47662,10 @@ return jQuery;
 	    var taskDetail = "";
 	    var project = ProjectStore.find(this.props.params.project_id);
 	
+	    // Set the current project for reference from anywhere
+	    ProjectStore.currentProject = project;
+	
 	    if (this.state.selectedTask) {
-	      console.log(this.state.selectedTask);
 	
 	      var task = this.state[[this.state.selectedTask]] ? this.state[[this.state.selectedTask]] : TaskStore.find(this.state.selectedTask);
 	
@@ -47686,7 +47725,7 @@ return jQuery;
 	
 	var React = __webpack_require__(1);
 	var TaskActions = __webpack_require__(297);
-	var SessionStore = __webpack_require__(251);
+	var SessionStore = __webpack_require__(255);
 	var hashHistory = __webpack_require__(188).hashHistory;
 	
 	var TaskForm = React.createClass({
@@ -47764,7 +47803,7 @@ return jQuery;
 
 	"use strict";
 	
-	var AppDispatcher = __webpack_require__(252);
+	var AppDispatcher = __webpack_require__(256);
 	var TaskConstants = __webpack_require__(294);
 	var TaskApiUtil = __webpack_require__(298);
 	
@@ -47977,7 +48016,13 @@ return jQuery;
 	var TaskDetail = React.createClass({
 	  displayName: 'TaskDetail',
 	  setDescription: function setDescription(e) {
-	    this.description = e.currentTarget.value;
+	    var newTask = this.props.task;
+	    newTask.description = e.currentTarget.value;
+	
+	    this.props.onEditTitle(newTask);
+	  },
+	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
+	    this.description = newProps.description;
 	  },
 	  handleExit: function handleExit(e) {
 	    var newTask = this.props.task;
@@ -47986,9 +48031,6 @@ return jQuery;
 	    this.props.onUpdateTask(newTask);
 	  },
 	  handleChange: function handleChange(e) {
-	    // console.log("Typing in task detail");
-	    console.log(e.currentTarget.value);
-	
 	    var newTask = this.props.task;
 	    newTask.title = e.currentTarget.value;
 	
@@ -48034,10 +48076,10 @@ return jQuery;
 
 	'use strict';
 	
-	var Store = __webpack_require__(256).Store;
+	var Store = __webpack_require__(260).Store;
 	var TeamConstants = __webpack_require__(302);
-	var AppDispatcher = __webpack_require__(252);
-	var SessionStore = __webpack_require__(251);
+	var AppDispatcher = __webpack_require__(256);
+	var SessionStore = __webpack_require__(255);
 	
 	var TeamStore = new Store(AppDispatcher);
 	
@@ -48221,7 +48263,7 @@ return jQuery;
 
 	"use strict";
 	
-	var AppDispatcher = __webpack_require__(252);
+	var AppDispatcher = __webpack_require__(256);
 	var TeamConstants = __webpack_require__(302);
 	var TeamApiUtil = __webpack_require__(306);
 	
@@ -48376,7 +48418,7 @@ return jQuery;
 	      React.createElement(
 	        "p",
 	        { "class": "p--large" },
-	        "Asana is the easiest way for teams to track their work—and get results."
+	        "aZana is the easiest way for teams to track their work—and get results."
 	      )
 	    );
 	  }
@@ -48394,9 +48436,10 @@ return jQuery;
 	
 	var React = __webpack_require__(1);
 	var Link = __webpack_require__(188).Link;
+	var hashHistory = __webpack_require__(188).hashHistory;
 	var Modal = __webpack_require__(168);
-	var SessionActions = __webpack_require__(274);
-	var SessionStore = __webpack_require__(251);
+	var SessionActions = __webpack_require__(278);
+	var SessionStore = __webpack_require__(255);
 	var ErrorStore = __webpack_require__(309);
 	
 	// const TeamStore = require('../stores/team_store');
@@ -48565,28 +48608,28 @@ return jQuery;
 				return _this.setState(_defineProperty({}, property, e.target.value));
 			};
 		},
-		render: function render() {
-	
-			var navLink = void 0;
-			var submitText = "Log In";
+		switchFormString: function switchFormString() {
+			return this.formType() === "login" ? "Don't have an account?" : "Already have an account?";
+		},
+		switchForm: function switchForm() {
 			if (this.formType() === "login") {
-				navLink = React.createElement(
-					Link,
-					{ to: '/signup' },
-					'sign up instead'
-				);
+				hashHistory.push('/signup');
 			} else {
-				navLink = React.createElement(
-					Link,
-					{ to: '/login' },
-					'log in instead'
-				);
+				hashHistory.push('/login');
+			}
+		},
+		render: function render() {
+			var submitText = "Log In";
+			var switchText = "Sign Up";
+	
+			if (this.formType() === "login") {} else {
+				switchText = "Log In";
 				submitText = "Sign Up";
 			}
 	
 			return React.createElement(
 				'div',
-				null,
+				{ className: 'login-form-background' },
 				React.createElement(
 					'div',
 					{ className: 'login-form-container' },
@@ -48606,6 +48649,11 @@ return jQuery;
 								'button',
 								{ onClick: this.demoLoginHandler, className: 'button-general login-demo' },
 								'Use a Demo Account'
+							),
+							React.createElement(
+								'div',
+								{ className: 'dialog-login-separator' },
+								'or'
 							),
 							React.createElement(
 								'div',
@@ -48640,7 +48688,7 @@ return jQuery;
 								{ className: 'login-form-submit' },
 								React.createElement(
 									'button',
-									{ onClick: this.handleSubmit, className: 'login-submit button-general', type: 'submit' },
+									{ onClick: this.handleSubmit, className: 'button-general login-submit' },
 									submitText
 								)
 							)
@@ -48648,11 +48696,17 @@ return jQuery;
 					),
 					React.createElement(
 						'div',
-						{ className: 'form-mode-dialog' },
-						'Please ',
-						this.formType(),
-						' or  ',
-						navLink
+						{ className: 'login-form-footer' },
+						React.createElement(
+							'div',
+							{ className: 'form-mode-dialog' },
+							this.switchFormString()
+						),
+						React.createElement(
+							'button',
+							{ className: 'form-mode-button', onClick: this.switchForm },
+							switchText
+						)
 					)
 				)
 			);
@@ -48667,9 +48721,9 @@ return jQuery;
 
 	"use strict";
 	
-	var Store = __webpack_require__(256).Store;
-	var AppDispatcher = __webpack_require__(252);
-	var ErrorConstants = __webpack_require__(277);
+	var Store = __webpack_require__(260).Store;
+	var AppDispatcher = __webpack_require__(256);
+	var ErrorConstants = __webpack_require__(281);
 	
 	var ErrorStore = new Store(AppDispatcher);
 	
@@ -48721,6 +48775,151 @@ return jQuery;
 
 /***/ },
 /* 310 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	var React = __webpack_require__(1);
+	var Modal = __webpack_require__(168);
+	
+	var TaskActions = __webpack_require__(297);
+	var SessionStore = __webpack_require__(255);
+	var hashHistory = __webpack_require__(188).hashHistory;
+	
+	var ProjectStore = __webpack_require__(291);
+	
+	var TaskFormModal = React.createClass({
+	  displayName: 'TaskFormModal',
+	  getInitialState: function getInitialState() {
+	    return {
+	      title: "",
+	      description: "",
+	      project_id: 0,
+	      author_id: 0,
+	      completed: false
+	    };
+	  },
+	  handleSubmit: function handleSubmit(event) {
+	    event.preventDefault();
+	
+	    var task = Object.assign({}, this.state);
+	
+	    var projectId = ProjectStore.currentProject.id;
+	
+	    task.project_id = projectId;
+	
+	    TaskActions.createTask(task);
+	    this.setState({ title: "" });
+	
+	    // 'Cave Johnson - we're done here.'
+	    hashHistory.push('/projects/' + projectId);
+	  },
+	  goHome: function goHome() {
+	    hashHistory.push("/");
+	  },
+	  handleCancel: function handleCancel(event) {
+	    event.preventDefault();
+	    this.goHome();
+	  },
+	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
+	    this.setState({
+	      project_id: newProps.projectId
+	    });
+	  },
+	  update: function update(property) {
+	    var _this = this;
+	
+	    return function (e) {
+	      return _this.setState(_defineProperty({}, property, e.target.value));
+	    };
+	  },
+	  render: function render() {
+	    var modalStyles = {
+	      overlay: {
+	        display: 'flex',
+	        position: "absolute",
+	        alignItems: 'center',
+	        zIndex: 1000
+	      },
+	      content: {}
+	    };
+	
+	    return React.createElement(
+	      Modal,
+	      { isOpen: true,
+	        style: modalStyles },
+	      React.createElement(
+	        'div',
+	        { className: 'new-project-container' },
+	        React.createElement(
+	          'div',
+	          { className: 'new-project-form' },
+	          React.createElement(
+	            'h3',
+	            { className: 'new-project-title' },
+	            'Create A Task!'
+	          ),
+	          React.createElement(
+	            'form',
+	            { onSubmit: this.handleSubmit },
+	            React.createElement(
+	              'div',
+	              { className: 'project-form-div' },
+	              React.createElement(
+	                'label',
+	                { className: 'project-title' },
+	                'Title'
+	              ),
+	              React.createElement('input', { type: 'text', value: this.state.title,
+	                onChange: this.update("title"), className: 'project-field' })
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'project-form-div' },
+	              React.createElement(
+	                'label',
+	                { className: 'project-description' },
+	                'Description'
+	              ),
+	              React.createElement('input', { type: 'text', value: this.state.description,
+	                onChange: this.update("description"), className: 'project-field' })
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'button-holder' },
+	              React.createElement('input', { type: 'submit', value: 'Create Task', className: 'new-project-button' })
+	            )
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'button-holder' },
+	            React.createElement(
+	              'button',
+	              { className: 'new-project-button', onClick: this.handleCancel },
+	              'Cancel'
+	            )
+	          )
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = TaskFormModal;
+	
+	// <div className="button-holder">
+	//   <input type="submit" value="Create Task" className="new-task-button"/>
+	// </div>
+	// </form>
+	//
+	// <div className="button-holder">
+	//   <button className="new-task-button" onClick={this.handleCancel}>Cancel</button>
+	// </div>
+
+/***/ },
+/* 311 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -48805,7 +49004,7 @@ return jQuery;
 	module.exports = TeamDetail;
 
 /***/ },
-/* 311 */
+/* 312 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -48813,8 +49012,12 @@ return jQuery;
 	var React = __webpack_require__(1);
 	var ProjectActions = __webpack_require__(288);
 	var ProjectStore = __webpack_require__(291);
+	var TeamStore = __webpack_require__(301);
 	var hashHistory = __webpack_require__(188).hashHistory;
 	var Modal = __webpack_require__(168);
+	
+	var TaskActions = __webpack_require__(297);
+	var SessionStore = __webpack_require__(255);
 	
 	var ProjectForm = React.createClass({
 	  displayName: 'ProjectForm',
@@ -48835,6 +49038,7 @@ return jQuery;
 	    this.listener.remove();
 	  },
 	  onChange: function onChange() {
+	    // Get the project from the store
 	    var all = ProjectStore.all();
 	    var keys = Object.keys(all);
 	
@@ -48842,12 +49046,33 @@ return jQuery;
 	      projectId: all[keys.length].id
 	    });
 	
-	    this.showProject(all[keys.length].id);
+	    var project = all[keys.length];
+	
+	    ProjectStore.currentProject = project;
+	
+	    var newTask = {
+	      title: "",
+	      description: "",
+	      completed: false,
+	      author_id: SessionStore.currentUser().id,
+	      project_id: project.id
+	    };
+	
+	    // Populate the project
+	    for (var i = 0; i < 18; i++) {
+	      TaskActions.createTask(newTask);
+	    }
+	
+	    // Display the project
+	    this.showProject(project.id);
 	  },
 	  handleSubmit: function handleSubmit(event) {
 	    event.preventDefault();
 	
 	    var project = Object.assign({}, this.state.project);
+	
+	    if (TeamStore.currentTeam) project.team_id = TeamStore.currentTeam.id;
+	
 	    ProjectActions.createProject(project);
 	  },
 	  showProject: function showProject(id) {
