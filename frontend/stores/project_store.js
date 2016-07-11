@@ -8,6 +8,8 @@ const ProjectStore = new Store(AppDispatcher);
 
 let _projects = {};
 
+ProjectStore.currentProject = undefined;
+
 ProjectStore.all = function () {
   return Object.assign({}, _projects);
 };
