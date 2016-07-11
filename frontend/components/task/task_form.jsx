@@ -52,10 +52,10 @@ const TaskForm = React.createClass({
     return (
       <div className="new-task-container">
         <div className="new-task-form">
-
           <form onSubmit={this.handleSubmit}>
             <input type="text" value={this.state.title}
-              onChange={this.update("title")} className="task-index-item"/>
+                   onChange={this.update("title")}
+                   className="task-index-item"/>
           </form>
         </div>
       </div>
