@@ -21,15 +21,21 @@ const TaskIndex = React.createClass({
   componentDidMount () {
     this.onChangeListener = TaskStore.addListener(this.onChange);
     TaskActions.fetchAllTasks();
+
+    this.onProjectsChangedListener = ProjectStore.addListener(this.onProjectsChanged);
   },
 
   componentWillUnmount () {
     this.onChangeListener.remove();
+    this.onProjectsChangedListener.remove();
+  },
+
+  onProjectsChanged () {
+    let projectId = parseInt(this.props.params.project_id);
+    this.setState({tasks: TaskStore.findByProject(projectId)});
   },
 
   onChange () {
-    // console.log("Task was updated");
-
     let projectId = parseInt(this.props.params.project_id);
     this.setState({tasks: TaskStore.findByProject(projectId)});
   },
@@ -39,10 +45,8 @@ const TaskIndex = React.createClass({
   /* Called whenever something is typed in the index item
   or in the task detail */
   onTitleWasEdited (newTask) {
-    // console.log(newTask.title);
     // Store a task pointing to its new value
     // let id = newTask.id
-    // console.log(newTask.title);
 
     this.setState({[newTask.id]: newTask});
   },
@@ -71,9 +75,10 @@ const TaskIndex = React.createClass({
     let taskDetail = "";
     let project = ProjectStore.find(this.props.params.project_id);
 
+    // Set the current project for reference from anywhere
+    ProjectStore.currentProject = project;
 
     if (this.state.selectedTask) {
-      console.log(this.state.selectedTask);
 
       let task = this.state[[this.state.selectedTask]] ? this.state[[this.state.selectedTask]] : TaskStore.find(this.state.selectedTask);
 

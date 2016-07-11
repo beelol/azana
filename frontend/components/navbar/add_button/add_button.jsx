@@ -11,12 +11,16 @@ const AddButton = React.createClass({
     hashHistory.push('/projects/new');
   },
 
+  goToTaskForm () {
+    hashHistory.push('/tasks/new');
+  },
+
   render () {
     return (
       <div className="navigation-link-left nav-dropdown">
         <img className="navigation-image" src={ASANA_PLUS_PATH} />
         <ul className="list">
-          <li onClick={this.goToProjectForm}>Add Task</li>
+          <li onClick={this.goToTaskForm}>Add Task</li>
           <li onClick={this.goToProjectForm}>Add Project</li>
         </ul>
       </div>

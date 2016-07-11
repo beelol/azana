@@ -18,12 +18,8 @@ const TaskDetail = React.createClass({
   },
 
   handleChange(e) {
-    // console.log("Typing in task detail");
-    console.log(e.currentTarget.value);
-
     let newTask = this.props.task;
     newTask.title = e.currentTarget.value;
-
 
     this.props.onEditTitle(newTask);
   },

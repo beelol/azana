@@ -22,6 +22,9 @@ const TeamActions = require('../actions/team_actions');
 // Projects
 const ProjectStore = require('../stores/project_store');
 const ProjectActions = require('../actions/project_actions');
+
+// Tasks
+const TaskStore = require('../stores/task_store');
 const TaskActions = require('../actions/task_actions');
 
 // Other
@@ -37,6 +40,8 @@ const App = React.createClass({
   componentDidMount() {
     this.forceUpdateListener = SessionStore.addListener(this.forceUpdate.bind(this));
 
+    this.taskListener = TaskStore.addListener(this.onTasksChanged);
+
     // Used to create a new team once we find all of them
     // to check if we already have one or not
     this.teamListener = TeamStore.addListener(this.onTeamsChanged);
@@ -49,20 +54,32 @@ const App = React.createClass({
 
   componentWillUnmount() {
     this.forceUpdateListener.remove();
+    this.taskListener.remove();
     this.teamListener.remove();
     this.projectListener.remove();
   },
 
-  onProjectsChanged () {
+  onTasksChanged () {
+    // let tasks = TaskStore.all();
+    // let keys = Object.keys(tasks);
+    //
+    // let lastTaskId = keys[Object.keys.length-1];
 
+    // let currentProjectId = ProjectStore.currentProject.id;
+
+    // hashHistory.push(`/projects/${currentProjectId}`);
+  },
+
+  onProjectsChanged () {
     // find the projects by a team
     // get the first one
     // display it
 
-
     let teamProjects = ProjectStore.findByTeam(TeamStore.currentTeam.id);
 
-    this.setState({projects: teamProjects})
+    this.setState({
+      projects: teamProjects
+    });
 
     if (TeamStore.currentTeam === undefined) {
       return;
@@ -74,13 +91,11 @@ const App = React.createClass({
       let defaultProject = {
         title: `${SessionStore.currentUser().username}'s First Project'`,
         description: "It's your first project. Go crazy!",
-        team_id: TeamStore.currentTeam.id,
+        team_id: TeamStore.currentTeam.id
       };
 
       ProjectActions.createProject(defaultProject);
     } else {
-      console.log("fetched projects");
-
       if (this.props.location.pathname === '/' && SessionStore.currentUser()) {
         this.redirectToFirstProject();
       }
@@ -92,16 +107,17 @@ const App = React.createClass({
       let firstProjectId = project.id;
 
       if (project.tasks.length === 0) {
+
         let newTask = {
           title: "",
           description: "",
           completed: false,
           author_id: SessionStore.currentUser().id,
-          project_id: firstProjectId,
+          project_id: firstProjectId
         }
 
         for (let i = 0; i < 18; i++) {
-          TaskActions.createTask(newTask)
+          TaskActions.createTask(newTask);
         }
 
         hashHistory.push(`/projects/${firstProjectId}`);
@@ -116,16 +132,16 @@ const App = React.createClass({
   },
 
   redirectToFirstProject () {
-      let teamProjects = this.state.projects;
+    let teamProjects = this.state.projects;
 
-      if (teamProjects[Object.keys(teamProjects)[0]] === undefined) {
-        return;
-      }
+    if (teamProjects[Object.keys(teamProjects)[0]] === undefined) {
+      return;
+    }
 
-      let firstProjectId = teamProjects[Object.keys(teamProjects)[0]].id;
+    let firstProjectId = teamProjects[Object.keys(teamProjects)[0]].id;
 
 
-      hashHistory.push(`/projects/${firstProjectId}`);
+    hashHistory.push(`/projects/${firstProjectId}`);
   },
 
   onTeamsChanged () {
@@ -144,7 +160,7 @@ const App = React.createClass({
 
 			const defaultTeam = {
 				author_id: SessionStore.currentUser().id,
-				name: teamName,
+				name: teamName
 			};
 			// create team
 			// set callback to set current team and
@@ -190,11 +206,11 @@ const App = React.createClass({
   },
 
   onLoginPage () {
-    return ["/login", "/signup"].includes(this.props.location.pathname)
+    return ["/login", "/signup"].includes(this.props.location.pathname);
   },
 
   shouldShowWelcome () {
-    return !SessionStore.isUserLoggedIn() && !this.onLoginPage();
+    return (!SessionStore.isUserLoggedIn() && !this.onLoginPage());
   },
 
   getWelcomeDiv() {
@@ -202,7 +218,7 @@ const App = React.createClass({
   },
 
   getNavBar () {
-    let navBar = SessionStore.isUserLoggedIn() ? <NavBar /> : <div />
+    let navBar = SessionStore.isUserLoggedIn() ? <NavBar /> : <div />;
 
     if (this.shouldShowWelcome()) {
       navBar = <WelcomeNavBar />;
@@ -212,7 +228,7 @@ const App = React.createClass({
   },
 
   render() {
-    let sideBar = SessionStore.isUserLoggedIn() ? <SideBar projects={this.state.projects}/> : <div/>
+    let sideBar = SessionStore.isUserLoggedIn() ? <SideBar projects={this.state.projects}/> : <div/>;
 
     return (
       <div>

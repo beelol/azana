@@ -34,6 +34,7 @@ const ApiUtil = {
   },
 
   createTask (newTask, cb, redirectCb) {
+    console.log("making a task boy");
     $.ajax({
       url: "api/tasks",
       method: "POST",

@@ -3,7 +3,7 @@
 //React
 const React = require('react');
 const ReactDOM = require('react-dom');
-const Modal = require('react-modal')
+const Modal = require('react-modal');
 
 //Router
 const ReactRouter = require('react-router');
@@ -19,7 +19,7 @@ const App = require('./components/app.jsx');
 const LoginForm = require('./components/login_form.jsx');
 
 // Tasks
-const TaskForm = require('./components/task/task_form.jsx');
+const TaskFormModal = require('./components/task/task_form_modal.jsx');
 const TaskDetail = require('./components/task/task_detail.jsx');
 const TaskIndex = require('./components/task/task_index.jsx');
 
@@ -38,15 +38,15 @@ const SessionStore = require('./stores/session_store');
 const SessionActions = require('./actions/session_actions');
 
 // <IndexRedirect to="/tasks" />
+// <Route path="/tasks" component={ TaskIndex } onEnter={_ensureLoggedIn}>
+//   <Route path=":id" component={ TaskDetail }>
+//   </Route>
+// </Route>
 
 const appRouter = (
   <Router history={ hashHistory }>
     <Route path="/" component={ App }>
-
-      <Route path="/tasks" component={ TaskIndex } onEnter={_ensureLoggedIn}>
-        <Route path=":id" component={ TaskDetail }>
-        </Route>
-      </Route>
+      <Route path="/tasks/new" component={ TaskFormModal } />
 
       <Route path="/teams/:team_id" component={ TeamDetail } />
 
