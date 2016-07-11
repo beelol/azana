@@ -48006,8 +48006,6 @@ return jQuery;
 	    }
 	  },
 	  render: function render() {
-	    console.log("changed props to " + this.props.task.title);
-	
 	    var task = this.props.task;
 	
 	    var empty = task === undefined;
@@ -48594,49 +48592,68 @@ return jQuery;
 					{ className: 'login-form-container' },
 					this.fieldErrors("base"),
 					React.createElement(
-						'form',
+						'div',
 						{ className: 'login-form-box' },
-						'Welcome!',
-						React.createElement('br', null),
-						'Please ',
-						this.formType(),
-						' or ',
-						navLink,
 						React.createElement(
-							'div',
-							{ className: 'login-form' },
+							'form',
+							{ className: 'login-form-box-inner' },
+							React.createElement(
+								'h1',
+								null,
+								'Welcome!'
+							),
+							React.createElement(
+								'button',
+								{ onClick: this.demoLoginHandler, className: 'button-general login-demo' },
+								'Use a Demo Account'
+							),
 							React.createElement(
 								'div',
-								{ className: 'login-input-label' },
-								'Username'
+								{ className: 'login-form' },
+								React.createElement(
+									'div',
+									{ className: 'login-input-label' },
+									'Username'
+								),
+								this.fieldErrors("username"),
+								React.createElement('input', { type: 'text',
+									value: this.state.username,
+									onChange: this.update("username"),
+									className: 'login-input' })
 							),
-							this.fieldErrors("username"),
-							React.createElement('input', { type: 'text',
-								value: this.state.username,
-								onChange: this.update("username"),
-								className: 'login-input' }),
 							React.createElement(
 								'div',
-								{ className: 'login-input-label' },
-								'Password'
+								{ className: 'login-form' },
+								React.createElement(
+									'div',
+									{ className: 'login-input-label' },
+									'Password'
+								),
+								this.fieldErrors("password"),
+								React.createElement('input', { type: 'password',
+									value: this.state.password,
+									onChange: this.update("password"),
+									className: 'login-input' })
 							),
-							this.fieldErrors("password"),
-							React.createElement('input', { type: 'password',
-								value: this.state.password,
-								onChange: this.update("password"),
-								className: 'login-input' })
+							React.createElement(
+								'div',
+								{ className: 'login-form-submit' },
+								React.createElement(
+									'button',
+									{ onClick: this.handleSubmit, className: 'login-submit button-general', type: 'submit' },
+									submitText
+								)
+							)
 						)
 					),
 					React.createElement(
 						'div',
-						{ className: 'login-form-submit' },
-						React.createElement('input', { onClick: this.handleSubmit, className: 'login-submit button-general', type: 'submit', value: submitText })
+						{ className: 'form-mode-dialog' },
+						'Please ',
+						this.formType(),
+						' or  ',
+						navLink
 					)
-				),
-				React.createElement(
-					'button',
-					{ onClick: this.demoLoginHandler, className: 'button-general login-demo' },
-					'Use a Demo Account'
 				)
 			);
 		}

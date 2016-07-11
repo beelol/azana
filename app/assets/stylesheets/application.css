@@ -162,7 +162,7 @@ input {
   /*background: blue;*/
   /*width: 500px;
   height: 450px;*/
-  width: 500px;
+  width: 585px;
   margin: 0 auto;
   margin-top: 30px;
   text-align: center;
@@ -172,14 +172,33 @@ input {
   line-height: 1.5;*/
 }
 
+.login-form-box input {
+  border: 1px solid #CDCFD2;
+  border-radius: 3px;
+  color: #1B2432;
+  height: 40px;
+  margin: 0;
+  padding: 0 0 0 10px;
+  width: 100%;
+}
+
 .login-form-box {
   position: relative;
   width: 100%;
   height: 450px;
+
   background-color: #fff;
   border-radius: 3px;
   box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.1);
   line-height: 1.5;
+
+}
+
+.login-form-box-inner {
+  position: relative;
+  height: 100%;
+  padding: 0 90px;
+  /*padding-bottom: 45px;*/
 }
 
 .login-signup {
@@ -191,7 +210,7 @@ input {
 .login-input {
   height: 25px;
   width: 400px;
-  margin-bottom: 25px;
+  /*margin-bottom: 25px;*/
 }
 
 .login-form {
@@ -200,12 +219,7 @@ input {
 }
 
 .login-form-submit {
-  position: relative;
-  display: block;
-  float: right;
-  margin-right: 30px;
-  margin-top: 150px;
-  bottom: 0px;
+
 }
 
 .button-general:hover {
@@ -316,14 +330,15 @@ input {
   min-width: 60px;
 }
 
-.login-form-box h1, form {
-  text-align: center;
-  margin: 0 auto;
-}
-
-.login-form-box label {
+.login-input-label {
   position: relative;
   text-align: left;
+  color: #898E95;
+  display: block;
+  font-size: 12px;
+  font-weight: 200;
+  margin-bottom: 7px;
+  text-transform: uppercase;
 }
 
 /* Task View Styling */
@@ -797,8 +812,10 @@ input {
   line-height: 25px;
 }
 
-.login-form-box {
-
+.login-form {
+  margin-top: 30px;
+  text-align: left;
+  display: block;
 }
 
 .login-form-box h1 {

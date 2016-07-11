@@ -177,30 +177,36 @@ const LoginForm = React.createClass({
 				<div>
 					<div className="login-form-container">
 						{ this.fieldErrors("base") }
-					<form className="login-form-box">
-		        <h1>Welcome!</h1>
+					<div className="login-form-box">
+						<form className="login-form-box-inner">
+			        <h1>Welcome!</h1>
 
-						<button onClick={this.demoLoginHandler} className="button-general login-demo">Use a Demo Account</button>
+							<button onClick={this.demoLoginHandler} className="button-general login-demo">Use a Demo Account</button>
 
-						<div className="login-form">
+							<div className="login-form">
+								<div className="login-input-label">Username</div>
+								{ this.fieldErrors("username") }
+									<input type="text"
+				            value={this.state.username}
+				            onChange={this.update("username")}
+										className="login-input" />
+							</div>
 
-							<div className="login-input-label">Username</div>
-							{ this.fieldErrors("username") }
-								<input type="text"
-			            value={this.state.username}
-			            onChange={this.update("username")}
-									className="login-input" />
+							<div className="login-form">
+									<div className="login-input-label">Password</div>
+									{ this.fieldErrors("password") }
+				          <input type="password"
+				            value={this.state.password}
+				            onChange={this.update("password")}
+										className="login-input" />
+							</div>
 
-								<div className="login-input-label">Password</div>
-								{ this.fieldErrors("password") }
-			          <input type="password"
-			            value={this.state.password}
-			            onChange={this.update("password")}
-									className="login-input" />
-						</div>
-					</form>
-					<div className="login-form-submit">
-						<input onClick={this.handleSubmit} className="login-submit button-general" type="submit" value={submitText} />
+							<div className="login-form-submit">
+								<button onClick={this.handleSubmit} className="login-submit button-general" type="submit">
+									{submitText}
+								</button>
+							</div>
+						</form>
 					</div>
 					<div className="form-mode-dialog">Please { this.formType() } or  { navLink }</div>
 				</div>
