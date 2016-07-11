@@ -2,6 +2,7 @@
 
 const React = require('react');
 const Link = require('react-router').Link;
+const hashHistory = require('react-router').hashHistory;
 const Modal = require('react-modal');
 const SessionActions = require('../actions/session_actions');
 const SessionStore = require('../stores/session_store');
@@ -163,28 +164,24 @@ const LoginForm = React.createClass({
   },
 
 	switchFormString () {
-		let navLink;
-		let submitText = "Log In";
+		return (this.formType() === "login" ? "Don't have an account?" : "Already have an account?");
+	},
 
+	switchForm() {
 		if (this.formType() === "login") {
-      navLink = "Don't have an account?";
-    } else {
-      navLink = "Already have an account?";
-			submitText = "Sign Up";
-    }
-
-		return navLink;
+			hashHistory.push('/signup');
+		} else {
+			hashHistory.push('/login');
+		}
 	},
 
 	render() {
-
-    let navLink;
 		let submitText = "Log In";
 		let switchText = "Sign Up";
+
     if (this.formType() === "login") {
-      navLink = <Link to="/signup">sign up instead</Link>;
+
     } else {
-      navLink = <Link to="/login">log in instead</Link>;
 			switchText = "Log In";
 			submitText = "Sign Up"
     }
@@ -232,7 +229,7 @@ const LoginForm = React.createClass({
 						<div className="form-mode-dialog">
 							{this.switchFormString()}
 						</div>
-						<button className="form-mode-button" >
+						<button className="form-mode-button" onClick={this.switchForm}>
 							{switchText}
 						</button>
 					</div>
