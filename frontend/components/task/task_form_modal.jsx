@@ -26,10 +26,12 @@ const TaskFormModal = React.createClass({
 
     const task = Object.assign({}, this.state);
 
-    TaskActions.createTask(task);
-    this.setState({title: ""})
-
     let projectId = ProjectStore.currentProject.id;
+
+    task.project_id = projectId;
+
+    TaskActions.createTask(task);
+    this.setState({title: ""});
 
     // 'Cave Johnson - we're done here.'
     hashHistory.push(`/projects/${projectId}`);
