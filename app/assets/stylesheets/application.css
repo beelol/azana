@@ -223,7 +223,7 @@ input {
 
 .login-form-submit {
   padding-top: 40px;
-  padding-bottom: 40px;  
+  padding-bottom: 40px;
   float: right;
 }
 
@@ -663,10 +663,6 @@ input {
   color: #898e95;
 }
 
-.nav-dropdown:hover {
-  margin-right: 4px;
-}
-
 .nav-dropdown:hover .list {
   display: flex;
   align-items: flex-end;
@@ -691,6 +687,7 @@ input {
 }
 
 .nav-dropdown:hover .list li {
+  cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -712,7 +709,12 @@ input {
   padding: 0px;
 }
 
+.navigation-link-right.nav-dropdown div {
+  align-self: flex-end;
+}
+
 .navigation-link-right.nav-dropdown {
+  align-self: flex-end;
   align-items: center;
   display: flex;
   flex-direction: column;

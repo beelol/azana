@@ -20,7 +20,7 @@ const NavBarRight = React.createClass({
     if (SessionStore.isUserLoggedIn()) {
       userController =
       <div className="navigation-link-right nav-dropdown">
-        {SessionStore.currentUser().username}
+        <div>{SessionStore.currentUser().username}</div>
         <ul className="list">
           <li onClick={this._handleLogOut}>SIGN OUT</li>
           <li onClick={this.viewProfile}>PROFILE</li>
