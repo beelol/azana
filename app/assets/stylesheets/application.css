@@ -418,12 +418,10 @@ input {
   line-height: 1.5;
 }
 
-.task-detail-container h1 {
-  margin-top: 20px;
-}
-
 .task-detail-container textarea {
-
+  position: relative;
+  width: 50%;
+  height: 20%;
 }
 
 .task-index-item-container {

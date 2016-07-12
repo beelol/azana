@@ -114,7 +114,8 @@ const LoginForm = React.createClass({
 
   handleSignIn() {
     if (SessionStore.isUserLoggedIn()) {
-      this.context.router.push("/");
+      // this.context.router.push("/");
+			hashHistory.push("/");
     }
 
 		// Fetch teams here so that we make a new team
@@ -140,6 +141,7 @@ const LoginForm = React.createClass({
       SessionActions.signUp(formData);
     }
 
+		// hashHistory.push('/');
 		// console.log(this.fieldErrors("username"));
 	},
 

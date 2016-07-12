@@ -74,6 +74,7 @@ const App = React.createClass({
     // find the projects by a team
     // get the first one
     // display it
+    // console.log(TeamStore.currentTeam);
 
     let teamProjects = ProjectStore.findByTeam(TeamStore.currentTeam.id);
 
@@ -104,6 +105,8 @@ const App = React.createClass({
       // So we can just view the first project and create 18 tasks.
       let project = teamProjects[Object.keys(teamProjects)[0]]
 
+      console.log(teamProjects);
+
       let firstProjectId = project.id;
 
       if (project.tasks.length === 0) {
@@ -120,8 +123,10 @@ const App = React.createClass({
           TaskActions.createTask(newTask);
         }
 
-        hashHistory.push(`/projects/${firstProjectId}`);
+        console.log(firstProjectId);
       }
+
+      hashHistory.push(`/projects/${firstProjectId}`);
     }
   },
 
