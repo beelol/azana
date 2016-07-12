@@ -39614,6 +39614,7 @@ return jQuery;
 	    // find the projects by a team
 	    // get the first one
 	    // display it
+	    // console.log(TeamStore.currentTeam);
 	
 	    var teamProjects = ProjectStore.findByTeam(TeamStore.currentTeam.id);
 	
@@ -39644,6 +39645,8 @@ return jQuery;
 	      // So we can just view the first project and create 18 tasks.
 	      var project = teamProjects[Object.keys(teamProjects)[0]];
 	
+	      console.log(teamProjects);
+	
 	      var firstProjectId = project.id;
 	
 	      if (project.tasks.length === 0) {
@@ -39660,8 +39663,10 @@ return jQuery;
 	          TaskActions.createTask(newTask);
 	        }
 	
-	        hashHistory.push('/projects/' + firstProjectId);
+	        console.log(firstProjectId);
 	      }
+	
+	      hashHistory.push('/projects/' + firstProjectId);
 	    }
 	  },
 	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
@@ -47779,7 +47784,8 @@ return jQuery;
 	          'form',
 	          { onSubmit: this.handleSubmit },
 	          React.createElement('input', { type: 'text', value: this.state.title,
-	            onChange: this.update("title"), className: 'task-index-item' })
+	            onChange: this.update("title"),
+	            className: 'task-index-item' })
 	        )
 	      )
 	    );
@@ -48551,7 +48557,8 @@ return jQuery;
 	
 		handleSignIn: function handleSignIn() {
 			if (SessionStore.isUserLoggedIn()) {
-				this.context.router.push("/");
+				// this.context.router.push("/");
+				hashHistory.push("/");
 			}
 	
 			// Fetch teams here so that we make a new team
@@ -48575,6 +48582,7 @@ return jQuery;
 				SessionActions.signUp(formData);
 			}
 	
+			// hashHistory.push('/');
 			// console.log(this.fieldErrors("username"));
 		},
 		fieldErrors: function fieldErrors(field) {
