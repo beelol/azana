@@ -114,8 +114,7 @@ const LoginForm = React.createClass({
 
   handleSignIn() {
     if (SessionStore.isUserLoggedIn()) {
-      // this.context.router.push("/");
-			hashHistory.push("/");
+      this.context.router.push("/");
     }
 
 		// Fetch teams here so that we make a new team
