@@ -37,12 +37,6 @@ const ProjectDetail = require('./components/project/project_detail.jsx');
 const SessionStore = require('./stores/session_store');
 const SessionActions = require('./actions/session_actions');
 
-// <IndexRedirect to="/tasks" />
-// <Route path="/tasks" component={ TaskIndex } onEnter={_ensureLoggedIn}>
-//   <Route path=":id" component={ TaskDetail }>
-//   </Route>
-// </Route>
-
 const appRouter = (
   <Router history={ hashHistory }>
     <Route path="/" component={ App }>
@@ -63,14 +57,6 @@ const appRouter = (
   </Router>
 );
 
-// <Route path="/teams" component={ TeamIndex } onEnter={_ensureLoggedIn}>
-// </Route>
-
-
-// <Route path="/benches/new" component={ BenchForm } onEnter={ _ensureLoggedIn }/>
-// <Route path="/benches/:benchId" component={ BenchShow} >
-//   <Route path="review" component={ ReviewForm } onEnter={ _ensureLoggedIn }/>
-// </Route>
 function _ensureLoggedIn(nextState, replace) {
   // We don't want users to be able to visit our 'new' or 'review' routes
   // if they haven't already signed in/up. Let's redirect them!

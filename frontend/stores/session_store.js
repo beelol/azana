@@ -1,5 +1,3 @@
-"use strict";
-
 const AppDispatcher = require('../dispatcher/dispatcher.js');
 const Store = require('flux/utils').Store;
 const SessionConstants = require('../constants/session_constants');

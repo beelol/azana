@@ -1,4 +1,4 @@
-ele/*
+/*
  * This is a manifest file that'll be compiled into application.css, which will include all the files
  * listed below.
  *
@@ -66,13 +66,17 @@ input {
 /* NAVBAR PROPERTIES */
 .navbar {
   background: #fff;
-  border-bottom: 1px solid #e1e2e4;
   color: #898e95;
   display: -webkit-box;
   display: -ms-flexbox;
   display: block;
   font-size: 14px;
   height: 40px;
+
+  position: fixed;
+  border-bottom: 1px solid #A2B4BC;
+  width: 100vw;
+  z-index: 1;
 }
 
 .navbar-left {
@@ -300,6 +304,7 @@ input {
   -webkit-transition: background 200ms,border 200ms,box-shadow 200ms,color 200ms;
   -moz-transition: background 200ms,border 200ms,box-shadow 200ms,color 200ms;
   transition: background 200ms,border 200ms,box-shadow 200ms,color 200ms;
+  transition: top 200ms,
   cursor: pointer;
   display: -webkit-inline-box;
   display: -moz-inline-box;
@@ -726,15 +731,6 @@ input {
   box-sizing: border-box;
   position: relative;
   z-index: 2;
-}
-
-.navbar {
-  position: relative;
-  /*-webkit-box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.4);
-  -moz-box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.4);
-  box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.4);*/
-  border-bottom: 1px solid #A2B4BC;
-  z-index: 1;
 }
 
 .nav-dropdown:hover .list li {

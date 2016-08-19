@@ -22,6 +22,9 @@
 # Ignore node modules
 node_modules
 
+# Ignore jshint configuration
+.jshintrc
+
 # Ignore bundle
 bundle.js
 bundle.js.map
