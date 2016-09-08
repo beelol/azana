@@ -22,7 +22,7 @@ const SideBar = React.createClass({
 
         <div className="logo" onClick={this.goHome}>
           <img className='logo-icon'
-               src="http://asanatraining.com/wp-content/uploads/2015/10/Asana-Logo_Full-Color-Mark.png"/>
+               src="logo.png"/>
 
              <h1 className='logo-text'>aZana</h1>
         </div>

@@ -694,7 +694,6 @@ input {
   font-size: 30px;
   width: 25px;
   height: 25px;
-  transform: rotate(180deg);
 }
 
 .side-bar .logo img {
@@ -706,7 +705,6 @@ input {
   font-size: 30px;
   width: 25px;
   height: 25px;
-  transform: rotate(180deg);
 }
 
 /* Dropdowns for buttons */
