@@ -304,7 +304,7 @@ input {
   -webkit-transition: background 200ms,border 200ms,box-shadow 200ms,color 200ms;
   -moz-transition: background 200ms,border 200ms,box-shadow 200ms,color 200ms;
   transition: background 200ms,border 200ms,box-shadow 200ms,color 200ms;
-  transition: top 200ms,
+  transition: top 200ms;
   cursor: pointer;
   display: -webkit-inline-box;
   display: -moz-inline-box;
