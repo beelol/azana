@@ -1,7 +1,7 @@
 class Api::TasksController < ApplicationController
   def index
     # @tasks = Task.all
-    projects = Project.where(team: teams)
+    projects = Project.where(team: current_user_teams)
 
     @tasks = Task.where(project: projects)
 
