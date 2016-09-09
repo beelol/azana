@@ -1,6 +1,8 @@
 class Api::TeamsController < ApplicationController
   def index
-    @teams = Team.all
+    # @teams = Team.all
+    @teams = current_user_teams
+    # fail
   end
 
   def create

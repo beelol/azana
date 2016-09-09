@@ -1,6 +1,9 @@
 class Api::ProjectsController < ApplicationController
   def index
-    @projects = Project.all
+    # @projects = Project.all
+    teams = current_user_teams
+
+    @projects = Project.where(team: teams)
   end
 
   def create
