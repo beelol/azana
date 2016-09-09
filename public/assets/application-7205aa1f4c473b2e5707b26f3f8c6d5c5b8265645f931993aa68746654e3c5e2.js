@@ -39616,7 +39616,7 @@ return jQuery;
 	    // display it
 	    // console.log(TeamStore.currentTeam);
 	
-	    var teamProjects = ProjectStore.findByTeam(TeamStore.currentTeam.id);
+	    var teamProjects = ProjectStore.all(TeamStore.currentTeam.id);
 	
 	    this.setState({
 	      projects: teamProjects
@@ -39693,7 +39693,7 @@ return jQuery;
 	    // find the teams by a user
 	    // get the first one
 	    // display it
-	    var authoredTeams = TeamStore.findByUser(SessionStore.currentUser().id);
+	    var authoredTeams = TeamStore.all(SessionStore.currentUser().id);
 	
 	    if (Object.keys(authoredTeams).length === 0) {
 	      /* Put all this in a listener for signing up */
@@ -47362,7 +47362,7 @@ return jQuery;
 	  return Object.assign({}, _projects[id]);
 	};
 	
-	ProjectStore.findByTeam = function (team_id) {
+	ProjectStore.all = function (team_id) {
 	  var projects = [];
 	
 	  Object.keys(_projects).forEach(function (key) {
@@ -47431,7 +47431,7 @@ return jQuery;
 	        id: undefined,
 	        title: "Project Title",
 	        description: "Project Description",
-	        tasks: TaskStore.findByProject(this.props.params.id)
+	        tasks: TaskStore.all(this.props.params.id)
 	      }
 	    };
 	  },
@@ -47520,7 +47520,7 @@ return jQuery;
 	  return Object.assign({}, _tasks[id]);
 	};
 	
-	TaskStore.findByProject = function (project_id) {
+	TaskStore.all = function (project_id) {
 	  var tasks = [];
 	
 	  Object.keys(_tasks).forEach(function (key) {
@@ -47622,11 +47622,11 @@ return jQuery;
 	  },
 	  onProjectsChanged: function onProjectsChanged() {
 	    var projectId = parseInt(this.props.params.project_id);
-	    this.setState({ tasks: TaskStore.findByProject(projectId) });
+	    this.setState({ tasks: TaskStore.all(projectId) });
 	  },
 	  onChange: function onChange() {
 	    var projectId = parseInt(this.props.params.project_id);
-	    this.setState({ tasks: TaskStore.findByProject(projectId) });
+	    this.setState({ tasks: TaskStore.all(projectId) });
 	  },
 	
 	
@@ -47642,7 +47642,7 @@ return jQuery;
 	  },
 	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
 	    var projectId = parseInt(newProps.params.project_id);
-	    this.setState({ tasks: TaskStore.findByProject(projectId) });
+	    this.setState({ tasks: TaskStore.all(projectId) });
 	  },
 	
 	
@@ -48097,7 +48097,7 @@ return jQuery;
 	  return Object.assign({}, _teams);
 	};
 	
-	TeamStore.findByUser = function (user_id) {
+	TeamStore.all = function (user_id) {
 	  var teams = [];
 	
 	  Object.keys(_teams).forEach(function (key) {
@@ -48945,7 +48945,7 @@ return jQuery;
 	        id: undefined,
 	        author_id: undefined,
 	        name: "Team Title"
-	        // projects: ProjectStore.findByTeam(this.props.params.id)
+	        // projects: ProjectStore.all(this.props.params.id)
 	      }
 	    };
 	  },

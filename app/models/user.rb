@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
 
 	after_initialize :ensure_session_token, :initialize_about
 
-	# This line will fuck up when updating a user; get rid of it
+	# This line will may mess up when updating a user; get rid of it
 	before_validation :ensure_session_token_uniqueness
 
   has_many :teams,

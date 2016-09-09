@@ -14,7 +14,7 @@ const TeamDetail = React.createClass({
         id: undefined,
         author_id: undefined,
         name: "Team Title"
-        // projects: ProjectStore.findByTeam(this.props.params.id)
+        // projects: ProjectStore.all(this.props.params.id)
       }
     };
   },

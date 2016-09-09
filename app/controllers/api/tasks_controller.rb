@@ -4,8 +4,6 @@ class Api::TasksController < ApplicationController
     projects = Project.where(team: current_user_teams)
 
     @tasks = Task.where(project: projects)
-
-    # @tasks = Task.where(author_id: current_user.id)
   end
 
   def create
