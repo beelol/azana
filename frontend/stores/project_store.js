@@ -18,20 +18,6 @@ ProjectStore.find = function (id) {
   return Object.assign({}, _projects[id]);
 };
 
-ProjectStore.findByTeam = function (team_id) {
-  let projects = [];
-
-  Object.keys(_projects).forEach((key) => {
-    let newKey = parseInt(key);
-
-    if (_projects[newKey].team_id === team_id) {
-      projects.push(_projects[key]);
-    }
-  });
-
-  return projects;
-};
-
 function resetAllProjects (projects) {
   projects.forEach((project) => {
     _projects[project.id] = project;

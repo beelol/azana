@@ -9,34 +9,15 @@ let _teams = {};
 
 TeamStore.currentTeam = undefined;
 
-TeamStore.all = function(){
+TeamStore.all = function() {
   return Object.assign({}, _teams);
 };
 
-TeamStore.findByUser = function (user_id) {
-  let teams = [];
-
-
-  Object.keys(_teams).forEach((key) => {
-    let newKey = parseInt(key);
-
-    if (_teams[newKey].author_id === user_id) {
-      teams.push(_teams[key]);
-    }
-  });
-
-  return teams;
-};
-
-
-TeamStore.find = function(id){
+TeamStore.find = function(id) {
   return Object.assign({}, _teams[id]);
 };
 
-
 function resetAllTeams(teams) {
-  // console.log("reset all teams");
-
   teams.forEach((team) => {
     _teams[team.id] = team;
   });

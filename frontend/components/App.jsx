@@ -76,7 +76,7 @@ const App = React.createClass({
     // display it
     // console.log(TeamStore.currentTeam);
 
-    let teamProjects = ProjectStore.findByTeam(TeamStore.currentTeam.id);
+    let teamProjects = ProjectStore.all(TeamStore.currentTeam.id);
 
     this.setState({
       projects: teamProjects
@@ -104,8 +104,6 @@ const App = React.createClass({
       // If we're here, then creating a project worked,
       // So we can just view the first project and create 18 tasks.
       let project = teamProjects[Object.keys(teamProjects)[0]]
-
-      console.log(teamProjects);
 
       let firstProjectId = project.id;
 
@@ -157,7 +155,7 @@ const App = React.createClass({
     // find the teams by a user
     // get the first one
     // display it
-    let authoredTeams = TeamStore.findByUser(SessionStore.currentUser().id);
+    let authoredTeams = TeamStore.all(SessionStore.currentUser().id);
 
 		if (Object.keys(authoredTeams).length === 0) {
 			/* Put all this in a listener for signing up */

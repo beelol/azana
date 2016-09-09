@@ -1,6 +1,9 @@
 class Api::TasksController < ApplicationController
   def index
-    @tasks = Task.all
+    # @tasks = Task.all
+    projects = Project.where(team: current_user_teams)
+
+    @tasks = Task.where(project: projects)
   end
 
   def create
